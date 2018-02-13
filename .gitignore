@@ -1,0 +1,5 @@
+# Git Ignore File
+*
+!.gitignore
+!Speck_64_128_v01/
+!Speck_64_128_v01/*
