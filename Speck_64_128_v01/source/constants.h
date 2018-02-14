@@ -41,21 +41,23 @@
  * 	NUMBER_OF_ROUNDS - the cipher number of rounds
  *
  */
-#define BLOCK_SIZE 8 /* Replace with the cipher block size in bytes */
 
-#define KEY_SIZE 10 /* Replace with the cipher key size in bytes */
-#define ROUND_KEYS_SIZE 128 /* Replace with the cipher round keys size in bytes */
+#define BLOCK_SIZE 8
 
-#define NUMBER_OF_ROUNDS 32 /* Replace with the cipher number of rounds */
+#define KEY_SIZE 16
 
+#define ROUND_KEYS_SIZE 108 /* NUMBER_OF_ROUNDS * 4 */ 
+
+#define NUMBER_OF_ROUNDS 27
 
 /*
- *
  * Cipher constants
- *
  */
-/* Replace with the cipher constants declaration */
-extern SBOX_BYTE S0[16];
-extern SBOX_BYTE S1[16];
+
+#define ALPHA 8
+#define BETA 3
+
+#define WORD_SIZE 32
+#define NUMBER_KEYWORDS 4
 
 #endif /* CONSTANTS_H */

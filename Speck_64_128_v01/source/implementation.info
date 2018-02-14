@@ -1,15 +1,15 @@
-ImplementationDescription: Cipher implementation example
-ImplementationAuthors: 
+ImplementationDescription: SPECK 64/128
+ImplementationAuthors: João Carlos Santos Fernandes
 
 EncryptionKeyScheduleConstants: constants
 EncryptConstants: constants
 DecryptionKeyScheduleConstants:
 DecryptConstants: constants
 
-EncryptionKeyScheduleCode: 
-EncryptCode: 
+EncryptionKeyScheduleCode: primitives
+EncryptCode: primitives 
 DecryptionKeyScheduleCode:
-DecryptCode:
+DecryptCode: primitives
 
 UseEncryptionKeySchedule: yes
 UseDecryptionKeySchedule: no

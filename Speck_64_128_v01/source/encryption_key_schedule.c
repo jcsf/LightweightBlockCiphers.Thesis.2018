@@ -30,9 +30,24 @@
 
 #include "cipher.h"
 #include "constants.h"
-
+#include "primitives.h"
 
 void RunEncryptionKeySchedule(uint8_t *key, uint8_t *roundKeys)
 {
-	/* Add here the cipher encryption key schedule implementation */
+	uint32_t *mk = (uint32_t *)key; /* Main Key */
+	uint32_t *rk = (uint32_t *)roundKeys;
+    uint32_t l[NUMBER_OF_ROUNDS + NUMBER_KEYWORDS];
+
+	uint8_t r;
+
+	l[0] = mk[1];
+	l[1] = mk[2];
+	l[2] = mk[3];
+	
+	rk[0] = mk[0];
+    for (r = 0; r < NUMBER_OF_ROUNDS-1; r++)
+    {
+		l[r+NUMBER_KEYWORDS-1] = (ror(l[r], ALPHA) + rk[r]) ^ r;
+		rk[r+1] = rol(rk[r], BETA) ^ l[r+NUMBER_KEYWORDS-1];
+    }
 }

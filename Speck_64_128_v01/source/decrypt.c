@@ -30,9 +30,18 @@
 
 #include "cipher.h"
 #include "constants.h"
-
+#include "primitives.h"
 
 void Decrypt(uint8_t *block, uint8_t *roundKeys)
 {
-	/* Add here the cipher decryption implementation */
+	uint32_t *rk = (uint32_t *)roundKeys;
+    uint32_t *rightSlice = (uint32_t *)block;
+    uint32_t *leftSlice = rightSlice + 1;
+    int8_t r;
+
+    for (r = NUMBER_OF_ROUNDS - 1; r > -1; r--)
+    {
+		*rightSlice = ror((*rightSlice ^ *leftSlice), BETA);
+        *leftSlice = rol(((*leftSlice ^ READ_ROUND_KEY_DOUBLE_WORD(rk[r])) - *rightSlice), ALPHA);
+    }
 }
