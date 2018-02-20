@@ -1,0 +1,20 @@
+ImplementationDescription: CLEFIA_128_128 Implementation
+ImplementationAuthors: João Carlos Santos Fernandes
+
+EncryptionKeyScheduleConstants: constants
+EncryptConstants: constants
+DecryptionKeyScheduleConstants:
+DecryptConstants: constants
+
+EncryptionKeyScheduleCode: 
+EncryptCode: 
+DecryptionKeyScheduleCode:
+DecryptCode:
+
+UseEncryptionKeySchedule: yes
+UseDecryptionKeySchedule: no
+
+ImplementationAVR: C
+ImplementationMSP: C
+ImplementationARM: C
+ImplementationPC: C
