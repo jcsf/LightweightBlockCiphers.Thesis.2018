@@ -36,3 +36,7 @@ All block ciphers implementations have been made from the reference implementati
 * [NOEKEON](NOEKEON_128_128_v02/source): *Indirect Key Implementation*
     * **Block:** 128 bits
     * **Key Size:** 128 bits
+
+* [ROADRUNNER](RoadRunneR_64_128_v01/source):
+    * **Block:** 64 bits
+    * **Key Size:** 128 bits
