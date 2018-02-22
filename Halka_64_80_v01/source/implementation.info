@@ -1,5 +1,5 @@
-ImplementationDescription: Cipher implementation example
-ImplementationAuthors: 
+ImplementationDescription: Halka_64_80 Implementation
+ImplementationAuthors: João Carlos Santos Fernandes
 
 EncryptionKeyScheduleConstants: constants
 EncryptConstants: constants
