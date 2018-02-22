@@ -17,16 +17,12 @@ All block ciphers implementations have been made from the reference implementati
     * **Block:** 64 bits
     * **Key Size:** 80 bits
 
+* [RECTANGLE](RECTANGLE_80_128_v01/source): *FELICS Implementation*
+    * **Block:** 64 bits
+    * **Key Size:** 128 bits
+
 * [CLEFIA](CLEFIA_128_128_v01/source)
     * **Block:** 128 bits
-    * **Key Size:** 128 bits
-
-* [SPECK](Speck_64_128_v01/source)
-    * **Block:** 64 bits
-    * **Key Size:** 128 bits
-
-* [SPARX](SPARX_64_128_v01/source)
-    * **Block:** 64 bits
     * **Key Size:** 128 bits
 
 * [NOEKEON](NOEKEON_128_128_v01/source): *Direct Key Implementation*
@@ -37,6 +33,22 @@ All block ciphers implementations have been made from the reference implementati
     * **Block:** 128 bits
     * **Key Size:** 128 bits
 
-* [ROADRUNNER](RoadRunneR_64_128_v01/source):
+* [HALKA](Halka_64_80_v01/source):
+    * **Block:** 64 bits
+    * **Key Size:** 80 bits
+
+* [NUX](NUX_64_128_v01/source):
+    * **Block:** 64 bits
+    * **Key Size:** 128 bits
+
+* [SPECK](Speck_64_128_v001/source)
+    * **Block:** 64 bits
+    * **Key Size:** 128 bits
+
+* [SPARX](SPARX_64_128_v001/source)
+    * **Block:** 64 bits
+    * **Key Size:** 128 bits
+
+* [ROADRUNNER](RoadRunneR_64_128_v001/source):
     * **Block:** 64 bits
     * **Key Size:** 128 bits
