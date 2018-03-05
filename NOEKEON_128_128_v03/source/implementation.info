@@ -1,4 +1,4 @@
-ImplementationDescription: Direct-Key Implementation (Based on Reference), Big Endian Version
+ImplementationDescription: Direct-Key Implementation (Based on Reference), Little Endian Version
 ImplementationAuthors: João Carlos Santos Fernandes
 
 EncryptionKeyScheduleConstants: constants

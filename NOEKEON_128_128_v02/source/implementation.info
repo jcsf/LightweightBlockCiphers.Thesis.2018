@@ -1,4 +1,4 @@
-ImplementationDescription: NOEKEON_128_128 Indirect-Key Implementation
+ImplementationDescription: Indirect-Key Implementation (Based on Reference), Big Endian Version
 ImplementationAuthors: João Carlos Santos Fernandes
 
 EncryptionKeyScheduleConstants: constants
