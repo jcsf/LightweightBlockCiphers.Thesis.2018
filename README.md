@@ -28,6 +28,11 @@ All block ciphers implementations have been made from the reference implementati
     * **Block:** 128 bits
     * **Key Size:** 128 bits
 
+* [CLEFIA](CLEFIA_128_128_v02/source)
+    * **Description:** Code Cleaned from Reference Implementation
+    * **Block:** 128 bits
+    * **Key Size:** 128 bits
+
 * [NOEKEON](NOEKEON_128_128_v01/source)
     * **Description:** Direct Key Implementation (Based on Reference), Big Endian Version
     * **Block:** 128 bits
