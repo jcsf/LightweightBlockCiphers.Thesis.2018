@@ -27,6 +27,7 @@
  */
 
 #include <stdint.h>
+#include <string.h>
 
 #include "cipher.h"
 #include "constants.h"
@@ -37,12 +38,13 @@ void RunEncryptionKeySchedule(uint8_t *key, uint8_t *roundKeys)
     uint8_t keystate[KEY_SIZE], tempks[KEY_SIZE];
     uint8_t i, j;
 
-    for (i = 0;i < KEY_SIZE; i++)
-		keystate[i] = key[i];
+	memcpy(keystate, key, KEY_SIZE);
 
-    for (i=0;i<25;i++)
+	uint8_t rounds_1 = NUMBER_OF_ROUNDS + 1;
+
+    for (i = 0; i < rounds_1; i++)
 	{
-		for(j=0;j < BLOCK_SIZE;j++)
+		for(j = 0; j < BLOCK_SIZE; j++)
 		{
 			//roundkey[i][j]=keystate[j+2];
             roundKeys[MATRIX_TO_ARRAY(i, j)] = keystate[j+2];
@@ -54,12 +56,11 @@ void RunEncryptionKeySchedule(uint8_t *key, uint8_t *roundKeys)
 			tempks[j]=(tempks[j]<<1)^(keystate[(j+2)%10]>>7);
 		}
 
-		tempks[9]=S_BOX[tempks[9]];//S-box
+		tempks[9]=S_BOX[tempks[9]]; //S-box
 
-		tempks[2]=(char) (tempks[2]^(((i+1) & 30) >> 1));//Round counter
-		tempks[1]=(char) (tempks[1]^(((i+1)&1)<<7));//Round counter
+		tempks[2]=(uint8_t) (tempks[2]^(((i+1) & 30) >> 1)); //Round counter
+		tempks[1]=(uint8_t) (tempks[1]^(((i+1)&1)<<7)); //Round counter
 
-		for(j=0;j < KEY_SIZE;j++)
-			keystate[j]=tempks[j];
+		memcpy(keystate, tempks, KEY_SIZE);
 	}
 }

@@ -1,4 +1,4 @@
-ImplementationDescription: Halka_64_80 Implementation
+ImplementationDescription: Reference Implementation
 ImplementationAuthors: João Carlos Santos Fernandes
 
 EncryptionKeyScheduleConstants: constants

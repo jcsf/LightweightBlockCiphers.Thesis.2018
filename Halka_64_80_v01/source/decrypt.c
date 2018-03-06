@@ -27,6 +27,7 @@
  */
 
 #include <stdint.h>
+#include <string.h>
 
 #include "cipher.h"
 #include "constants.h"
@@ -45,11 +46,8 @@ void Decrypt(uint8_t *block, uint8_t *roundKeys)
     for (i = NUMBER_OF_ROUNDS - 1;i > -1; i--)
 	{
 		//Permutation
-		for(j=0;j < BLOCK_SIZE;j++)
-		{
-			tempds[j] = 0;
-		}
-
+		memset(tempds, 0, BLOCK_SIZE);
+		
         PERMUTATION_INV_XY_IJ(0, 0, 1, 2);
         PERMUTATION_INV_XY_IJ(0, 1, 2, 5);
         PERMUTATION_INV_XY_IJ(0, 2, 3, 4);
@@ -190,21 +188,15 @@ void Decrypt(uint8_t *block, uint8_t *roundKeys)
 		tempds[3]=tempds[3]^(((block[7]>>7)&1)<<7); // 63 - 31
 		*/
 
+		memcpy(block, tempds, BLOCK_SIZE);
+        
 		for(j=0;j < BLOCK_SIZE;j++)
 		{
-			block[j]=tempds[j];
-		}
-
-        //S-box-inv transformation
-		for(j=0;j < BLOCK_SIZE;j++)
-		{
+			//S-Box-Inv Transformation
 			block[j]=S_BOX_INV[(block[j])];
-		}
 
-        //Add round key
-		for (j=0;j < BLOCK_SIZE;j++)
-		{
-			block[j]=block[j]^roundKeys[MATRIX_TO_ARRAY(i, j)];
+			//Add Round Key
+			block[j] = block[j] ^ roundKeys[MATRIX_TO_ARRAY(i, j)];
 		}
 	}
 }
