@@ -1,13 +1,14 @@
 /*
  *
- * Kocaeli University Computer Engineering
- * TÜBİTAK BİLGEM, Turkey
+ * Chinese Academy of Sciences
+ * State Key Laboratory of Information Security, 
+ * Institute of Information Engineering
  *
  * FELICS - Fair Evaluation of Lightweight Cryptographic Systems
  *
- * Copyright (C) 2016 Kocaeli University
+ * Copyright (C) 2016 Chinese Academy of Sciences
  *
- * Written in 2016 by Adnan Baysal <adnan.baysal@tubitak.gov.tr>
+ * Written in 2016 by Luo Peng <luopeng@iie.ac.cn>
  *
  * This file is part of FELICS.
  *
@@ -56,11 +57,17 @@
 
 #include <stdint.h>
 
-#include "cipher.h"
 #include "constants.h"
+#include "cipher.h"
 
+/*
+ *
+ * Cipher constants
+ *
+ */
+ROM_DATA_BYTE RC[25] = {
+	0x01, 0x02, 0x04, 0x09, 0x12, 0x05, 0x0b, 0x16, 
+	0x0c, 0x19, 0x13, 0x07, 0x0f, 0x1f, 0x1e, 0x1c, 
+	0x18, 0x11, 0x03, 0x06, 0x0d, 0x1b, 0x17, 0x0e, 0x1d
+};
 
-void RunDecryptionKeySchedule(uint8_t *key, uint8_t *roundKeys)
-{
-
-}

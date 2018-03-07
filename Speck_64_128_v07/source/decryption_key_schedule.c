@@ -1,13 +1,13 @@
 /*
  *
- * Kocaeli University Computer Engineering
- * TÜBİTAK BİLGEM, Turkey
+ * University of Luxembourg
+ * Laboratory of Algorithmics, Cryptology and Security (LACS)
  *
  * FELICS - Fair Evaluation of Lightweight Cryptographic Systems
  *
- * Copyright (C) 2016 Kocaeli University
+ * Copyright (C) 2015 University of Luxembourg
  *
- * Written in 2016 by Adnan Baysal <adnan.baysal@tubitak.gov.tr>
+ * Written in 2015 by Daniel Dinu <dumitru-daniel.dinu@uni.lu>
  *
  * This file is part of FELICS.
  *
@@ -26,11 +26,13 @@
  *
  */
 
+#include <stdint.h>
 
-#ifndef S_LAYER_H
-#define S_LAYER_H
+#include "cipher.h"
+#include "constants.h"
 
-void S_layer(uint16_t *data);
 
-#endif /* S_LAYER_H */
-
+void RunDecryptionKeySchedule(uint8_t *key, uint8_t *roundKeys)
+{
+	/* Add here the cipher decryption key schedule implementation */
+}

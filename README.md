@@ -18,8 +18,8 @@ All block ciphers implementations have been made from the reference implementati
     * **Block:** 64 bits
     * **Key Size:** 80 bits
 
-* [RECTANGLE](RECTANGLE_80_128_v01/source)
-    * **Description:** FELICS Implementation
+* [RECTANGLE](RECTANGLE_64_128_v10/source)
+    * **Description:** FELICS Optimized Implementation
     * **Block:** 64 bits
     * **Key Size:** 128 bits
 
@@ -63,7 +63,7 @@ All block ciphers implementations have been made from the reference implementati
     * **Block:** 64 bits
     * **Key Size:** 128 bits
 
-* [SPECK](Speck_64_128_v001/source)
+* [SPECK](Speck_64_128_v07/source)
     * **Description:** Implementation from scratch
     * **Block:** 64 bits
     * **Key Size:** 128 bits
@@ -73,7 +73,7 @@ All block ciphers implementations have been made from the reference implementati
     * **Block:** 64 bits
     * **Key Size:** 128 bits
 
-* [ROADRUNNER](RoadRunneR_64_128_v001/source)
-    * **Description:** Implementation from scratch
+* [ROADRUNNER](RoadRunneR_64_128_v07/source)
+    * **Description:** Optimized from Reference
     * **Block:** 64 bits
     * **Key Size:** 128 bits

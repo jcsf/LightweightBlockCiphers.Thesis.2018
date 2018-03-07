@@ -41,7 +41,7 @@ void Encrypt(uint8_t *block, uint8_t *roundKeys)
 
     for (r = 0; r < NUMBER_OF_ROUNDS; r++)
     {
-		*leftSlice = (ror(*leftSlice, ALPHA) + *rightSlice) ^ READ_ROUND_KEY_DOUBLE_WORD(rk[r]);
-		*rightSlice = rol(*rightSlice, BETA) ^ *leftSlice;
+      *leftSlice = (ror(*leftSlice, ALPHA) + *rightSlice) ^ READ_ROUND_KEY_DOUBLE_WORD(rk[r]);
+      *rightSlice = rol(*rightSlice, BETA) ^ *leftSlice;
     }
 }

@@ -1,13 +1,16 @@
 /*
  *
- * Kocaeli University Computer Engineering
- * TÜBİTAK BİLGEM, Turkey
+ * Chinese Academy of Sciences
+ * State Key Laboratory of Information Security, 
+ * Institute of Information Engineering
  *
  * FELICS - Fair Evaluation of Lightweight Cryptographic Systems
  *
- * Copyright (C) 2016 Kocaeli University
+ * Copyright (C) 2016 Chinese Academy of Sciences
  *
- * Written in 2016 by Adnan Baysal <adnan.baysal@tubitak.gov.tr>
+ * Written in 2016 by Luo Peng <luopeng@iie.ac.cn>,
+ *					  Bao Zhenzhen <baozhenzhen@iie.ac.cn>,
+ *					  Zhang Wentao <zhangwentao@iie.ac.cn>
  *
  * This file is part of FELICS.
  *
@@ -58,42 +61,58 @@
 
 #include "cipher.h"
 #include "constants.h"
-#include "rot.h"
-
-
-void IS_layer(uint16_t *data){
-   uint16_t  temp[5];
-   temp[0] = data[0]|data[3]; 
-   temp[1] = data[0]^data[3]; 
-   temp[2] = data[0]&(data[2]^0xFFFF); 
-   temp[3] = data[2]^temp[0]; 
-   data[2] = data[1]^temp[3]; 
-   temp[4] = temp[3]^0xffff; 
-   temp[0] = data[3]^data[2]; 
-   data[1] = temp[2]^temp[0]; 
-   temp[2] = temp[4]|temp[0]; 
-   data[3] = temp[1]^temp[2]; 
-   temp[0] = data[1]&(data[3]^0xffff);   
-   data[0] = temp[4]^temp[0];
-}
-
-void IP_layer(uint16_t *data){
-   data[1] = ROTR1(data[1]);
-   data[2] = ROTR12(data[2]);
-   data[3] = ROTR13(data[3]);
-}
-
-void Iround_function(uint16_t *data,uint16_t *rkey){
-   uint8_t i;
-   for(i=0;i<4;i++) data[i] ^= READ_ROUND_KEY_WORD(rkey[i]);
-   IP_layer(data);
-   IS_layer(data);
-}
-
 
 void Decrypt(uint8_t *block, uint8_t *roundKeys)
 {
-        uint8_t i;
-        for(i=NUMBER_OF_ROUNDS;i!=0;i--) Iround_function((uint16_t*)block,(uint16_t*)(roundKeys+8*i));
-        for(i=0;i<8;i++) block[i] ^= READ_ROUND_KEY_BYTE(roundKeys[i]);
+	uint32_t *block32 = (uint32_t*)block;
+	uint32_t *roundKeys32 = (uint32_t*)roundKeys;
+	// point to the start address of round 26
+	roundKeys32 += 50;
+
+	uint32_t temprk = *block32;
+	uint16_t w0 = (uint16_t)temprk;		// first line
+	uint16_t w1 = (uint16_t)(temprk>>16);	// second line
+	temprk = *(block32+1);
+	uint16_t w2 = (uint16_t)temprk;		// third line
+	uint16_t w3 = (uint16_t)(temprk>>16);	// forth line
+
+	uint16_t sbox0, sbox1, sbox2, sbox3;
+	uint8_t i;
+	for ( i = 0; i < NUMBER_OF_ROUNDS; i++ ) {
+		/* AddRoundKey */
+		temprk = READ_ROUND_KEY_DOUBLE_WORD(*roundKeys32);
+		w0 ^= (uint16_t)temprk;
+		w1 ^= (uint16_t)(temprk>>16);
+		temprk = READ_ROUND_KEY_DOUBLE_WORD(*(roundKeys32+1));
+		w2 ^= (uint16_t)temprk;
+		w3 ^= (uint16_t)(temprk>>16);
+		roundKeys32 -= 2;
+		/* ShiftRow */
+		w1 = (w1>>1  | w1 << 15);
+		w2 = (w2>>12 | w2 << 4);
+		w3 = (w3>>13 | w3 << 3);
+		/* Invert sbox */
+		sbox2 = w0 ^ w1;
+		sbox0 = w0 | w3;
+		sbox0 ^= w2;
+		w2 = w1 ^ sbox0;
+		sbox1 = w0 & sbox0;
+		sbox1 ^= w3;
+		w1 = sbox1 ^ w2;
+		sbox3 = ~w1;
+		sbox1 = sbox0 | sbox3;;
+		w3 = sbox1 ^ sbox2;
+		sbox1 = w3 | sbox3;
+		w0 = sbox0 ^ sbox1;
+	}
+	/* last round add key */
+	temprk = READ_ROUND_KEY_DOUBLE_WORD(*roundKeys32);
+	w0 ^= (uint16_t)temprk;
+	w1 ^= (uint16_t)(temprk>>16);
+	temprk = READ_ROUND_KEY_DOUBLE_WORD(*(roundKeys32+1));
+	w2 ^= (uint16_t)temprk;
+	w3 ^= (uint16_t)(temprk>>16);
+	/* store plain text */
+	*block32 = ((uint32_t)w1<<16) + w0;
+	*(block32+1) = ((uint32_t)w3<<16) + w2;
 }

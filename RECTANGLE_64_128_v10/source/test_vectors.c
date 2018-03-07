@@ -1,13 +1,14 @@
 /*
  *
- * Kocaeli University Computer Engineering
- * TÜBİTAK BİLGEM, Turkey
+ * Chinese Academy of Sciences
+ * State Key Laboratory of Information Security, 
+ * Institute of Information Engineering
  *
  * FELICS - Fair Evaluation of Lightweight Cryptographic Systems
  *
- * Copyright (C) 2016 Kocaeli University
+ * Copyright (C) 2016 Chinese Academy of Sciences
  *
- * Written in 2016 by Adnan Baysal <adnan.baysal@tubitak.gov.tr>
+ * Written in 2016 by Luo Peng <luopeng@iie.ac.cn>
  *
  * This file is part of FELICS.
  *
@@ -58,17 +59,17 @@
 
 #include "test_vectors.h"
 
-
 /*
  *
  * Test vectors
  *
  */
+//const uint8_t expectedPlaintext[BLOCK_SIZE] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+//const uint8_t expectedKey[KEY_SIZE] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+// 10011001 11101110, 01000100 10100100, 00110110 00010011, 10101110 11100110. The order is reverse.
+//const uint8_t expectedCiphertext[BLOCK_SIZE] = {0xe6, 0xae, 0x13, 0x36, 0xa4, 0x44, 0xee, 0x99};
 
-//const uint8_t expectedPlaintext[BLOCK_SIZE] = {0};
-//const uint8_t expectedKey[KEY_SIZE] = {0};
-//const uint8_t expectedCiphertext[BLOCK_SIZE] = {0XAE,0XE6,0X36,0X13,0X44,0XA4,0X99,0XEE};
-
-const uint8_t expectedPlaintext[BLOCK_SIZE] = {0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff};
-const uint8_t expectedKey[KEY_SIZE] = {0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff};
-const uint8_t expectedCiphertext[BLOCK_SIZE] = {0XE8,0X3E,0XEF,0XEE,0X4A,0X15,0X7A,0X46};
+const uint8_t expectedPlaintext[BLOCK_SIZE] = {0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff};
+const uint8_t expectedKey[KEY_SIZE] = {0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff};
+// 01111010 01000110, 01001010 00010101, 11101111 11101110, 11101000 00111110. The order is reverse.
+const uint8_t expectedCiphertext[BLOCK_SIZE] = {0x3e, 0xe8, 0xee, 0xef, 0x15, 0x4a, 0x46, 0x7a};

@@ -1,13 +1,16 @@
 /*
  *
- * Kocaeli University Computer Engineering
- * TÜBİTAK BİLGEM, Turkey
+ * Chinese Academy of Sciences
+ * State Key Laboratory of Information Security, 
+ * Institute of Information Engineering
  *
  * FELICS - Fair Evaluation of Lightweight Cryptographic Systems
  *
- * Copyright (C) 2016 Kocaeli University
+ * Copyright (C) 2016 Chinese Academy of Sciences
  *
- * Written in 2016 by Adnan Baysal <adnan.baysal@tubitak.gov.tr>
+ * Written in 2016 by Luo Peng <luopeng@iie.ac.cn>,
+ *					  Bao Zhenzhen <baozhenzhen@iie.ac.cn>,
+ *					  Zhang Wentao <zhangwentao@iie.ac.cn>
  *
  * This file is part of FELICS.
  *
@@ -58,39 +61,59 @@
 
 #include "cipher.h"
 #include "constants.h"
-#include "s_layer.h"
 
 
 void RunEncryptionKeySchedule(uint8_t *key, uint8_t *roundKeys)
 {
-   uint8_t i, j, key_state[16] = {0}, temp[8];
-   for(i=0;i<16;i++) key_state[i] = key[i];
-   for(i=0;i<NUMBER_OF_ROUNDS;i++){
-      for(j=0;j<4;j++){
-         roundKeys[i*8+2*j] = key_state[j*4+2];
-         roundKeys[i*8+2*j+1] = key_state[j*4+3];
-      }
-      for(j=0;j<4;j++) temp[2*j+1] = key_state[4*j+3];
-      S_layer((uint16_t*)temp);
-      for(j=0;j<4;j++) key_state[4*j+3] = temp[2*j+1];
-      for(j=0;j<4;j++) temp[j] = key_state[j];
-      key_state[0] = key_state[1]^key_state[4];
-      key_state[1] = key_state[2]^key_state[5];
-      key_state[2] = key_state[3]^key_state[6];
-      key_state[3] = temp[0]^key_state[7];
-      for(j=0;j<4;j++) key_state[4+j] = key_state[8+j];
-      temp[4] = key_state[8];
-      temp[5] = key_state[9];
-      key_state[8] = key_state[10]^key_state[12];
-      key_state[9] = key_state[11]^key_state[13];
-      key_state[10] = temp[4]^key_state[14];
-      key_state[11] = temp[5]^key_state[15];
-      for(j=0;j<4;j++) key_state[12+j] = temp[j];
-      key_state[3] ^= READ_ROUND_CONSTANT_BYTE(round_constants[i]);
-   }
-   for(j=0;j<4;j++){
-      roundKeys[NUMBER_OF_ROUNDS*8+2*j] = key_state[j*4+2];
-      roundKeys[NUMBER_OF_ROUNDS*8+2*j+1] = key_state[j*4+3];
-   }
+	uint8_t key8[16];
+	/* the master key can not be modified. */
+	uint8_t i;
+	*((uint32_t*)key8) = *((uint32_t*)key);
+	*((uint32_t*)key8+1) = *((uint32_t*)key+1);
+	*((uint32_t*)key8+2) = *((uint32_t*)key+2);
+	*((uint32_t*)key8+3) = *((uint32_t*)key+3);
 
+	uint16_t *key16 = (uint16_t*)key8;
+	uint16_t *roundKeys16 = (uint16_t*)roundKeys;
+
+	/* the first round keys */
+	roundKeys16[0] = key16[0];
+	roundKeys16[1] = key16[2];
+	roundKeys16[2] = key16[4];
+	roundKeys16[3] = key16[6];
+
+	/* key schedule */
+	uint8_t sbox0, sbox1;
+	uint16_t halfRow2;
+	uint32_t tempRow0;
+	for ( i = 1; i <= NUMBER_OF_ROUNDS; i++) {
+		/* S box */
+		sbox1 = ~key8[4];
+		sbox0 = sbox1 | key8[12];
+		sbox0 ^= key8[0];
+		key8[0] &= sbox1;
+		sbox1 = key8[8] ^ key8[12];
+		key8[0] ^= sbox1;
+		key8[12] = key8[4] ^ key8[8];
+		key8[4] = key8[8] ^ sbox0;
+		sbox1 &= sbox0;
+		key8[12] ^= sbox1;
+		key8[8] = key8[0] | key8[12];
+		key8[8] ^= sbox0;
+		/* row */
+		tempRow0 = *((uint32_t*)key8);
+		*((uint32_t*)key8) = (tempRow0<<8 | tempRow0>>24) ^ *((uint32_t*)key8+1);
+		*((uint32_t*)key8+1) = *((uint32_t*)key8+2);
+		halfRow2 = *(key16+4);
+		*(key16+4) = *(key16+5) ^ *(key16+6);
+		*(key16+5) = halfRow2 ^ *(key16+7);
+		*((uint32_t*)key8+3) = tempRow0;
+		/* round const */
+		*key8 ^= READ_ROM_DATA_BYTE(RC[i-1]);
+		/* store round key */
+		roundKeys16[4*i] = key16[0];
+		roundKeys16[4*i+1] = key16[2];
+		roundKeys16[4*i+2] = key16[4];
+		roundKeys16[4*i+3] = key16[6];
+	}
 }

@@ -1,0 +1,15 @@
+ImplementationDescription: Optimized Implementation
+ImplementationAuthors: João Carlos Santos Fernanades
+
+EncryptionKeyScheduleConstants: 
+EncryptConstants: 
+DecryptionKeyScheduleConstants: 
+DecryptConstants: 
+
+EncryptionKeyScheduleCode: 
+EncryptCode: primitives
+DecryptionKeyScheduleCode:
+DecryptCode: primitives
+
+UseEncryptionKeySchedule: yes
+UseDecryptionKeySchedule: no

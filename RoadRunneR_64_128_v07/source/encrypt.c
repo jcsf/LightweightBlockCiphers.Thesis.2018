@@ -1,13 +1,13 @@
 /*
  *
- * Kocaeli University Computer Engineering
- * TÜBİTAK BİLGEM, Turkey
+ * University of Luxembourg
+ * Laboratory of Algorithmics, Cryptology and Security (LACS)
  *
  * FELICS - Fair Evaluation of Lightweight Cryptographic Systems
  *
- * Copyright (C) 2016 Kocaeli University
+ * Copyright (C) 2015 University of Luxembourg
  *
- * Written in 2016 by Adnan Baysal <adnan.baysal@tubitak.gov.tr>
+ * Written in 2015 by Daniel Dinu <dumitru-daniel.dinu@uni.lu>
  *
  * This file is part of FELICS.
  *
@@ -26,16 +26,28 @@
  *
  */
 
+#include <stdint.h>
+#include <string.h>
 
-#ifndef ROT_H
-#define ROT_H
+#include "cipher.h"
+#include "constants.h"
+#include "primitives.h"
 
-#define ROTL1(x)	(((x)<<1)^((x)>>15))
-#define ROTL12(x)	(((x)<<12)^((x)>>4))
-#define ROTL13(x)	(((x)<<13)^((x)>>3))
-#define ROTR1(x)	(((x)<<15)^((x)>>1))
-#define ROTR12(x)	(((x)<<4)^((x)>>12))
-#define ROTR13(x)	(((x)<<3)^((x)>>13))
+void Encrypt(uint8_t *block, uint8_t *roundKeys)
+{
+	uint8_t i, temp[4] = {0};
+	temp[0] = 4;
+	
+	for(i=0;i<4;i++) block[i] ^= READ_ROUND_KEY_BYTE(roundKeys[i]);
+	
+	for(i=NUMBER_OF_ROUNDS; i>0; i--){
+		rrr_enc_dec_round(block,roundKeys,i,temp,4);
+	}
+	
+	memcpy(temp, block, 4);
 
-#endif /* ROT_H */
+	for(i=0;i<4;i++) block[i] = block[i+4]^READ_ROUND_KEY_BYTE(roundKeys[i+4]);
+	
+	memcpy(block+4, temp, 4);
+}
 

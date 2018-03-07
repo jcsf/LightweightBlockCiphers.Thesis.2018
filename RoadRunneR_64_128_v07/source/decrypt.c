@@ -27,6 +27,7 @@
  */
 
 #include <stdint.h>
+#include <string.h>
 
 #include "cipher.h"
 #include "constants.h"
@@ -35,13 +36,21 @@
 void Decrypt(uint8_t *block, uint8_t *roundKeys)
 {
 	uint8_t i, temp[4] = {0};
+
 	temp[0] = 8;
+	
 	for(i=0;i<4;i++) block[i] ^= READ_ROUND_KEY_BYTE(roundKeys[i+4]);
-	for(i=1;i<=NUMBER_OF_ROUNDS;i++){
-		rrr_enc_dec_round(block,roundKeys,i,temp,1);
+	
+	uint8_t rounds = NUMBER_OF_ROUNDS + 1;
+
+	for(i = 1;i < rounds; i++){
+		rrr_enc_dec_round(block,roundKeys,i,temp,12);
 	}
-	for(i=0;i<4;i++) temp[i] = block[i];
+
+	memcpy(temp, block, 4);
+
 	for(i=0;i<4;i++) block[i] = block[i+4]^READ_ROUND_KEY_BYTE(roundKeys[i]);
-	for(i=0;i<4;i++) block[i+4] = temp[i];
+
+	memcpy(block+4, temp, 4);
 }
 

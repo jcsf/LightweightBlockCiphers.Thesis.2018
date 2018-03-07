@@ -1,13 +1,14 @@
 /*
  *
- * Kocaeli University Computer Engineering
- * TÜBİTAK BİLGEM, Turkey
+ * Chinese Academy of Sciences
+ * State Key Laboratory of Information Security, 
+ * Institute of Information Engineering
  *
  * FELICS - Fair Evaluation of Lightweight Cryptographic Systems
  *
- * Copyright (C) 2016 Kocaeli University
+ * Copyright (C) 2016 Chinese Academy of Sciences
  *
- * Written in 2016 by Adnan Baysal <adnan.baysal@tubitak.gov.tr>
+ * Written in 2016 by Luo Peng <luopeng@iie.ac.cn>
  *
  * This file is part of FELICS.
  *
@@ -54,20 +55,34 @@
  *
  */
 
+#ifndef CONSTANTS_H
+#define CONSTANTS_H
 
-#include <stdint.h>
-#include "constants.h"
+#include "data_types.h"
+
+
+/*
+ *
+ * Cipher characteristics:
+ * 	BLOCK_SIZE - the cipher block size in bytes
+ * 	KEY_SIZE - the cipher key size in bytes
+ *	ROUND_KEY_SIZE - the cipher round keys size in bytes
+ * 	NUMBER_OF_ROUNDS - the cipher number of rounds
+ *
+ */
+#define BLOCK_SIZE 8
+
+#define KEY_SIZE 16
+#define ROUND_KEYS_SIZE 208
+
+#define NUMBER_OF_ROUNDS 25
+
 
 /*
  *
  * Cipher constants
  *
  */
- 
-ROUND_CONSTANT_BYTE round_constants[25] = {
-        0X01,0X02,0X04,0X09,0X12,
-        0X05,0X0B,0X16,0X0C,0X19,
-        0X13,0X07,0X0F,0X1F,0X1E,
-        0X1C,0X18,0X11,0X03,0X06,
-        0X0D,0X1B,0X17,0X0E,0X1D
-};
+extern ROM_DATA_BYTE RC[];
+
+#endif /* CONSTANTS_H */

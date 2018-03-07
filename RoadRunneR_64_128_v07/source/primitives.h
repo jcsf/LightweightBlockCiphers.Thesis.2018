@@ -1,13 +1,13 @@
 /*
  *
- * Kocaeli University Computer Engineering
- * TÜBİTAK BİLGEM, Turkey
+ * University of Luxembourg
+ * Laboratory of Algorithmics, Cryptology and Security (LACS)
  *
  * FELICS - Fair Evaluation of Lightweight Cryptographic Systems
  *
- * Copyright (C) 2016 Kocaeli University
+ * Copyright (C) 2015 University of Luxembourg
  *
- * Written in 2016 by Adnan Baysal <adnan.baysal@tubitak.gov.tr>
+ * Written in 2015 by Daniel Dinu <dumitru-daniel.dinu@uni.lu>
  *
  * This file is part of FELICS.
  *
@@ -26,24 +26,14 @@
  *
  */
 
-#include <stdint.h>
-#include "s_layer.h"
 
+#ifndef PRIMITIVES_H
+#define PRIMITITVES_H
 
-void S_layer(uint16_t *data){
-   uint16_t  temp[5];
-   temp[0] = data[1]^0xffff;
-   temp[1] = data[0]&temp[0];
-   temp[2] = data[2]^data[3];
-   temp[3] = temp[1]^temp[2];
-   temp[1] = data[3]|temp[0];
-   temp[0] = data[0]^temp[1];
-   temp[1] = data[2]^temp[0];
-   temp[4] = data[1]^data[2];
-   data[3] = temp[2]&temp[0];
-   data[3] = data[3]^temp[4];
-   data[2] = temp[3]|temp[4];
-   data[2] = data[2]^temp[0];
-   data[0] = temp[3];
-   data[1] = temp[1];
-}
+extern void inline rrr_sbox(uint8_t *data);
+extern void inline rrr_L(uint8_t *data);
+extern void rrr_SLK(uint8_t *data,uint8_t *key_part);
+extern void inline rrr_enc_dec_round(uint8_t *block, uint8_t *roundKey, uint8_t round, uint8_t *key_ctr, uint8_t mode);
+
+#endif /* PRIMITIVES_H */
+

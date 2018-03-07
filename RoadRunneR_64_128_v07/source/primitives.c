@@ -27,13 +27,15 @@
  */
 
 #include <stdint.h>
+#include <string.h>
+
 #include "cipher.h"
 #include "constants.h"
 #include "primitives.h"
 
 #define ROTL(x)   (((x)<<1)|((x)>>7))
 
-void rrr_sbox(uint8_t *data)
+void inline rrr_sbox(uint8_t *data)
 {
 	uint8_t temp = data[3];
 	data[3] &= data[2];
@@ -46,7 +48,7 @@ void rrr_sbox(uint8_t *data)
 	data[2] ^= temp;
 }
 
-void rrr_L(uint8_t *data)
+void inline rrr_L(uint8_t *data)
 {
 	uint8_t temp = data[0];
 	temp = ROTL(temp);
@@ -55,7 +57,7 @@ void rrr_L(uint8_t *data)
 	data[0] ^= temp;
 }
 
-void rrr_SLK(uint8_t *data,uint8_t *key_part)
+void rrr_SLK(uint8_t *data, uint8_t *key_part)
 {
 	uint8_t i;
 	rrr_sbox(data);
@@ -65,11 +67,11 @@ void rrr_SLK(uint8_t *data,uint8_t *key_part)
 	}
 }
 
-void rrr_enc_dec_round(uint8_t *block, uint8_t *roundKey, uint8_t round, uint8_t *key_ctr, uint8_t mode)
+void inline rrr_enc_dec_round(uint8_t *block, uint8_t *roundKey, uint8_t round, uint8_t *key_ctr, uint8_t mode)
 {
 	uint8_t i, temp[4];
 	
-	for(i=0;i<4;i++) temp[i] = block[i];
+	memcpy(temp, block, 4);
 	
 	rrr_SLK(block,roundKey+key_ctr[0]);
 	key_ctr[0] = (key_ctr[0]+4)&15;
@@ -78,15 +80,11 @@ void rrr_enc_dec_round(uint8_t *block, uint8_t *roundKey, uint8_t round, uint8_t
 	block[3] ^= round;
 	rrr_SLK(block,roundKey+key_ctr[0]);
 	
-	if(mode==1)
-		key_ctr[0] = (key_ctr[0]+12)&15;
-	else
-		key_ctr[0] = (key_ctr[0]+4)&15;
+	key_ctr[0] = (key_ctr[0]+mode)&15; //mode: 12 - Decryption, 4 - Encryption
 	
 	rrr_sbox(block);
 	
 	for(i=0;i<4;i++) block[i] ^= block[i+4];
-	for(i=0;i<4;i++) block[i+4] = temp[i];
+
+	memcpy(block+4, temp, 4);
 }
-
-
