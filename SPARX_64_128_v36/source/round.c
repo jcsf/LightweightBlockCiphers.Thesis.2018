@@ -26,38 +26,50 @@
  *
  */
 
+
 #include <stdint.h>
 
+#include "round.h"
 #include "cipher.h"
-#include "constants.h"
-#include "primitives.h"
+#include "rot32.h"
+#include "speckey.h"
 
-void Decrypt(uint8_t *block, uint8_t *roundKeys)
+
+void round_f(uint32_t *left, uint32_t *right, uint32_t *roundKeys)
 {
-    uint16_t* x = (uint16_t*) block;
-	/*uint16_t k[][2*ROUNDS_PER_STEPS] = (uint16_t**) roundKeys;*/
-	uint16_t* k = (uint16_t*) roundKeys;
+    uint32_t temp;
 
-	int8_t s, r, b;
+    uint16_t *b0_l = (uint16_t *)left;
+    uint16_t *b0_r = (uint16_t *)left + 1;
 
-    for (b=0 ; b<N_BRANCHES ; b++)
-    {
-        /*x[2*b  ] ^= k[N_BRANCHES*N_STEPS][2*b  ];
-		x[2*b+1] ^= k[N_BRANCHES*N_STEPS][2*b+1];*/
-		x[2*b  ] ^= k[MATRIX_TO_ARRAY(N_BRANCHES*N_STEPS, 2*b)];
-		x[2*b+1] ^= k[MATRIX_TO_ARRAY(N_BRANCHES*N_STEPS,2*b+1)];
-    }
-    for (s=N_STEPS-1 ; s >= 0 ; s--)
-    {
-        L_inv(x);
-        for (b=0 ; b<N_BRANCHES ; b++)
-            for (r=ROUNDS_PER_STEPS-1 ; r >= 0 ; r--)
-            {
-                A_inv(x + 2*b, x + 2*b+1);
-                /*x[2*b  ] ^= k[N_BRANCHES*s + b][2*r    ];
-				x[2*b+1] ^= k[N_BRANCHES*s + b][2*r + 1];*/
-				x[2*b  ] ^= k[MATRIX_TO_ARRAY(N_BRANCHES*s + b, 2*r)];
-				x[2*b+1] ^= k[MATRIX_TO_ARRAY(N_BRANCHES*s + b, 2*r + 1)];
-            }
-    }
+    uint16_t *b1_l = (uint16_t *)right;
+    uint16_t *b1_r = (uint16_t *)right + 1;
+
+    uint8_t i;
+
+    /* left branch */
+    *left ^= READ_ROUND_KEY_DOUBLE_WORD(roundKeys[0]);
+    speckey(b0_l, b0_r);
+
+    *left ^= READ_ROUND_KEY_DOUBLE_WORD(roundKeys[1]);
+    speckey(b0_l, b0_r);
+
+    *left ^= READ_ROUND_KEY_DOUBLE_WORD(roundKeys[2]);
+    speckey(b0_l, b0_r);
+
+    /* right branch */
+    *right ^= READ_ROUND_KEY_DOUBLE_WORD(roundKeys[3]);
+    speckey(b1_l, b1_r);
+
+    *right ^= READ_ROUND_KEY_DOUBLE_WORD(roundKeys[4]);
+    speckey(b1_l, b1_r);
+
+    *right ^= READ_ROUND_KEY_DOUBLE_WORD(roundKeys[5]);
+    speckey(b1_l, b1_r);
+
+    /* linear layer */
+    temp = *left;
+    *right ^= *left ^ rot32l8(*left) ^ rot32r8(*left);
+    *left = *right;
+    *right = temp;
 }

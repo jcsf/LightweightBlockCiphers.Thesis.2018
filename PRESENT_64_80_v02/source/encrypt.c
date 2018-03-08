@@ -30,68 +30,61 @@
 
 #include "cipher.h"
 #include "constants.h"
-#include "rotate.h"
+
+
+#define SPLayer(SPtable_lo, SPtable_hi,index) \
+{ \
+	sboxvalue = (state >> index) & 0xF; \
+	state_lo ^= READ_SBOX_DOUBLE_WORD(SPtable_lo[sboxvalue]); \
+	state_hi ^= READ_SBOX_DOUBLE_WORD(SPtable_hi[sboxvalue]); \
+}
 
 
 void Encrypt(uint8_t *block, uint8_t *roundKeys)
 {
+	uint8_t round;
 	uint64_t state = *(uint64_t*)block;
-	uint64_t temp;
-	uint8_t round, k;
 
 	
+	/* Encryption */
 	for (round = 0; round < 31; round++)
 	{
 		/* addRoundkey */
 		uint32_t subkey_lo = READ_ROUND_KEY_DOUBLE_WORD(((uint32_t*)roundKeys)[2 * round]);
 		uint32_t subkey_hi = READ_ROUND_KEY_DOUBLE_WORD(((uint32_t*)roundKeys)[2 * round + 1]);
-		
 		state ^= (uint64_t)subkey_lo ^ (((uint64_t)subkey_hi) << 32);
 
-		
+
 		/* sBoxLayer */
-		for (k = 0; k < 16; k++)
-		{
-			/* get lowest nibble */
-			uint16_t sBoxValue = state & 0xF;
+		uint8_t sboxvalue;
+		uint64_t state_lo = 0;
+		uint64_t state_hi = 0;
+		SPLayer(spBox0_lo, spBox0_hi, 0);
+		SPLayer(spBox1_lo, spBox1_hi, 4);
+		SPLayer(spBox2_lo, spBox2_hi, 8);
+		SPLayer(spBox3_lo, spBox3_hi, 12);
+		SPLayer(spBox4_lo, spBox4_hi, 16);
+		SPLayer(spBox5_lo, spBox5_hi, 20);
+		SPLayer(spBox6_lo, spBox6_hi, 24);
+		SPLayer(spBox7_lo, spBox7_hi, 28);
+		SPLayer(spBox8_lo, spBox8_hi, 32);
+		SPLayer(spBox9_lo, spBox9_hi, 36);
+		SPLayer(spBox10_lo, spBox10_hi, 40);
+		SPLayer(spBox11_lo, spBox11_hi, 44);
+		SPLayer(spBox12_lo, spBox12_hi, 48);
+		SPLayer(spBox13_lo, spBox13_hi, 52);
+		SPLayer(spBox14_lo, spBox14_hi, 56);
+		SPLayer(spBox15_lo, spBox15_hi, 60);
 
-			/* kill lowest nibble */
-			state &= 0xFFFFFFFFFFFFFFF0; 
-
-			/* put new value to lowest nibble (sBox) */
-			state |= READ_SBOX_BYTE(sBox4[sBoxValue]);
-
-			/* next(rotate by one nibble) */
-			state = rotate4l_64(state); 
-		}
-		
-
-		/* pLayer */
-		temp = 0;
-		for (k = 0; k < 64; k++)
-		{
-			/* arithmentic calculation of the p-Layer */
-			uint16_t position = (16 * k) % 63;
-
-			/* exception for bit 63 */
-			if (k == 63)
-			{
-				position = 63;
-			}
-
-			/* result writing */
-			temp |= ((state >> k) & 0x1) << position; 
-		}
-		state = temp;
+		state = (state_hi << 32) ^ state_lo;
 	}
 
 
 	/* addRoundkey (Round 31) */
 	uint32_t subkey_lo = READ_ROUND_KEY_DOUBLE_WORD(((uint32_t*)roundKeys)[62]);
 	uint32_t subkey_hi = READ_ROUND_KEY_DOUBLE_WORD(((uint32_t*)roundKeys)[63]);
-	
 	state ^= (uint64_t)subkey_lo ^ (((uint64_t)subkey_hi) << 32);
 
-	
+
 	*(uint64_t*)block = state;
 }

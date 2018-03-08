@@ -7,7 +7,7 @@
  *
  * Copyright (C) 2015 University of Luxembourg
  *
- * Written in 2015 by Dmitry Khovratovich <dmitry.khovratovich@uni.lu>
+ * Written in 2015 by Daniel Dinu <dumitru-daniel.dinu@uni.lu>
  *
  * This file is part of FELICS.
  *
@@ -26,9 +26,27 @@
  *
  */
 
-#include <stdint.h>
+#ifndef CONSTANTS_H
+#define CONSTANTS_H
 
-#include "constants.h"
+#include "data_types.h"
 
 
-DATA_SBOX_BYTE sBox4[] = {0xc, 0x5, 0x6, 0xb, 0x9, 0x0, 0xa, 0xd, 0x3, 0xe, 0xf, 0x8, 0x4, 0x7, 0x1, 0x2};
+/*
+ *
+ * Cipher characteristics:
+ * 	BLOCK_SIZE - the cipher block size in bytes
+ * 	KEY_SIZE - the cipher key size in bytes
+ *	ROUND_KEY_SIZE - the cipher round keys size in bytes
+ * 	NUMBER_OF_ROUNDS - the cipher number of rounds
+ *
+ */
+#define BLOCK_SIZE 8
+
+#define KEY_SIZE 16
+#define ROUND_KEYS_SIZE 200
+
+#define NUMBER_OF_ROUNDS 8
+
+
+#endif /* CONSTANTS_H */

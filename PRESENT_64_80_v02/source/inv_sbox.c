@@ -7,7 +7,7 @@
  *
  * Copyright (C) 2015 University of Luxembourg
  *
- * Written in 2015 by Daniel Dinu <dumitru-daniel.dinu@uni.lu>
+ * Written in 2015 by Dmitry Khovratovich <dmitry.khovratovich@uni.lu>
  *
  * This file is part of FELICS.
  *
@@ -26,23 +26,9 @@
  *
  */
 
-#ifndef PRIMITIVES_H
-#define PRIMITIVES_H
+#include <stdint.h>
 
-#include "data_types.h"
+#include "constants.h"
 
-/* Cipher Primitives */
 
-#define ROTL(x, n) (((x) << n) | ((x) >> (16 - (n))))
-#define SWAP(x, y) tmp = x; x = y; y = tmp
-
-#define MATRIX_TO_ARRAY(i, j) (((i)*2*ROUNDS_PER_STEPS)+(j))
-
-extern void A(uint16_t * l, uint16_t * r);
-extern void A_inv(uint16_t * l, uint16_t * r);
-extern void L_2(uint16_t * x);
-extern void L_2_inv(uint16_t * x);
-
-extern void K_perm_64_128(uint16_t * k, uint16_t c);
-
-#endif /* PRIMITIVES_H */
+DATA_SBOX_BYTE invsBox4[16] = { 0x5, 0xe, 0xf, 0x8, 0xC, 0x1, 0x2, 0xD, 0xB, 0x4, 0x6, 0x3, 0x0, 0x7, 0x9, 0xA };

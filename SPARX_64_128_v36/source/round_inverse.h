@@ -7,7 +7,7 @@
  *
  * Copyright (C) 2015 University of Luxembourg
  *
- * Written in 2015 by Dmitry Khovratovich <dmitry.khovratovich@uni.lu>
+ * Written in 2015 by Daniel Dinu <dumitru-daniel.dinu@uni.lu>
  *
  * This file is part of FELICS.
  *
@@ -26,13 +26,11 @@
  *
  */
 
-#include <stdint.h>
-
-#include "cipher.h"
-#include "constants.h"
+#ifndef ROUND_INVESRE_H
+#define ROUND_INVERSE_H
 
 
-void RunDecryptionKeySchedule(uint8_t *key, uint8_t *roundKeys)
-{
-	
-}
+void round_f_inverse(uint32_t *left, uint32_t *right, uint32_t *roundKeys);
+
+
+#endif /* ROUND_INVERSE_H */

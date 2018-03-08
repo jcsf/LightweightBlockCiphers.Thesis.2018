@@ -7,7 +7,7 @@
  *
  * Copyright (C) 2015 University of Luxembourg
  *
- * Written in 2015 by Daniel Dinu <dumitru-daniel.dinu@uni.lu>
+ * Written in 2015 by Dmitry Khovratovich <dmitry.khovratovich@uni.lu>
  *
  * This file is part of FELICS.
  *
@@ -28,10 +28,11 @@
 
 #include <stdint.h>
 
+#include "cipher.h"
 #include "constants.h"
 
-/*
- *
- * Cipher constants
- *
- */
+
+void RunDecryptionKeySchedule(uint8_t *key, uint8_t *roundKeys)
+{
+
+}

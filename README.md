@@ -13,8 +13,8 @@ Repository:
 
 All block ciphers implementations have been made from the reference implementations of the ciphers.
 
-* [PRESENT](PRESENT_64_80_v01/source)
-    * **Description:** FELICS Implementation
+* [PRESENT](PRESENT_64_80_v02/source)
+    * **Description:** FELICS Implementation, Software Optimized
     * **Block:** 64 bits
     * **Key Size:** 80 bits
 
@@ -68,8 +68,8 @@ All block ciphers implementations have been made from the reference implementati
     * **Block:** 64 bits
     * **Key Size:** 128 bits
 
-* [SPARX](SPARX_64_128_v001/source)
-    * **Description:** Based on Reference Implementation
+* [SPARX](SPARX_64_128_v36/source)
+    * **Description:** FELICS Reference Implementation with cycles on rounds.
     * **Block:** 64 bits
     * **Key Size:** 128 bits
 

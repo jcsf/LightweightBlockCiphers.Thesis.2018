@@ -31,8 +31,25 @@
 #include "cipher.h"
 #include "constants.h"
 
+#include "round_inverse.h"
 
-void RunDecryptionKeySchedule(uint8_t *key, uint8_t *roundKeys)
+
+void Decrypt(uint8_t *block, uint8_t *roundKeys)
 {
-	/* Add here the cipher decryption key schedule implementation */
+    int8_t i;
+
+    uint32_t *left = (uint32_t *)block;
+    uint32_t *right = (uint32_t *)block + 1;
+    uint32_t *RoundKeys = (uint32_t *)roundKeys;
+
+
+    /* post whitening */
+    *left ^= READ_ROUND_KEY_DOUBLE_WORD(RoundKeys[6 * NUMBER_OF_ROUNDS]);
+    *right ^= READ_ROUND_KEY_DOUBLE_WORD(RoundKeys[6 * NUMBER_OF_ROUNDS + 1]);
+
+
+    for (i = NUMBER_OF_ROUNDS - 1; i >= 0 ; i--)
+    {
+        round_f_inverse(left, right, &RoundKeys[6 * i]);
+    }
 }

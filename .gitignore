@@ -39,19 +39,19 @@
 !Speck_64_128_v07/*
 !Speck_64_128_v07/source/*
 
-!SPARX_64_128_v001/
-!SPARX_64_128_v001/*
-!SPARX_64_128_v001/source/*
-
 !RoadRunneR_64_128_v07/
 !RoadRunneR_64_128_v07/*
 !RoadRunneR_64_128_v07/source/*
 
 # FELICS IMPLEMENTATIONS
-!PRESENT_64_80_v01/
-!PRESENT_64_80_v01/*
-!PRESENT_64_80_v01/source/*
+!PRESENT_64_80_v02/
+!PRESENT_64_80_v02/*
+!PRESENT_64_80_v02/source/*
 
 !RECTANGLE_64_128_v10/
 !RECTANGLE_64_128_v10/*
 !RECTANGLE_64_128_v10/source/*
+
+!SPARX_64_128_v36/
+!SPARX_64_128_v36/*
+!SPARX_64_128_v36/source/*

@@ -26,42 +26,18 @@
  *
  */
 
+
 #include <stdint.h>
 
-#include "cipher.h"
-#include "constants.h"
-#include "primitives.h"
+#include "speckey_inverse.h"
+#include "rot16.h"
 
-void Encrypt(uint8_t *block, uint8_t *roundKeys)
+
+void speckey_inverse(uint16_t *left, uint16_t *right)
 {
-	uint16_t* x = (uint16_t*) block;
-	/*uint16_t k[][2*ROUNDS_PER_STEPS] = (uint16_t**) roundKeys;*/
-	uint16_t* k = (uint16_t*) roundKeys;
+    *right ^= *left;
+    *right = rot16r2(*right);
 
-	uint8_t s, r, b;
-
-	s=0; b=0; r=0;
-	for (s=0 ; s<N_STEPS ; s++)
-	{
-		for (b=0 ; b<N_BRANCHES ; b++)
-		{
-			for (r=0 ; r<ROUNDS_PER_STEPS ; r++)
-			{
-				/*x[2*b  ] ^= k[N_BRANCHES*s + b][2*r    ];
-				x[2*b+1] ^= k[N_BRANCHES*s + b][2*r + 1];*/
-				x[2*b  ] ^= k[MATRIX_TO_ARRAY(N_BRANCHES*s + b, 2*r)];
-				x[2*b+1] ^= k[MATRIX_TO_ARRAY(N_BRANCHES*s + b, 2*r + 1)];
-				A(x + 2*b, x + 2*b+1);
-			}
-		}
-		L(x);
-	}
-	
-	for (b=0 ; b<N_BRANCHES ; b++)
-	{
-		/*x[2*b  ] ^= k[N_BRANCHES*N_STEPS][2*b  ];
-		x[2*b+1] ^= k[N_BRANCHES*N_STEPS][2*b+1];*/
-		x[2*b  ] ^= k[MATRIX_TO_ARRAY(N_BRANCHES*N_STEPS, 2*b)];
-		x[2*b+1] ^= k[MATRIX_TO_ARRAY(N_BRANCHES*N_STEPS,2*b+1)];
-	}
+    *left -= *right;
+    *left = rot16l7(*left);
 }

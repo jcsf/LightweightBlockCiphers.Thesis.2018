@@ -26,39 +26,30 @@
  *
  */
 
-#ifndef CONSTANTS_H
-#define CONSTANTS_H
+#include <stdint.h>
 
-#include "data_types.h"
+#include "cipher.h"
+#include "constants.h"
 
-/*
- *
- * Cipher characteristics:
- * 	BLOCK_SIZE - the cipher block size in bytes
- * 	KEY_SIZE - the cipher key size in bytes
- *	ROUND_KEY_SIZE - the cipher round keys size in bytes
- * 	NUMBER_OF_ROUNDS - the cipher number of rounds
- *
- */
-#define BLOCK_SIZE 8 /* Replace with the cipher block size in bytes */
+#include "round.h"
 
-#define KEY_SIZE 16 /* Replace with the cipher key size in bytes */
-#define ROUND_KEYS_SIZE 204 /* Replace with the cipher round keys size in bytes */
 
-#define NUMBER_OF_ROUNDS 24 /* Replace with the cipher number of rounds */
+void Encrypt(uint8_t *block, uint8_t *roundKeys)
+{
+    uint8_t i;
 
-/*
- *
- * Cipher constants
- *
- */
+    uint32_t *left = (uint32_t *)block;
+    uint32_t *right = (uint32_t *)block + 1;
+    uint32_t *RoundKeys = (uint32_t *)roundKeys;
 
-#define N_STEPS 8
-#define ROUNDS_PER_STEPS 3
-#define N_BRANCHES 2
-#define K_SIZE 4
-#define L L_2
-#define L_inv L_2_inv
-#define K_perm K_perm_64_128
 
-#endif /* CONSTANTS_H */
+    for (i = 0; i < NUMBER_OF_ROUNDS; i++)
+    {
+        round_f(left, right, &RoundKeys[6 * i]);
+    }
+
+
+    /* post whitening */
+    *left ^= READ_ROUND_KEY_DOUBLE_WORD(RoundKeys[6 * NUMBER_OF_ROUNDS]);
+    *right ^= READ_ROUND_KEY_DOUBLE_WORD(RoundKeys[6 * NUMBER_OF_ROUNDS + 1]);
+}

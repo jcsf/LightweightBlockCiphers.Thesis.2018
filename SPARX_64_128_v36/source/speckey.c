@@ -7,7 +7,7 @@
  *
  * Copyright (C) 2015 University of Luxembourg
  *
- * Written in 2015 by Dmitry Khovratovich <dmitry.khovratovich@uni.lu>
+ * Written in 2015 by Daniel Dinu <dumitru-daniel.dinu@uni.lu>
  *
  * This file is part of FELICS.
  *
@@ -26,35 +26,18 @@
  *
  */
 
-#ifndef CONSTANTS_H
-#define CONSTANTS_H
 
-#include "data_types.h"
+#include <stdint.h>
 
-
-/*
- *
- * Cipher characteristics:
- * 	BLOCK_SIZE - the cipher block size in bytes
- * 	KEY_SIZE - the cipher key size in bytes
- *	ROUND_KEY_SIZE - the cipher round keys size in bytes
- * 	NUMBER_OF_ROUNDS - the cipher number of rounds
- *
- */
-#define BLOCK_SIZE 8
-
-#define KEY_SIZE 10
-#define ROUND_KEYS_SIZE 256
-
-#define NUMBER_OF_ROUNDS 31
+#include "speckey.h"
+#include "rot16.h"
 
 
-/*
- *
- * Cipher constants
- *
- */
-extern DATA_SBOX_BYTE sBox4[];
-extern DATA_SBOX_BYTE invsBox4[];
+void speckey(uint16_t *left, uint16_t *right)
+{
+    *left = rot16r7(*left);
+    *left += *right;
 
-#endif /* CONSTANTS_H */
+    *right = rot16l2(*right);
+    *right ^= *left;
+}

@@ -26,40 +26,11 @@
  *
  */
 
-#ifndef DATA_TYPES_H
-#define DATA_TYPES_H
-
-#include "cipher.h"
+#ifndef ROUND_H
+#define ROUND_H
 
 
-/*
- *
- * Implementation data types
- *
- */
+void round_f(uint32_t *left, uint32_t *right, uint32_t *roundKeys);
 
 
-#if defined(PC) /* PC */
-
-#endif /* PC */
-
-
-
-#if defined(AVR) /* AVR */
-
-#endif /* AVR */
-
-
-
-#if defined(MSP) /* MSP */
-
-#endif /* MSP */
-
-
-
-#if defined(ARM) /* ARM */
-
-#endif /* ARM */
-
-
-#endif /* DATA_TYPES_H */
+#endif /* ROUND_H */

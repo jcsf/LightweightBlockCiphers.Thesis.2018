@@ -30,7 +30,30 @@
 
 #include "cipher.h"
 #include "constants.h"
-#include "rotate.h"
+
+
+/* input rotated left (4x) */
+#define rotate4l_64(r4lin) 	( high4_64(r4lin) | ( r4lin << 4 ) )
+
+
+/* 4 MSB as LSB */
+#define high4_64(h4in)		( (uint64_t)h4in >> 60 )
+
+
+#define PLayer(Ptable_lo, Ptable_hi,index) \
+{ \
+	sboxvalue = (state >> index) & 0xF; \
+	state_lo ^= READ_SBOX_DOUBLE_WORD(Ptable_lo[sboxvalue]); \
+	state_hi ^= READ_SBOX_DOUBLE_WORD(Ptable_hi[sboxvalue]); \
+}
+
+#define SBOXANDROTATE \
+{ \
+	sboxvalue = state & 0xF;	\
+	state &= 0xFFFFFFFFFFFFFFF0;			\
+	state |= READ_SBOX_BYTE(invsBox4[sboxvalue]); \
+	state = rotate4l_64(state);				\
+}
 
 
 void Decrypt(uint8_t *block, uint8_t *roundKeys)
@@ -38,10 +61,11 @@ void Decrypt(uint8_t *block, uint8_t *roundKeys)
 	uint64_t state = *(uint64_t*)block;
 	uint64_t temp;
 	uint32_t subkey_lo, subkey_hi;
+
 	uint8_t keyindex = 31;
-	uint8_t i, k;
+	uint8_t i;
 	
-	
+
 	for (i = 0; i < 31; i++)
 	{
 		/* addRoundkey */
@@ -51,51 +75,59 @@ void Decrypt(uint8_t *block, uint8_t *roundKeys)
 		state ^= (uint64_t)subkey_lo ^ (((uint64_t)subkey_hi) << 32);
 
 		keyindex--;
-
+		
 
 		/* pLayer */
 		temp = 0;
-		for (k = 0; k < 64; k++)
-		{
-			/* arithmetic calculation of the p-Layer */
-			uint16_t position = (4 * k) % 63;
+		uint8_t sboxvalue;
+		uint64_t state_lo = 0;
+		uint64_t state_hi = 0;
+		PLayer(ipBox0_lo, ipBox0_hi, 0);
+		PLayer(ipBox1_lo, ipBox1_hi, 4);
+		PLayer(ipBox2_lo, ipBox2_hi, 8);
+		PLayer(ipBox3_lo, ipBox3_hi, 12);
+		PLayer(ipBox4_lo, ipBox4_hi, 16);
+		PLayer(ipBox5_lo, ipBox5_hi, 20);
+		PLayer(ipBox6_lo, ipBox6_hi, 24);
+		PLayer(ipBox7_lo, ipBox7_hi, 28);
+		PLayer(ipBox8_lo, ipBox8_hi, 32);
+		PLayer(ipBox9_lo, ipBox9_hi, 36);
+		PLayer(ipBox10_lo, ipBox10_hi, 40);
+		PLayer(ipBox11_lo, ipBox11_hi, 44);
+		PLayer(ipBox12_lo, ipBox12_hi, 48);
+		PLayer(ipBox13_lo, ipBox13_hi, 52);
+		PLayer(ipBox14_lo, ipBox14_hi, 56);
+		PLayer(ipBox15_lo, ipBox15_hi, 60);
 
-			/* exception for bit 63 */
-			if (k == 63)
-			{										
-				position = 63;
-			}
-
-			/* result writing */
-			temp |= ((state >> k) & 0x1) << position;
-		}
-		state = temp;
-
+		state = (state_hi << 32) ^ state_lo;
+		
 
 		/* sBoxLayer */
-		for (k = 0; k < 16; k++)
-		{
-			/* get lowest nibble */
-			uint16_t sBoxValue = state & 0xF;
-
-			/* kill lowest nibble */			
-			state &= 0xFFFFFFFFFFFFFFF0;
-
-			/* put new value to lowest nibble (sbox) */				
-			state |= READ_SBOX_BYTE(invsBox4[sBoxValue]);
-
-			/* next(rotate by one nibble) */				
-			state = rotate4l_64(state);						
-		}
+		SBOXANDROTATE;
+		SBOXANDROTATE;
+		SBOXANDROTATE;
+		SBOXANDROTATE;
+		SBOXANDROTATE;
+		SBOXANDROTATE;
+		SBOXANDROTATE;
+		SBOXANDROTATE;
+		SBOXANDROTATE;
+		SBOXANDROTATE;
+		SBOXANDROTATE;
+		SBOXANDROTATE;
+		SBOXANDROTATE;
+		SBOXANDROTATE;
+		SBOXANDROTATE;
+		SBOXANDROTATE;
 	}
 
-	
+
 	/* addRoundkey (Round 31) */
 	subkey_lo = READ_ROUND_KEY_DOUBLE_WORD(((uint32_t*)roundKeys)[2 * keyindex]);
 	subkey_hi = READ_ROUND_KEY_DOUBLE_WORD(((uint32_t*)roundKeys)[2 * keyindex + 1]);
 
 	state ^= (uint64_t)subkey_lo ^ (((uint64_t)subkey_hi) << 32);
 
-	
+
 	*(uint64_t*)block = state;
 }

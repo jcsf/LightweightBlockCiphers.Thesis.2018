@@ -2,9 +2,9 @@ ImplementationDescription: Speed-optimized implementation of Present with 80-bit
 ImplementationAuthors: Dmitry Khovratovich
 
 EncryptionKeyScheduleConstants: sbox
-EncryptConstants: sbox
+EncryptConstants: spbox
 DecryptionKeyScheduleConstants:
-DecryptConstants: inv_sbox
+DecryptConstants: inv_sbox, ipbox
 
 EncryptionKeyScheduleCode: 
 EncryptCode: 

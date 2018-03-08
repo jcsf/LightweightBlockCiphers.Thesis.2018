@@ -7,7 +7,7 @@
  *
  * Copyright (C) 2015 University of Luxembourg
  *
- * Written in 2015 by Dmitry Khovratovich <dmitry.khovratovich@uni.lu>
+ * Written in 2015 by Daniel Dinu <dumitru-daniel.dinu@uni.lu>
  *
  * This file is part of FELICS.
  *
@@ -26,9 +26,11 @@
  *
  */
 
-#include <stdint.h>
+#ifndef SPECKEY_H
+#define SPECKEY_H
 
-#include "constants.h"
+
+void speckey(uint16_t *left, uint16_t *right);
 
 
-DATA_SBOX_BYTE invsBox4[] = {0x5, 0xe, 0xf, 0x8, 0xC, 0x1, 0x2, 0xD, 0xB, 0x4, 0x6, 0x3, 0x0, 0x7, 0x9, 0xA};
+#endif /* SPECKEY_H */

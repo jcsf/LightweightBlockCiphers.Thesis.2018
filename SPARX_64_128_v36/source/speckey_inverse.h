@@ -7,7 +7,7 @@
  *
  * Copyright (C) 2015 University of Luxembourg
  *
- * Written in 2015 by Dmitry Khovratovich <dmitry.khovratovich@uni.lu>
+ * Written in 2015 by Daniel Dinu <dumitru-daniel.dinu@uni.lu>
  *
  * This file is part of FELICS.
  *
@@ -26,13 +26,11 @@
  *
  */
 
-#ifndef ROTATE_H
-#define ROTATE_H
+#ifndef SPECKEY_INVERSE_H
+#define SPECKEY_INVERSE_H
 
-/* input rotated left (4x) */
-#define rotate4l_64(r4lin) ( high4_64(r4lin) | ( r4lin << 4 ) )
 
-/* 4 msb as lsb */
-#define high4_64(h4in) ( (uint64_t)h4in >> 60 )
+void speckey_inverse(uint16_t *left, uint16_t *right);
 
-#endif /* ROTATE_H */
+
+#endif /* SPECKEY_INVERSE_H */
