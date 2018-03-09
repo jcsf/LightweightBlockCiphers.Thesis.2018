@@ -36,15 +36,17 @@
 void Encrypt(uint8_t *block, uint8_t *roundKeys)
 {
     uint8_t tempds[BLOCK_SIZE];
+    uint8_t *rk;
     uint8_t i, j;
 
     for (i=0;i < NUMBER_OF_ROUNDS;i++)
 	{
+        rk = roundKeys + (i << 3); // roundKeys[i * 8]
 		
 		for (j=0;j < BLOCK_SIZE;j++)
 		{
             //Add Round Key
-			block[j] = block[j] ^ roundKeys[MATRIX_TO_ARRAY(i, j)];
+            block[j] = block[j] ^ rk[j];
             
             //S-box Transformation
             block[j] = S_BOX[(block[j])];
@@ -216,8 +218,10 @@ void Encrypt(uint8_t *block, uint8_t *roundKeys)
         memcpy(block, tempds, BLOCK_SIZE);
 	}
 
+    rk = roundKeys + (24 << 3);
+
     for (j=0;j < BLOCK_SIZE; j++)
     {
-        block[j] = block[j] ^ roundKeys[MATRIX_TO_ARRAY(24, j)];
+        block[j] = block[j] ^ rk[j];
     }
 }

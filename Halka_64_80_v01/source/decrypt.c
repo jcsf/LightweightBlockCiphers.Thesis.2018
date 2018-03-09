@@ -37,10 +37,13 @@ void Decrypt(uint8_t *block, uint8_t *roundKeys)
 {
     uint8_t tempds[BLOCK_SIZE];
     int8_t i, j;
+	uint8_t *rk;
 
-    for (j=0;j < BLOCK_SIZE;j++)
+	rk = roundKeys + (24 << 3);
+
+    for (j=0;j < BLOCK_SIZE; j++)
     {
-        block[j]=block[j]^roundKeys[MATRIX_TO_ARRAY(24, j)];
+		block[j]=block[j]^rk[j];
     }
 
     for (i = NUMBER_OF_ROUNDS - 1;i > -1; i--)
@@ -190,13 +193,15 @@ void Decrypt(uint8_t *block, uint8_t *roundKeys)
 
 		memcpy(block, tempds, BLOCK_SIZE);
         
+		rk = roundKeys + (i << 3);
+
 		for(j=0;j < BLOCK_SIZE;j++)
 		{
 			//S-Box-Inv Transformation
 			block[j]=S_BOX_INV[(block[j])];
 
 			//Add Round Key
-			block[j] = block[j] ^ roundKeys[MATRIX_TO_ARRAY(i, j)];
+			block[j] = block[j] ^ rk[j];
 		}
 	}
 }

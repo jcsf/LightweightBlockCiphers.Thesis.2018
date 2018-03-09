@@ -35,7 +35,7 @@
 
 void RunEncryptionKeySchedule(uint8_t *key, uint8_t *roundKeys)
 {
-    uint8_t keystate[KEY_SIZE], tempks[KEY_SIZE];
+    uint8_t keystate[KEY_SIZE], tempks[KEY_SIZE], *rk;
     uint8_t i, j;
 
 	memcpy(keystate, key, KEY_SIZE);
@@ -44,10 +44,11 @@ void RunEncryptionKeySchedule(uint8_t *key, uint8_t *roundKeys)
 
     for (i = 0; i < rounds_1; i++)
 	{
+		rk = roundKeys + (i << 3);
+
 		for(j = 0; j < BLOCK_SIZE; j++)
 		{
-			//roundkey[i][j]=keystate[j+2];
-            roundKeys[MATRIX_TO_ARRAY(i, j)] = keystate[j+2];
+            rk[j] = keystate[j+2];
 		}
 
 		for (j = 0; j < KEY_SIZE; j++)
