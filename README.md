@@ -68,6 +68,11 @@ All block ciphers implementations have been made from the reference implementati
     * **Block:** 64 bits
     * **Key Size:** 128 bits
 
+* [SPECK](Speck_128_128_v01/source)
+    * **Description:** Implementation from scratch
+    * **Block:** 128 bits
+    * **Key Size:** 128 bits
+
 * [SPARX](SPARX_64_128_v36/source)
     * **Description:** FELICS Reference Implementation with cycles on rounds.
     * **Block:** 64 bits
