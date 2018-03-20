@@ -7,7 +7,7 @@
  *
  * Copyright (C) 2015 University of Luxembourg
  *
- * Written in 2015 by Daniel Dinu <dumitru-daniel.dinu@uni.lu>
+ * Written in 2015 by Dmitry Khovratovich <dmitry.khovratovich@uni.lu>
  *
  * This file is part of FELICS.
  *
@@ -27,40 +27,53 @@
  */
 
 #include <stdint.h>
-#include <string.h>
 
-#include "cipher.h"
 #include "constants.h"
+#include "key_schedule.h"
 
 
-void RunEncryptionKeySchedule(uint8_t *key, uint8_t *roundKeys)
+void KeySchedule(uint8_t *key, uint8_t *roundKeys)
 {
-    uint8_t keystate[KEY_SIZE], tempks[KEY_SIZE];
-    uint8_t i, j;
+	uint32_t w[44], temp;
+	int i, j;
 
-    for (i = 0;i < KEY_SIZE; i++)
-		keystate[i] = key[i];
 
-    for (i=0;i<25;i++)
+	for (i = 0; i < 4; i++)
 	{
-		for(j=0;j < BLOCK_SIZE;j++)
+		w[i] = ((uint32_t*)key)[i];
+	}
+
+	i = 4;
+	while (i < 44)
+	{
+		temp = w[i - 1];
+
+		temp = ((uint32_t)READ_SBOX_BYTE(Sbox[temp & 0xFF]) << 24) ^
+			((uint32_t)READ_SBOX_BYTE(Sbox[(temp >> 8) & 0xFF])) ^
+			((uint32_t)READ_SBOX_BYTE(Sbox[(temp >> 16) & 0xFF]) << 8) ^
+			((uint32_t)READ_SBOX_BYTE(Sbox[(temp >> 24) & 0xFF]) << 16) ^
+			(uint32_t)READ_KS_BYTE(Rcon[i / 4]);
+		w[i] = w[i - 4] ^ temp;
+		i++;
+
+		temp = w[i - 1];
+		w[i] = w[i - 4] ^ temp;
+		i++;
+
+		temp = w[i - 1];
+		w[i] = w[i - 4] ^ temp;
+		i++;
+
+		temp = w[i - 1];
+		w[i] = w[i - 4] ^ temp;
+		i++;
+	}
+
+	for (i = 0; i <= 10; i++)
+	{
+		for (j = 0; j < 4; j++)
 		{
-			//roundkey[i][j]=keystate[j+2];
-            roundKeys[MATRIX_TO_ARRAY(i, j)] = keystate[j+2];
+			((uint32_t*)roundKeys)[4 * i + j] = w[4 * i + j];
 		}
-
-		for (j = 0; j < KEY_SIZE; j++)
-		{
-			tempks[j]=keystate[(j+3)%10];
-			tempks[j]=(tempks[j]<<1)^(keystate[(j+2)%10]>>7);
-		}
-
-		tempks[9]=S_BOX[tempks[9]];//S-box
-
-		tempks[2]=(char) (tempks[2]^(((i+1) & 30) >> 1));//Round counter
-		tempks[1]=(char) (tempks[1]^(((i+1)&1)<<7));//Round counter
-
-		for(j=0;j < KEY_SIZE;j++)
-			keystate[j]=tempks[j];
 	}
 }

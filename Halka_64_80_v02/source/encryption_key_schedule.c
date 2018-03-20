@@ -26,38 +26,42 @@
  *
  */
 
-#ifndef CONSTANTS_H
-#define CONSTANTS_H
+#include <stdint.h>
+#include <string.h>
 
-#include "data_types.h"
+#include "cipher.h"
+#include "constants.h"
 
-/*
- *
- * Cipher characteristics:
- *  BLOCK_SIZE - the cipher block size in bytes
- *  KEY_SIZE - the cipher key size in bytes
- *  ROUND_KEY_SIZE - the cipher round keys size in bytes
- *  NUMBER_OF_ROUNDS - the cipher number of rounds
- *
- */
-#define BLOCK_SIZE 8
 
-#define KEY_SIZE 10
+void RunEncryptionKeySchedule(uint8_t *key, uint8_t *roundKeys)
+{
+    uint8_t keystate[KEY_SIZE], tempks[KEY_SIZE], *rk;
+    uint8_t i, j;
 
-#define ROUND_KEYS_SIZE 200 /* 24 (25) * 8 */
+	memcpy(keystate, key, KEY_SIZE);
 
-#define NUMBER_OF_ROUNDS 24 /* Replace with the cipher number of rounds */
+	uint8_t rounds_1 = NUMBER_OF_ROUNDS + 1;
 
-/*
- *
- * Cipher constants
- *
- */
-#define MATRIX_TO_ARRAY(i, j) (((i)*8)+(j))
-#define PERMUTATION_XY_IJ(l, c, i, j) tempds[(i)]=tempds[(i)]^(((block[(l)]>>(c))&1)<<(j));
-#define PERMUTATION_INV_XY_IJ(l, c, i, j) tempds[(l)]=tempds[(l)]^(((block[(i)]>>(j))&1)<<(c));
+    for (i = 0; i < rounds_1; i++)
+	{
+		rk = roundKeys + (i << 3);
 
-extern uint8_t S_BOX[256];
-extern uint8_t S_BOX_INV[256];
+		for(j = 0; j < BLOCK_SIZE; j++)
+		{
+            rk[j] = keystate[j+2];
+		}
 
-#endif /* CONSTANTS_H */
+		for (j = 0; j < KEY_SIZE; j++)
+		{
+			tempks[j]=keystate[(j+3)%10];
+			tempks[j]=(tempks[j]<<1)^(keystate[(j+2)%10]>>7);
+		}
+
+		tempks[9]=S_BOX[tempks[9]]; //S-box
+
+		tempks[2]=(uint8_t) (tempks[2]^(((i+1) & 30) >> 1)); //Round counter
+		tempks[1]=(uint8_t) (tempks[1]^(((i+1)&1)<<7)); //Round counter
+
+		memcpy(keystate, tempks, KEY_SIZE);
+	}
+}

@@ -53,7 +53,6 @@
  * Cipher constants
  *
  */
-#define MATRIX_TO_ARRAY(i, j) (((i)*8)+(j))
 #define PERMUTATION_XY_IJ(l, c, i, j) tempds[(i)]=tempds[(i)]^(((block[(l)]>>(c))&1)<<(j));
 #define PERMUTATION_INV_XY_IJ(l, c, i, j) tempds[(l)]=tempds[(l)]^(((block[(i)]>>(j))&1)<<(c));
 

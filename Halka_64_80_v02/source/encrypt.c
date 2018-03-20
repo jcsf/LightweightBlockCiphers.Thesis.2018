@@ -36,26 +36,23 @@
 void Encrypt(uint8_t *block, uint8_t *roundKeys)
 {
     uint8_t tempds[BLOCK_SIZE];
+    uint8_t *rk;
     uint8_t i, j;
 
     for (i=0;i < NUMBER_OF_ROUNDS;i++)
 	{
-		//Add round key
+        rk = roundKeys + (i << 3); // roundKeys[i * 8]
+		
 		for (j=0;j < BLOCK_SIZE;j++)
 		{
-			block[j]=block[j]^roundKeys[MATRIX_TO_ARRAY(i, j)];
-		}
+            //Add Round Key
+            block[j] = block[j] ^ rk[j];
+            
+            //S-box Transformation
+            block[j] = S_BOX[(block[j])];
 
-		//S-box transformation
-		for(j=0;j < BLOCK_SIZE;j++)
-		{
-			block[j]=S_BOX[(block[j])];
-		}
-
-		//Permutation
-		for(j=0;j < BLOCK_SIZE;j++)
-		{
-			tempds[j]=0;
+            //Clean Tempds to use on Permutation
+            tempds[j]=0;
 		}
 
         PERMUTATION_XY_IJ(0, 0, 1, 2);
@@ -218,15 +215,13 @@ void Encrypt(uint8_t *block, uint8_t *roundKeys)
             tempds[3]=tempds[3]^(((block[7]>>7)&1)<<3); // 63 -
         */
 
-
-		for(j=0;j < BLOCK_SIZE;j++)
-		{
-			block[j]=tempds[j];
-		}
+        memcpy(block, tempds, BLOCK_SIZE);
 	}
 
-    for (j=0;j < BLOCK_SIZE;j++)
+    rk = roundKeys + (24 << 3);
+
+    for (j=0;j < BLOCK_SIZE; j++)
     {
-        block[j]=block[j]^roundKeys[MATRIX_TO_ARRAY(24, j)];
+        block[j] = block[j] ^ rk[j];
     }
 }

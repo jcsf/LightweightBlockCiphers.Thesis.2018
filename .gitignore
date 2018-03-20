@@ -31,9 +31,9 @@
 !Halka_64_80_v01/*
 !Halka_64_80_v01/source/*
 
-!NUX_64_128_v01/
-!NUX_64_128_v01/*
-!NUX_64_128_v01/source/*
+!Halka_64_80_v02/
+!Halka_64_80_v02/*
+!Halka_64_80_v02/source/*
 
 !Speck_64_128_v07/
 !Speck_64_128_v07/*
@@ -59,3 +59,7 @@
 !SPARX_64_128_v36/
 !SPARX_64_128_v36/*
 !SPARX_64_128_v36/source/*
+
+!AES_128_128_v02/
+!AES_128_128_v02/*
+!AES_128_128_v02/source/*

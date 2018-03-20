@@ -7,7 +7,7 @@
  *
  * Copyright (C) 2015 University of Luxembourg
  *
- * Written in 2015 by Daniel Dinu <dumitru-daniel.dinu@uni.lu>
+ * Written in 2015 by Dmitry Khovratovich <dmitry.khovratovich@uni.lu>
  *
  * This file is part of FELICS.
  *
@@ -26,38 +26,15 @@
  *
  */
 
-#ifndef CONSTANTS_H
-#define CONSTANTS_H
+#include <stdint.h>
 
-#include "data_types.h"
+#include "constants.h"
 
-/*
- *
- * Cipher characteristics:
- *  BLOCK_SIZE - the cipher block size in bytes
- *  KEY_SIZE - the cipher key size in bytes
- *  ROUND_KEY_SIZE - the cipher round keys size in bytes
- *  NUMBER_OF_ROUNDS - the cipher number of rounds
- *
- */
-#define BLOCK_SIZE 8
 
-#define KEY_SIZE 10
-
-#define ROUND_KEYS_SIZE 200 /* 24 (25) * 8 */
-
-#define NUMBER_OF_ROUNDS 24 /* Replace with the cipher number of rounds */
-
-/*
- *
- * Cipher constants
- *
- */
-#define MATRIX_TO_ARRAY(i, j) (((i)*8)+(j))
-#define PERMUTATION_XY_IJ(l, c, i, j) tempds[(i)]=tempds[(i)]^(((block[(l)]>>(c))&1)<<(j));
-#define PERMUTATION_INV_XY_IJ(l, c, i, j) tempds[(l)]=tempds[(l)]^(((block[(i)]>>(j))&1)<<(c));
-
-extern uint8_t S_BOX[256];
-extern uint8_t S_BOX_INV[256];
-
-#endif /* CONSTANTS_H */
+DATA_KS_BYTE Rcon[31] =
+	{
+		0x00, 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 
+		0x80, 0x1b, 0x36, 0x6c, 0xc0, 0xab, 0x4d, 0x9a, 
+		0x2f, 0x5e, 0xbc, 0x63, 0xc6, 0x97, 0x35, 0x6a, 
+		0xd4, 0xb3, 0x7d, 0xfa, 0xef, 0xc5, 0x91
+	};

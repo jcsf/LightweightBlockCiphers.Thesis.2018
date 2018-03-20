@@ -26,38 +26,16 @@
  *
  */
 
-#ifndef CONSTANTS_H
-#define CONSTANTS_H
+#include <stdint.h>
 
-#include "data_types.h"
+#include "test_vectors.h"
 
-/*
- *
- * Cipher characteristics:
- *  BLOCK_SIZE - the cipher block size in bytes
- *  KEY_SIZE - the cipher key size in bytes
- *  ROUND_KEY_SIZE - the cipher round keys size in bytes
- *  NUMBER_OF_ROUNDS - the cipher number of rounds
- *
- */
-#define BLOCK_SIZE 8
-
-#define KEY_SIZE 10
-
-#define ROUND_KEYS_SIZE 200 /* 24 (25) * 8 */
-
-#define NUMBER_OF_ROUNDS 24 /* Replace with the cipher number of rounds */
 
 /*
  *
- * Cipher constants
+ * Test vectors
  *
  */
-#define MATRIX_TO_ARRAY(i, j) (((i)*8)+(j))
-#define PERMUTATION_XY_IJ(l, c, i, j) tempds[(i)]=tempds[(i)]^(((block[(l)]>>(c))&1)<<(j));
-#define PERMUTATION_INV_XY_IJ(l, c, i, j) tempds[(l)]=tempds[(l)]^(((block[(i)]>>(j))&1)<<(c));
-
-extern uint8_t S_BOX[256];
-extern uint8_t S_BOX_INV[256];
-
-#endif /* CONSTANTS_H */
+const uint8_t expectedPlaintext[BLOCK_SIZE] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+const uint8_t expectedKey[KEY_SIZE] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+const uint8_t expectedCiphertext[BLOCK_SIZE] = {0xce, 0x9d, 0x43, 0x65, 0x57, 0xb5, 0x18, 0x50};

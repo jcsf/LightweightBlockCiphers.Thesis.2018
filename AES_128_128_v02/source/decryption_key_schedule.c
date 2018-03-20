@@ -7,7 +7,7 @@
  *
  * Copyright (C) 2015 University of Luxembourg
  *
- * Written in 2015 by Daniel Dinu <dumitru-daniel.dinu@uni.lu>
+ * Written in 2015 by Dmitry Khovratovich <dmitry.khovratovich@uni.lu>
  *
  * This file is part of FELICS.
  *
@@ -26,38 +26,25 @@
  *
  */
 
-#ifndef CONSTANTS_H
-#define CONSTANTS_H
+#include <stdint.h>
 
-#include "data_types.h"
+#include "key_schedule.h"
+#include "constants.h"
 
-/*
- *
- * Cipher characteristics:
- *  BLOCK_SIZE - the cipher block size in bytes
- *  KEY_SIZE - the cipher key size in bytes
- *  ROUND_KEY_SIZE - the cipher round keys size in bytes
- *  NUMBER_OF_ROUNDS - the cipher number of rounds
- *
- */
-#define BLOCK_SIZE 8
 
-#define KEY_SIZE 10
+void RunDecryptionKeySchedule(uint8_t *key, uint8_t *roundKeys)
+{
+	uint8_t i;	
 
-#define ROUND_KEYS_SIZE 200 /* 24 (25) * 8 */
 
-#define NUMBER_OF_ROUNDS 24 /* Replace with the cipher number of rounds */
-
-/*
- *
- * Cipher constants
- *
- */
-#define MATRIX_TO_ARRAY(i, j) (((i)*8)+(j))
-#define PERMUTATION_XY_IJ(l, c, i, j) tempds[(i)]=tempds[(i)]^(((block[(l)]>>(c))&1)<<(j));
-#define PERMUTATION_INV_XY_IJ(l, c, i, j) tempds[(l)]=tempds[(l)]^(((block[(i)]>>(j))&1)<<(c));
-
-extern uint8_t S_BOX[256];
-extern uint8_t S_BOX_INV[256];
-
-#endif /* CONSTANTS_H */
+	KeySchedule(key, roundKeys);
+	
+	for (i = 4; i < 40; ++i)
+	{
+		((uint32_t*)roundKeys)[i] = 
+			READ_KS_DOUBLE_WORD(inv_MC0[roundKeys[4 * i]]) ^ 
+			READ_KS_DOUBLE_WORD(inv_MC1[roundKeys[4 * i + 1]]) ^
+			READ_KS_DOUBLE_WORD(inv_MC2[roundKeys[4 * i + 2]]) ^ 
+			READ_KS_DOUBLE_WORD(inv_MC3[roundKeys[4 * i + 3]]);
+	}
+}
