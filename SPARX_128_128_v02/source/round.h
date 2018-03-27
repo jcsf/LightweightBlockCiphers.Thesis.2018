@@ -26,14 +26,11 @@
  *
  */
 
+#ifndef ROUND_H
+#define ROUND_H
 
-#ifndef PRIMITIVES_H
-#define PRIMITITVES_H
 
-extern void inline rrr_sbox(uint8_t *data);
-extern void inline rrr_L(uint8_t *data);
-extern void rrr_SLK(uint8_t *data, uint8_t *roundKey);
-extern void inline rrr_enc_dec_round(uint8_t *block, uint8_t *roundKey, uint8_t round);
+void round_f(uint16_t *block, uint16_t *roundKeys);
 
-#endif /* PRIMITIVES_H */
 
+#endif /* ROUND_H */

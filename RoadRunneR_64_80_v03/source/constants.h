@@ -26,14 +26,30 @@
  *
  */
 
+#ifndef CONSTANTS_H
+#define CONSTANTS_H
 
-#ifndef PRIMITIVES_H
-#define PRIMITITVES_H
+#include "data_types.h"
 
-extern void inline rrr_sbox(uint8_t *data);
-extern void inline rrr_L(uint8_t *data);
-extern void rrr_SLK(uint8_t *data, uint8_t *roundKey);
-extern void inline rrr_enc_dec_round(uint8_t *block, uint8_t *roundKey, uint8_t round);
+/*
+ *
+ * Cipher characteristics:
+ * 	BLOCK_SIZE - the cipher block size in bytes
+ * 	KEY_SIZE - the cipher key size in bytes
+ *	ROUND_KEY_SIZE - the cipher round keys size in bytes
+ * 	NUMBER_OF_ROUNDS - the cipher number of rounds
+ *
+ */
+#define BLOCK_SIZE 8
+#define KEY_SIZE 10
+#define ROUND_KEYS_SIZE 128
+#define NUMBER_OF_ROUNDS 10
 
-#endif /* PRIMITIVES_H */
+/*
+ *
+ * Cipher constants
+ *
+ */
+#define FRAC_4_5_KEY_SIZE 8
 
+#endif /* CONSTANTS_H */

@@ -23,6 +23,11 @@ All block ciphers implementations have been made from the reference implementati
     * **Block:** 64 bits
     * **Key Size:** 80 bits
 
+* [RECTANGLE](RECTANGLE_64_80_v10/source)
+    * **Description:** FELICS Optimized Implementation
+    * **Block:** 64 bits
+    * **Key Size:** 80 bits
+
 * [RECTANGLE](RECTANGLE_64_128_v10/source)
     * **Description:** FELICS Optimized Implementation
     * **Block:** 64 bits
@@ -83,7 +88,17 @@ All block ciphers implementations have been made from the reference implementati
     * **Block:** 64 bits
     * **Key Size:** 128 bits
 
+* [SPARX](SPARX_128_128_v02/source)
+    * **Description:** FELICS Reference Implementation.
+    * **Block:** 128 bits
+    * **Key Size:** 128 bits
+
+* [ROADRUNNER](RoadRunneR_64_80_v03/source)
+    * **Description:** Implementation using only one key scheduler
+    * **Block:** 64 bits
+    * **Key Size:** 80 bits
+
 * [ROADRUNNER](RoadRunneR_64_128_v07/source)
-    * **Description:** Optimized from Reference
+    * **Description:** Implementation using only one key scheduler
     * **Block:** 64 bits
     * **Key Size:** 128 bits

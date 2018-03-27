@@ -26,14 +26,16 @@
  *
  */
 
+#include <stdint.h>
 
-#ifndef PRIMITIVES_H
-#define PRIMITITVES_H
+#include "test_vectors.h"
 
-extern void inline rrr_sbox(uint8_t *data);
-extern void inline rrr_L(uint8_t *data);
-extern void rrr_SLK(uint8_t *data, uint8_t *roundKey);
-extern void inline rrr_enc_dec_round(uint8_t *block, uint8_t *roundKey, uint8_t round);
+/*
+ *
+ * Test vectors
+ *
+ */
 
-#endif /* PRIMITIVES_H */
-
+const uint8_t expectedPlaintext[BLOCK_SIZE] = {0xFE,0xDC,0xBA,0x98,0x76,0x54,0x32,0x10};
+const uint8_t expectedKey[KEY_SIZE] = {0x01,0x23,0x45,0x67,0x89,0xAB,0xCD,0xEF, 0x01,0x23};
+const uint8_t expectedCiphertext[BLOCK_SIZE] = {0x32,0x8C,0x79,0x8A,0x0E,0xB2,0x5A,0x3B};

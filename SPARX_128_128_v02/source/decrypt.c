@@ -26,14 +26,31 @@
  *
  */
 
+#include <stdint.h>
 
-#ifndef PRIMITIVES_H
-#define PRIMITITVES_H
+#include "cipher.h"
+#include "constants.h"
 
-extern void inline rrr_sbox(uint8_t *data);
-extern void inline rrr_L(uint8_t *data);
-extern void rrr_SLK(uint8_t *data, uint8_t *roundKey);
-extern void inline rrr_enc_dec_round(uint8_t *block, uint8_t *roundKey, uint8_t round);
+#include "round_inverse.h"
 
-#endif /* PRIMITIVES_H */
 
+void Decrypt(uint8_t *block, uint8_t *roundKeys)
+{
+    int8_t i;
+
+    uint16_t *Block = (uint16_t *)block;
+    uint16_t *RoundKeys = (uint16_t *)roundKeys;
+
+
+    /* post whitening */
+    for (i = 0; i < 8; i++)
+    {
+        Block[i] ^= READ_ROUND_KEY_WORD(RoundKeys[32 * NUMBER_OF_ROUNDS + i]);
+    }
+
+
+    for (i = NUMBER_OF_ROUNDS - 1; i >= 0 ; i--)
+    {
+        round_f_inverse(Block, &RoundKeys[32 * i]);
+    }
+}

@@ -35,18 +35,22 @@
 
 void Encrypt(uint8_t *block, uint8_t *roundKeys)
 {
-	uint8_t i, temp[4] = {0};
-	temp[0] = 4;
-	
-	for(i=0;i<4;i++) block[i] ^= READ_ROUND_KEY_BYTE(roundKeys[i]);
-	
+	uint8_t i, temp[4] = {0}, j = 4;
+
+	for(i=0;i<4;i++) {
+		block[i] ^= READ_ROUND_KEY_BYTE(roundKeys[i]);
+	}
+
 	for(i=NUMBER_OF_ROUNDS; i>0; i--){
-		rrr_enc_dec_round(block,roundKeys,i,temp,4);
+		rrr_enc_dec_round(block,roundKeys + j,i);
+		j += 12;
 	}
 	
 	memcpy(temp, block, 4);
 
-	for(i=0;i<4;i++) block[i] = block[i+4]^READ_ROUND_KEY_BYTE(roundKeys[i+4]);
+	for(i=0;i<4;i++) {
+		block[i] = block[i+4]^READ_ROUND_KEY_BYTE(roundKeys[148 + i]);
+	}
 	
 	memcpy(block+4, temp, 4);
 }

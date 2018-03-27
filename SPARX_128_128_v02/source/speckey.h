@@ -26,14 +26,11 @@
  *
  */
 
+#ifndef SPECKEY_H
+#define SPECKEY_H
 
-#ifndef PRIMITIVES_H
-#define PRIMITITVES_H
 
-extern void inline rrr_sbox(uint8_t *data);
-extern void inline rrr_L(uint8_t *data);
-extern void rrr_SLK(uint8_t *data, uint8_t *roundKey);
-extern void inline rrr_enc_dec_round(uint8_t *block, uint8_t *roundKey, uint8_t round);
+void speckey(uint16_t *left, uint16_t *right);
 
-#endif /* PRIMITIVES_H */
 
+#endif /* SPECKEY_H */

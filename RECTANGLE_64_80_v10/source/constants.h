@@ -1,5 +1,34 @@
 /*
  *
+ * Chinese Academy of Sciences
+ * State Key Laboratory of Information Security, 
+ * Institute of Information Engineering
+ *
+ * FELICS - Fair Evaluation of Lightweight Cryptographic Systems
+ *
+ * Copyright (C) 2016 Chinese Academy of Sciences
+ *
+ * Written in 2016 by Luo Peng <luopeng@iie.ac.cn>
+ *
+ * This file is part of FELICS.
+ *
+ * FELICS is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FELICS is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
+/*
+ *
  * University of Luxembourg
  * Laboratory of Algorithmics, Cryptology and Security (LACS)
  *
@@ -31,6 +60,7 @@
 
 #include "data_types.h"
 
+
 /*
  *
  * Cipher characteristics:
@@ -41,15 +71,18 @@
  *
  */
 #define BLOCK_SIZE 8
-#define KEY_SIZE 16
-#define ROUND_KEYS_SIZE 152
-#define NUMBER_OF_ROUNDS 12
+
+#define KEY_SIZE 10
+#define ROUND_KEYS_SIZE 208
+
+#define NUMBER_OF_ROUNDS 25
+
 
 /*
  *
  * Cipher constants
  *
  */
-#define HALF_KEY_SIZE 8 /* KEYSIZE / 2 */ 
+extern ROM_DATA_BYTE RC[];
 
 #endif /* CONSTANTS_H */

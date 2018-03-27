@@ -26,14 +26,20 @@
  *
  */
 
+#include <stdint.h>
 
-#ifndef PRIMITIVES_H
-#define PRIMITITVES_H
+#include "cipher.h"
+#include "constants.h"
 
-extern void inline rrr_sbox(uint8_t *data);
-extern void inline rrr_L(uint8_t *data);
-extern void rrr_SLK(uint8_t *data, uint8_t *roundKey);
-extern void inline rrr_enc_dec_round(uint8_t *block, uint8_t *roundKey, uint8_t round);
+void RunEncryptionKeySchedule(uint8_t *key, uint8_t *roundKeys)
+{
+	
+	uint8_t i;
 
-#endif /* PRIMITIVES_H */
+	for(i = 0; i < 12; i++) { /* 12 = number of time that full Key needs to repeat to fit on Round Keys */
+		memcpy(roundKeys, key, KEY_SIZE);
+		roundKeys += KEY_SIZE;
+	}
 
+	memcpy(roundKeys, key, FRAC_4_5_KEY_SIZE); /* Rest of the Key Size to full fill the round keys */
+}

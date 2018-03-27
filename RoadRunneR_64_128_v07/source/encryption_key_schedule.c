@@ -27,21 +27,19 @@
  */
 
 #include <stdint.h>
+#include <string.h>
 
 #include "cipher.h"
 #include "constants.h"
 
 void RunEncryptionKeySchedule(uint8_t *key, uint8_t *roundKeys)
 {
-	uint32_t* mk = (uint32_t*) key;
-	uint32_t* rk = (uint32_t*) roundKeys;
+	uint8_t i;
 
-	uint8_t i, j = 0;
-
-	uint8_t rounds = NUMBER_OF_ROUNDS + 2;
-
-	for(i = 0; i < rounds; i++) {
-		rk[i] = mk[j];
-		j = (j+1) % U32_BLOCK_VECTOR_SIZE;
+	for(i = 0; i < 9; i++) { /* 9 = number of time that full Key needs to repeat to fit on Round Keys */
+		memcpy(roundKeys, key, KEY_SIZE);
+		roundKeys += KEY_SIZE;
 	}
+
+	memcpy(roundKeys, key, HALF_KEY_SIZE); /* Rest of the Key Size to full fill the round keys */
 }

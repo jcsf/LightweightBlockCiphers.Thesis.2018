@@ -35,16 +35,15 @@
 
 void Decrypt(uint8_t *block, uint8_t *roundKeys)
 {
-	uint8_t i, temp[4] = {0};
+	uint8_t i, temp[4] = {0}, j = 136; // j = 148 - 12
 
-	temp[0] = 8;
-	
-	for(i=0;i<4;i++) block[i] ^= READ_ROUND_KEY_BYTE(roundKeys[i+4]);
+	for(i=0;i<4;i++) block[i] ^= READ_ROUND_KEY_BYTE(roundKeys[148+i]);
 	
 	uint8_t rounds = NUMBER_OF_ROUNDS + 1;
 
 	for(i = 1;i < rounds; i++){
-		rrr_enc_dec_round(block,roundKeys,i,temp,12);
+		rrr_enc_dec_round(block,roundKeys+j,i);
+		j -= 12;
 	}
 
 	memcpy(temp, block, 4);

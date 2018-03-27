@@ -27,13 +27,17 @@
  */
 
 
-#ifndef PRIMITIVES_H
-#define PRIMITITVES_H
+#include <stdint.h>
 
-extern void inline rrr_sbox(uint8_t *data);
-extern void inline rrr_L(uint8_t *data);
-extern void rrr_SLK(uint8_t *data, uint8_t *roundKey);
-extern void inline rrr_enc_dec_round(uint8_t *block, uint8_t *roundKey, uint8_t round);
+#include "speckey.h"
+#include "rot16.h"
 
-#endif /* PRIMITIVES_H */
 
+void speckey(uint16_t *left, uint16_t *right)
+{
+    *left = rot16r7(*left);
+    *left += *right;
+
+    *right = rot16l2(*right);
+    *right ^= *left;
+}
