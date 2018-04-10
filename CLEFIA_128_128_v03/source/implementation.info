@@ -1,0 +1,20 @@
+ImplementationDescription: T-Box Implementation
+ImplementationAuthors: João Carlos Santos Fernandes
+
+EncryptionKeyScheduleConstants: constants
+EncryptConstants: constants, tables
+DecryptionKeyScheduleConstants:
+DecryptConstants: constants, tables
+
+EncryptionKeyScheduleCode: primitives
+EncryptCode: primitives
+DecryptionKeyScheduleCode:
+DecryptCode: primitives
+
+UseEncryptionKeySchedule: yes
+UseDecryptionKeySchedule: no
+
+ImplementationAVR: C
+ImplementationMSP: C
+ImplementationARM: C
+ImplementationPC: C

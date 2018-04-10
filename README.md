@@ -43,6 +43,21 @@ All block ciphers implementations have been made from the reference implementati
     * **Block:** 128 bits
     * **Key Size:** 128 bits
 
+* [CLEFIA](CLEFIA_128_128_v03/source)
+    * **Description:** T-Box Implementation
+    * **Block:** 128 bits
+    * **Key Size:** 128 bits
+
+* [CLEFIA](CLEFIA_128_128_v04/source)
+    * **Description:** 32-bits Oriented Implementation
+    * **Block:** 128 bits
+    * **Key Size:** 128 bits
+
+* [CLEFIA](CLEFIA_128_128_v05/source)
+    * **Description:** 32-bits Optimized Implementation, With T-Box and Constants Table
+    * **Block:** 128 bits
+    * **Key Size:** 128 bits
+
 * [NOEKEON](NOEKEON_128_128_v01/source)
     * **Description:** Direct Key Implementation (Based on Reference), Big Endian Version
     * **Block:** 128 bits

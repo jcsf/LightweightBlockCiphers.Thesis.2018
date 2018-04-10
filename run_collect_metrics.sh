@@ -11,7 +11,10 @@
 # SPARX
 #ciphers="SPARX_64_128_v36 SPARX_128_128_v02"
 # SPECK
-ciphers="Speck_64_128_v07 Speck_128_128_v01"
+#ciphers="Speck_64_128_v07 Speck_128_128_v01"
+
+# Comparision Between CLEFIA Normal and CLEFIA T-Box
+ciphers="CLEFIA_128_128_v02 CLEFIA_128_128_v03"
 
 # Current Ciphers
 #ciphers="AES_128_128_v02 PRESENT_64_80_v02 CLEFIA_128_128_v02 Speck_64_128_v07 RECTANGLE_64_128_v10 SPARX_64_128_v36 RoadRunneR_64_128_v07 NOEKEON_128_128_v03 NOEKEON_128_128_v04 Halka_64_80_v02"
