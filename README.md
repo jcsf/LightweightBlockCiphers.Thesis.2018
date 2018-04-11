@@ -14,7 +14,22 @@ Repository:
 All block ciphers implementations have been made from the reference implementations of the ciphers.
 
 * [AES](AES_128_128_v02/source):
-    * **Description:** T-Box Implementation
+    * **Description:** FELICS Implementation, T-Box AES Implementation
+    * **Block:** 128 bits
+    * **Key Size:** 128 bits
+
+* [AES](AES_128_128_v08/source):
+    * **Description:** T-Box AES implementation with cycle for rounds
+    * **Block:** 128 bits
+    * **Key Size:** 128 bits
+
+* [AES](AES_128_128_v09/source):
+    * **Description:** T-Box Compressed AES Implementation with cycle for rounds (12 Tables to 3)
+    * **Block:** 128 bits
+    * **Key Size:** 128 bits
+
+* [AES](AES_128_128_v10/source):
+    * **Description:** T-Box Compressed AES Compact Implementation (No Function Calls only Permutations and Cyles)
     * **Block:** 128 bits
     * **Key Size:** 128 bits
     

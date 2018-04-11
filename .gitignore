@@ -7,6 +7,18 @@
 !run_cipher_arm.sh
 
 # MY IMPLEMENTATIONS
+!AES_128_128_v08/
+!AES_128_128_v08/*
+!AES_128_128_v08/source/*
+
+!AES_128_128_v09/
+!AES_128_128_v09/*
+!AES_128_128_v09/source/*
+
+!AES_128_128_v10/
+!AES_128_128_v10/*
+!AES_128_128_v10/source/*
+
 !CLEFIA_128_128_v01/
 !CLEFIA_128_128_v01/*
 !CLEFIA_128_128_v01/source/*
