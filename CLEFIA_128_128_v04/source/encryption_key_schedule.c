@@ -37,17 +37,20 @@ void RunEncryptionKeySchedule(uint8_t *key, uint8_t *roundKeys)
 {
 	uint32_t *k = (uint32_t*) key;
 	uint32_t *rk = (uint32_t*) roundKeys;
+	uint32_t con128[60];
 	uint32_t lk[4];
 	uint8_t i;
+
+	/* generating CONi^(128) (0 <= i < 60, lk = 30) */
+	const uint8_t iv[2] = {0x42U, 0x8aU}; /* cubic root of 2 */
+	ClefiaConSet((uint8_t*)con128, iv, 30);
 
 	/* GFN_{4,12} (generating L from K) */
 	memcpy(lk, key, KEY_SIZE);
 
 	/* ClefiaGfn4 */
-	uint32_t *rcon128 = con128;
-
-	ClefiaGfn4(lk, rcon128, 11);
-	rcon128 += 12 << 1; // NUMBER_OF_ROUNDS * 2 
+	ClefiaGfn4(lk, con128, 11);
+	uint32_t *rcon128 = con128 + (12 << 1); // NUMBER_OF_ROUNDS * 2 
 	/* End ClefiaGfn4 */
 
 	/* Initial Whitening Key (WK0, WK1) */

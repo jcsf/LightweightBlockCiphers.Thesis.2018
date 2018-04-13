@@ -46,25 +46,8 @@ void Decrypt(uint8_t *block, uint8_t *roundKeys)
 	rk -= 2;
 
 	/* ClefiaGfn4Inv*/
-	uint8_t r;
-	uint32_t temp;
-
-	for(r = 0; r < NUMBER_OF_ROUNDS - 1; r++) {
-		ClefiaF0Xor(data, rk[0]);
-		ClefiaF1Xor(data + 2, rk[1]);
-		rk -= 2;
-
-		/* Feistel Permutation */
-		temp = data[3];
-		data[3] = data[2];
-		data[2] = data[1];
-		data[1] = data[0];
-		data[0] = temp;
-	}
-
-	ClefiaF0Xor(data, rk[0]);
-	ClefiaF1Xor(data + 2, rk[1]);
-	rk -= 2;
+	ClefiaGfn4Inv(data, rk, NUMBER_OF_ROUNDS - 1);
+	rk -= NUMBER_OF_ROUNDS << 1; // NUMBER_OF_ROUNDS * 2 
 	/* End ClefiaGfn4Inv */
 
 	/* Final Key Whitening */

@@ -87,7 +87,7 @@ void RunEncryptionKeySchedule(uint8_t *key, uint8_t *roundKeys)
 
 		uint8_t *doubleSwap_lk = (uint8_t *) lk;
 
-		ClefiaDoubleSwap(doubleSwap_lk); /* Updating L (DoubleSwap function) */
+		ClefiaDoubleSwap(doubleSwap_lk) /* Updating L (DoubleSwap function) */
 
 		rk += 4;
 		rcon128 += 4;

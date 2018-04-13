@@ -52,6 +52,9 @@
  * Cipher constants
  *
  */
+extern const uint8_t clefia_s0[256];
+extern const uint8_t clefia_s1[256];
+
 extern uint32_t con128[60];
 
 #endif /* CONSTANTS_H */

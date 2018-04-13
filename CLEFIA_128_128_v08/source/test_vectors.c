@@ -26,35 +26,17 @@
  *
  */
 
-#ifndef CONSTANTS_H
-#define CONSTANTS_H
+#include <stdint.h>
 
-#include "data_types.h"
+#include "test_vectors.h"
 
-/*
- *
- * Cipher characteristics:
- * 	BLOCK_SIZE - the cipher block size in bytes
- * 	KEY_SIZE - the cipher key size in bytes
- *	ROUND_KEY_SIZE - the cipher round keys size in bytes
- * 	NUMBER_OF_ROUNDS - the cipher number of rounds
- *
- */
-#define BLOCK_SIZE 16 /* Replace with the cipher block size in bytes */
-
-#define KEY_SIZE 16 /* Replace with the cipher key size in bytes */
-#define ROUND_KEYS_SIZE 160 /* Replace with the cipher round keys size in bytes */
-
-#define NUMBER_OF_ROUNDS 18 /* Replace with the cipher number of rounds */
 
 /*
  *
- * Cipher constants
+ * Test vectors
  *
  */
-extern const uint8_t clefia_s0[256];
-extern const uint8_t clefia_s1[256];
-
-extern void ClefiaConSet(uint8_t *con, const uint8_t *iv, int8_t lk);
-
-#endif /* CONSTANTS_H */
+/* Replace with the cipher test vectors */
+const uint8_t expectedPlaintext[BLOCK_SIZE] = {0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e,0x0f};
+const uint8_t expectedKey[KEY_SIZE] = {0xff, 0xee, 0xdd, 0xcc, 0xbb, 0xaa, 0x99, 0x88, 0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11, 0x00};
+const uint8_t expectedCiphertext[BLOCK_SIZE] = {0xde, 0x2b, 0xf2, 0xfd, 0x9b, 0x74, 0xaa, 0xcd, 0xf1, 0x29, 0x85, 0x55, 0x45, 0x94, 0x94, 0xfd};

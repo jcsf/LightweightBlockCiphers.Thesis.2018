@@ -27,73 +27,44 @@
  */
 
 #include <stdint.h>
-#include <string.h>
 
 #include "cipher.h"
 #include "constants.h"
 #include "primitives.h"
 
-void RunEncryptionKeySchedule(uint8_t *key, uint8_t *roundKeys)
+void Encrypt(uint8_t *block, uint8_t *roundKeys)
 {
-	uint32_t *k = (uint32_t*) key;
-	uint32_t *rk = (uint32_t*) roundKeys;
-	uint32_t lk[4];
-	uint8_t i;
+	const uint32_t *rk = (uint32_t*) roundKeys;
+	uint32_t *data = (uint32_t*) block;
 
-	/* GFN_{4,12} (generating L from K) */
-	memcpy(lk, key, KEY_SIZE);
+	/* Initial Key Whitening */
+	data[1] = data[1] ^ rk[0];
+	data[3] = data[3] ^ rk[1];
+	rk += 2;
 
 	/* ClefiaGfn4 */
 	uint8_t r;
 	uint32_t temp;
-	uint32_t *rcon128 = con128;
 
-	for(r = 0; r < 11; r++) {
-		ClefiaF0Xor(lk, rcon128[0]);
-		ClefiaF1Xor(lk + 2, rcon128[1]);
-		rcon128 += 2;
+	for(r = 0; r < NUMBER_OF_ROUNDS - 1; r++) {
+		ClefiaF0Xor(data, rk[0]);
+		ClefiaF1Xor(data + 2, rk[1]);
+		rk += 2;
 
 		/* Feistel Permutation */
-		temp = lk[0];
-		lk[0] = lk[1];
-		lk[1] = lk[2];
-		lk[2] = lk[3];
-		lk[3] = temp;
+		temp = data[0];
+		data[0] = data[1];
+		data[1] = data[2];
+		data[2] = data[3];
+		data[3] = temp;
 	}
 
-	ClefiaF0Xor(lk, rcon128[0]);
-	ClefiaF1Xor(lk + 2, rcon128[1]);
-	rcon128 += 2;
+	ClefiaF0Xor(data, rk[0]);
+	ClefiaF1Xor(data + 2, rk[1]);
+	rk += 2;
 	/* End ClefiaGfn4 */
 
-	/* Initial Whitening Key (WK0, WK1) */
-	rk[0] = k[0];
-	rk[1] = k[1];
-
-	rk += 2;
-
-	for(i = 0; i < 9; i++) {
-		rk[0] = lk[0] ^ rcon128[0];
-		rk[1] = lk[1] ^ rcon128[1];
-		rk[2] = lk[2] ^ rcon128[2];
-		rk[3] = lk[3] ^ rcon128[3];
-		
-		if(i & 1) { // When "i" is Odd
-			rk[0] ^= k[0];
-			rk[1] ^= k[1];
-			rk[2] ^= k[2];
-			rk[3] ^= k[3];
-		}
-
-		uint8_t *doubleSwap_lk = (uint8_t *) lk;
-
-		ClefiaDoubleSwap(doubleSwap_lk); /* Updating L (DoubleSwap function) */
-
-		rk += 4;
-		rcon128 += 4;
-	}
-
-	/* Final Whitening Key (WK2, WK3) */
-	rk[0] = k[2];
-	rk[1] = k[3];
+	/* Final Key Whitening */
+	data[1] = data[1] ^ rk[0];
+	data[3] = data[3] ^ rk[1];
 }

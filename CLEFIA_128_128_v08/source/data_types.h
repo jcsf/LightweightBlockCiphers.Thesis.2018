@@ -26,35 +26,40 @@
  *
  */
 
-#ifndef CONSTANTS_H
-#define CONSTANTS_H
+#ifndef DATA_TYPES_H
+#define DATA_TYPES_H
 
-#include "data_types.h"
+#include "cipher.h"
 
-/*
- *
- * Cipher characteristics:
- * 	BLOCK_SIZE - the cipher block size in bytes
- * 	KEY_SIZE - the cipher key size in bytes
- *	ROUND_KEY_SIZE - the cipher round keys size in bytes
- * 	NUMBER_OF_ROUNDS - the cipher number of rounds
- *
- */
-#define BLOCK_SIZE 16 /* Replace with the cipher block size in bytes */
-
-#define KEY_SIZE 16 /* Replace with the cipher key size in bytes */
-#define ROUND_KEYS_SIZE 160 /* Replace with the cipher round keys size in bytes */
-
-#define NUMBER_OF_ROUNDS 18 /* Replace with the cipher number of rounds */
 
 /*
  *
- * Cipher constants
+ * Implementation data types
  *
  */
-extern const uint8_t clefia_s0[256];
-extern const uint8_t clefia_s1[256];
 
-extern void ClefiaConSet(uint8_t *con, const uint8_t *iv, int8_t lk);
 
-#endif /* CONSTANTS_H */
+#if defined(PC) /* PC */
+
+#endif /* PC */
+
+
+
+#if defined(AVR) /* AVR */
+
+#endif /* AVR */
+
+
+
+#if defined(MSP) /* MSP */
+
+#endif /* MSP */
+
+
+
+#if defined(ARM) /* ARM */
+
+#endif /* ARM */
+
+
+#endif /* DATA_TYPES_H */

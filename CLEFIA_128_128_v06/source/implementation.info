@@ -1,10 +1,10 @@
-ImplementationDescription: 32-bits Optimized Implementation, With T-Box (Reduction from 8 to 4) and Constants Table
+ImplementationDescription: 32-bits Oriented Implementation, Gfn functions inlined, With Constants Table
 ImplementationAuthors: João Carlos Santos Fernandes
 
 EncryptionKeyScheduleConstants: constants
-EncryptConstants: constants, tables
+EncryptConstants: constants
 DecryptionKeyScheduleConstants:
-DecryptConstants: constants, tables
+DecryptConstants: constants
 
 EncryptionKeyScheduleCode: primitives
 EncryptCode: primitives

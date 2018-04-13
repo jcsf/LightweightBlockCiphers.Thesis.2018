@@ -29,55 +29,59 @@
 #include <stdint.h>
 #include <string.h>
 
-#include "cipher.h"
 #include "constants.h"
 #include "primitives.h"
+#include "tables.h"
 
-void RunEncryptionKeySchedule(uint8_t *key, uint8_t *roundKeys)
+/*
+ *
+ * Cipher Primitives
+ *
+ */
+
+void ClefiaF0Xor(uint32_t *slice, const uint32_t rk)
 {
-	uint32_t *k = (uint32_t*) key;
-	uint32_t *rk = (uint32_t*) roundKeys;
-	uint32_t lk[4];
-	uint8_t i;
+  uint32_t F0out, x1, x2, x3, x4;
 
-	/* GFN_{4,12} (generating L from K) */
-	memcpy(lk, key, KEY_SIZE);
+  /* F0 */
+  /* Key addition */
+  F0out = *slice ^ rk;
+  
+  x1 = (uint8_t)(F0out);
+  x2 = (uint8_t)(F0out >> 8);
+  x3 = (uint8_t)(F0out >> 16);
+  x4 = (uint8_t)(F0out >> 24);
 
-	/* ClefiaGfn4 */
-	uint32_t *rcon128 = con128;
+  /*y[0] = fout & 0xFF;
+  y[1] = (fout >> 8) & 0xFF;
+  y[2] = (fout >> 16) & 0xFF;
+  y[3] = (fout >> 24) & 0xFF;*/
+  
+  F0out = T0_F0[x1] ^ T1_F0[x2] ^ T2_F0[x3] ^ T3_F0[x4];
 
-	ClefiaGfn4(lk, rcon128, 11);
-	rcon128 += 12 << 1; // NUMBER_OF_ROUNDS * 2 
-	/* End ClefiaGfn4 */
+  slice[1] = slice[1] ^ F0out;
+}
 
-	/* Initial Whitening Key (WK0, WK1) */
-	rk[0] = k[0];
-	rk[1] = k[1];
+void ClefiaF1Xor(uint32_t *slice, const uint32_t rk)
+{
+  uint32_t F1out, x1, x2, x3, x4;
 
-	rk += 2;
+  /* F1 */
+  /* Key addition */
+  F1out = *slice ^ rk;
+ 
+  x1 = (uint8_t)(F1out);
+  x2 = (uint8_t)(F1out >> 8);
+  x3 = (uint8_t)(F1out >> 16);
+  x4 = (uint8_t)(F1out >> 24);
+  
+  /*y[0] = fout & 0xFF;
+  y[1] = (fout >> 8) & 0xFF;
+  y[2] = (fout >> 16) & 0xFF;
+  y[3] = (fout >> 24) & 0xFF;*/
 
-	for(i = 0; i < 9; i++) {
-		rk[0] = lk[0] ^ rcon128[0];
-		rk[1] = lk[1] ^ rcon128[1];
-		rk[2] = lk[2] ^ rcon128[2];
-		rk[3] = lk[3] ^ rcon128[3];
-		
-		if(i & 1) { // When "i" is Odd
-			rk[0] ^= k[0];
-			rk[1] ^= k[1];
-			rk[2] ^= k[2];
-			rk[3] ^= k[3];
-		}
+  F1out = T0_F1[x1] ^ T1_F1[x2] ^ T2_F1[x3] ^ T3_F1[x4];
 
-		uint8_t *doubleSwap_lk = (uint8_t *) lk;
-
-		ClefiaDoubleSwap(doubleSwap_lk); /* Updating L (DoubleSwap function) */
-
-		rk += 4;
-		rcon128 += 4;
-	}
-
-	/* Final Whitening Key (WK2, WK3) */
-	rk[0] = k[2];
-	rk[1] = k[3];
+  /* Xoring after F1 */
+  slice[1] = slice[1] ^ F1out;
 }
