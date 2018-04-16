@@ -30,6 +30,7 @@
 #define PRIMITIVES_H
 
 #include "data_types.h"
+#include "tables.h"
 
 /*
  *
@@ -38,6 +39,108 @@
  */
 extern void ClefiaGfn4(uint32_t *block, uint32_t *rk, int8_t rounds_minus_1);
 extern void ClefiaGfn4Inv(uint32_t *block, uint32_t* rk, int8_t rounds_minus_1);
+
+#define round(block, rk, round) \
+{ \
+  ClefiaF0Xor((block), (rk)[0]) \
+	ClefiaF1Xor((block) + 2, (rk)[1]) \
+	(rk) += 2; \
+  \
+  /* Feistel Permutation */ \
+  uint32_t temp = (block)[0]; \
+  (block)[0] = (block)[1]; \
+  (block)[1] = (block)[2]; \
+  (block)[2] = (block)[3]; \
+  (block)[3] = temp; \
+}
+
+#define last_round(block, rk) \
+{ \
+  ClefiaF0Xor((block), (rk)[0]) \
+	ClefiaF1Xor((block) + 2, (rk)[1]) \
+  (rk) += 2; \
+}
+
+#define ClefiaGfn4(block, rk) \
+{ \
+  round(block, rk, 1) \
+  round(block, rk, 2) \
+  round(block, rk, 3) \
+  round(block, rk, 4) \
+  round(block, rk, 5) \
+  round(block, rk, 6) \
+  round(block, rk, 7) \
+  round(block, rk, 8) \
+  round(block, rk, 9) \
+  round(block, rk, 10) \
+  round(block, rk, 11) \
+  round(block, rk, 12) \
+  round(block, rk, 13) \
+  round(block, rk, 14) \
+  round(block, rk, 15) \
+  round(block, rk, 16) \
+  round(block, rk, 17) \
+  last_round(block, rk) \
+}
+
+#define ClefiaGfn4KeyScheduler(block, rk) \
+{ \
+  round(block, rk, 1) \
+  round(block, rk, 2) \
+  round(block, rk, 3) \
+  round(block, rk, 4) \
+  round(block, rk, 5) \
+  round(block, rk, 6) \
+  round(block, rk, 7) \
+  round(block, rk, 8) \
+  round(block, rk, 9) \
+  round(block, rk, 10) \
+  round(block, rk, 11) \
+  last_round(block, rk) \
+}
+
+#define round_inv(block, rk, round) \
+{ \
+  ClefiaF0Xor((block), (rk)[0]) \
+	ClefiaF1Xor((block) + 2, (rk)[1]) \
+	(rk) -= 2; \
+  \
+  /* Feistel Permutation */ \
+  uint32_t temp = (block)[3]; \
+  (block)[3] = (block)[2]; \
+  (block)[2] = (block)[1]; \
+  (block)[1] = (block)[0]; \
+  (block)[0] = temp; \
+}
+
+#define last_round_inv(block, rk) \
+{ \
+  ClefiaF0Xor((block), (rk)[0]) \
+	ClefiaF1Xor((block) + 2, (rk)[1]) \
+  (rk) -= 2; \
+}
+
+#define ClefiaGfn4Inv(block, rk) \
+{ \
+  round_inv(block, rk, 1) \
+  round_inv(block, rk, 2) \
+  round_inv(block, rk, 3) \
+  round_inv(block, rk, 4) \
+  round_inv(block, rk, 5) \
+  round_inv(block, rk, 6) \
+  round_inv(block, rk, 7) \
+  round_inv(block, rk, 8) \
+  round_inv(block, rk, 9) \
+  round_inv(block, rk, 10) \
+  round_inv(block, rk, 11) \
+  round_inv(block, rk, 12) \
+  round_inv(block, rk, 13) \
+  round_inv(block, rk, 14) \
+  round_inv(block, rk, 15) \
+  round_inv(block, rk, 16) \
+  round_inv(block, rk, 17) \
+  last_round_inv(block, rk) \
+}
 
 #define ClefiaF0Xor(slice, rk) \
 { \

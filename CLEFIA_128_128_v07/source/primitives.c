@@ -38,6 +38,49 @@
  * Cipher Primitives
  *
  */
+void ClefiaGfn4(uint32_t *block, uint32_t *rk, int8_t rounds_minus_1) {
+  uint8_t i;
+  uint32_t temp;
+
+	for(i = 0; i < rounds_minus_1; i++) {
+		ClefiaF0Xor(block, rk[0]);
+		ClefiaF1Xor(block + 2, rk[1]);
+		rk += 2;
+
+		/* Feistel Permutation */
+		temp = block[0];
+		block[0] = block[1];
+		block[1] = block[2];
+		block[2] = block[3];
+		block[3] = temp;
+	}
+
+  /* Last Round */
+	ClefiaF0Xor(block, rk[0]);
+	ClefiaF1Xor(block + 2, rk[1]);
+}
+
+void ClefiaGfn4Inv(uint32_t *block, uint32_t* rk, int8_t rounds_minus_1) {
+  uint8_t i;
+  uint32_t temp;
+
+	for(i = 0; i < rounds_minus_1; i++) {
+		ClefiaF0Xor(block, rk[0]);
+		ClefiaF1Xor(block + 2, rk[1]);
+		rk -= 2;
+
+		/* Feistel Permutation */
+		temp = block[3];
+		block[3] = block[2];
+		block[2] = block[1];
+		block[1] = block[0];
+		block[0] = temp;
+	}
+
+  /* Last Round */
+	ClefiaF0Xor(block, rk[0]);
+	ClefiaF1Xor(block + 2, rk[1]);
+}
 
 void ClefiaF0Xor(uint32_t *slice, const uint32_t rk)
 {
@@ -57,7 +100,10 @@ void ClefiaF0Xor(uint32_t *slice, const uint32_t rk)
   y[2] = (fout >> 16) & 0xFF;
   y[3] = (fout >> 24) & 0xFF;*/
   
-  F0out = T0_F0[x1] ^ T1_F0[x2] ^ T2_F0[x3] ^ T3_F0[x4];
+  T2_F0(x3)
+  T3_F0(x4)
+
+  F0out = T0_F0[x1] ^ T1_F0[x2] ^ x3 ^ x4;
 
   slice[1] = slice[1] ^ F0out;
 }
@@ -80,7 +126,10 @@ void ClefiaF1Xor(uint32_t *slice, const uint32_t rk)
   y[2] = (fout >> 16) & 0xFF;
   y[3] = (fout >> 24) & 0xFF;*/
 
-  F1out = T0_F1[x1] ^ T1_F1[x2] ^ T2_F1[x3] ^ T3_F1[x4];
+  T2_F1(x3)
+  T3_F1(x4)
+
+  F1out = T0_F1[x1] ^ T1_F1[x2] ^ x3 ^ x4;
 
   /* Xoring after F1 */
   slice[1] = slice[1] ^ F1out;

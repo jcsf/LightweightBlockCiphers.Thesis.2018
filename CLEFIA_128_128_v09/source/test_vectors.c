@@ -27,57 +27,16 @@
  */
 
 #include <stdint.h>
-#include <string.h>
 
-#include "constants.h"
-#include "primitives.h"
-#include "tables.h"
+#include "test_vectors.h"
+
 
 /*
  *
- * Cipher Primitives
+ * Test vectors
  *
  */
-void ClefiaGfn4(uint32_t *block, uint32_t *rk, int8_t rounds_minus_1) {
-  uint8_t i;
-  uint32_t temp;
-
-	for(i = 0; i < rounds_minus_1; i++) {
-		ClefiaF0Xor(block, rk[0])
-		ClefiaF1Xor(block + 2, rk[1])
-		rk += 2;
-
-		/* Feistel Permutation */
-		temp = block[0];
-		block[0] = block[1];
-		block[1] = block[2];
-		block[2] = block[3];
-		block[3] = temp;
-	}
-
-  /* Last Round */
-	ClefiaF0Xor(block, rk[0])
-	ClefiaF1Xor(block + 2, rk[1])
-}
-
-void ClefiaGfn4Inv(uint32_t *block, uint32_t* rk, int8_t rounds_minus_1) {
-  uint8_t i;
-  uint32_t temp;
-
-	for(i = 0; i < rounds_minus_1; i++) {
-		ClefiaF0Xor(block, rk[0])
-		ClefiaF1Xor(block + 2, rk[1])
-		rk -= 2;
-
-		/* Feistel Permutation */
-		temp = block[3];
-		block[3] = block[2];
-		block[2] = block[1];
-		block[1] = block[0];
-		block[0] = temp;
-	}
-
-  /* Last Round */
-	ClefiaF0Xor(block, rk[0])
-	ClefiaF1Xor(block + 2, rk[1])
-}
+/* Replace with the cipher test vectors */
+const uint8_t expectedPlaintext[BLOCK_SIZE] = {0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e,0x0f};
+const uint8_t expectedKey[KEY_SIZE] = {0xff, 0xee, 0xdd, 0xcc, 0xbb, 0xaa, 0x99, 0x88, 0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11, 0x00};
+const uint8_t expectedCiphertext[BLOCK_SIZE] = {0xde, 0x2b, 0xf2, 0xfd, 0x9b, 0x74, 0xaa, 0xcd, 0xf1, 0x29, 0x85, 0x55, 0x45, 0x94, 0x94, 0xfd};

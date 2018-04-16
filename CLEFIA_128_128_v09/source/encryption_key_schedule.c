@@ -29,55 +29,54 @@
 #include <stdint.h>
 #include <string.h>
 
+#include "cipher.h"
 #include "constants.h"
 #include "primitives.h"
-#include "tables.h"
 
-/*
- *
- * Cipher Primitives
- *
- */
-void ClefiaGfn4(uint32_t *block, uint32_t *rk, int8_t rounds_minus_1) {
-  uint8_t i;
-  uint32_t temp;
+void RunEncryptionKeySchedule(uint8_t *key, uint8_t *roundKeys)
+{
+	uint32_t *k = (uint32_t*) key;
+	uint32_t *rk = (uint32_t*) roundKeys;
+	uint32_t lk[4];
+	uint8_t i;
 
-	for(i = 0; i < rounds_minus_1; i++) {
-		ClefiaF0Xor(block, rk[0])
-		ClefiaF1Xor(block + 2, rk[1])
-		rk += 2;
+	/* GFN_{4,12} (generating L from K) */
+	memcpy(lk, key, KEY_SIZE);
 
-		/* Feistel Permutation */
-		temp = block[0];
-		block[0] = block[1];
-		block[1] = block[2];
-		block[2] = block[3];
-		block[3] = temp;
+	/* ClefiaGfn4 */
+	uint32_t *rcon128 = con128;
+
+	ClefiaGfn4KeyScheduler(lk, rcon128)
+	/* End ClefiaGfn4 */
+
+	/* Initial Whitening Key (WK0, WK1) */
+	rk[0] = k[0];
+	rk[1] = k[1];
+
+	rk += 2;
+
+	for(i = 0; i < 9; i++) {
+		rk[0] = lk[0] ^ rcon128[0];
+		rk[1] = lk[1] ^ rcon128[1];
+		rk[2] = lk[2] ^ rcon128[2];
+		rk[3] = lk[3] ^ rcon128[3];
+		
+		if(i & 1) { // When "i" is Odd
+			rk[0] ^= k[0];
+			rk[1] ^= k[1];
+			rk[2] ^= k[2];
+			rk[3] ^= k[3];
+		}
+
+		uint8_t *doubleSwap_lk = (uint8_t *) lk;
+
+		ClefiaDoubleSwap(doubleSwap_lk); /* Updating L (DoubleSwap function) */
+
+		rk += 4;
+		rcon128 += 4;
 	}
 
-  /* Last Round */
-	ClefiaF0Xor(block, rk[0])
-	ClefiaF1Xor(block + 2, rk[1])
-}
-
-void ClefiaGfn4Inv(uint32_t *block, uint32_t* rk, int8_t rounds_minus_1) {
-  uint8_t i;
-  uint32_t temp;
-
-	for(i = 0; i < rounds_minus_1; i++) {
-		ClefiaF0Xor(block, rk[0])
-		ClefiaF1Xor(block + 2, rk[1])
-		rk -= 2;
-
-		/* Feistel Permutation */
-		temp = block[3];
-		block[3] = block[2];
-		block[2] = block[1];
-		block[1] = block[0];
-		block[0] = temp;
-	}
-
-  /* Last Round */
-	ClefiaF0Xor(block, rk[0])
-	ClefiaF1Xor(block + 2, rk[1])
+	/* Final Whitening Key (WK2, WK3) */
+	rk[0] = k[2];
+	rk[1] = k[3];
 }

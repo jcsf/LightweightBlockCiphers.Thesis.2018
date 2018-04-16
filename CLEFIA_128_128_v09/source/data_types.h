@@ -26,31 +26,40 @@
  *
  */
 
-#include <stdint.h>
+#ifndef DATA_TYPES_H
+#define DATA_TYPES_H
 
 #include "cipher.h"
-#include "constants.h"
-#include "primitives.h"
 
-void Decrypt(uint8_t *block, uint8_t *roundKeys)
-{
-	const uint32_t *rk = (uint32_t*) roundKeys;
-	uint32_t *data = (uint32_t*) block;
 
-	// RoundKeys Starts At The End
-	rk = rk + ((NUMBER_OF_ROUNDS + 1) << 1); // (NUMBER_OF_ROUNDS + 1) * 2
-	
-	/* Initial Key Whitening */
-	data[1] = data[1] ^ rk[0];
-	data[3] = data[3] ^ rk[1];
-	rk -= 2;
+/*
+ *
+ * Implementation data types
+ *
+ */
 
-	/* ClefiaGfn4Inv*/
-	ClefiaGfn4Inv(data, rk, NUMBER_OF_ROUNDS - 1);
-	rk -= NUMBER_OF_ROUNDS << 1; // NUMBER_OF_ROUNDS * 2 
-	/* End ClefiaGfn4Inv */
 
-	/* Final Key Whitening */
-	data[1] = data[1] ^ rk[0];
-	data[3] = data[3] ^ rk[1];	
-}
+#if defined(PC) /* PC */
+
+#endif /* PC */
+
+
+
+#if defined(AVR) /* AVR */
+
+#endif /* AVR */
+
+
+
+#if defined(MSP) /* MSP */
+
+#endif /* MSP */
+
+
+
+#if defined(ARM) /* ARM */
+
+#endif /* ARM */
+
+
+#endif /* DATA_TYPES_H */

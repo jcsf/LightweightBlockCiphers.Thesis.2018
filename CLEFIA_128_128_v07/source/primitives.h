@@ -36,6 +36,8 @@
  * Cipher Primitives
  *
  */
+extern void ClefiaGfn4(uint32_t *block, uint32_t *rk, int8_t rounds_minus_1);
+extern void ClefiaGfn4Inv(uint32_t *block, uint32_t* rk, int8_t rounds_minus_1);
 extern void ClefiaF0Xor(uint32_t *slice, const uint32_t rk);
 extern void ClefiaF1Xor(uint32_t *slice, const uint32_t rk);
 

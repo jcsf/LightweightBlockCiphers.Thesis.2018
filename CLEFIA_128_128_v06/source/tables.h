@@ -26,31 +26,19 @@
  *
  */
 
-#include <stdint.h>
+#ifndef TABLES_H
+#define TABLES_H
 
-#include "cipher.h"
-#include "constants.h"
-#include "primitives.h"
+#include "data_types.h"
 
-void Decrypt(uint8_t *block, uint8_t *roundKeys)
-{
-	const uint32_t *rk = (uint32_t*) roundKeys;
-	uint32_t *data = (uint32_t*) block;
+extern const uint32_t T0_F0[256];
+extern const uint32_t T1_F0[256];
+extern const uint32_t T2_F0[256];
+extern const uint32_t T3_F0[256];
 
-	// RoundKeys Starts At The End
-	rk = rk + ((NUMBER_OF_ROUNDS + 1) << 1); // (NUMBER_OF_ROUNDS + 1) * 2
-	
-	/* Initial Key Whitening */
-	data[1] = data[1] ^ rk[0];
-	data[3] = data[3] ^ rk[1];
-	rk -= 2;
+extern const uint32_t T0_F1[256];
+extern const uint32_t T1_F1[256];
+extern const uint32_t T2_F1[256];
+extern const uint32_t T3_F1[256];
 
-	/* ClefiaGfn4Inv*/
-	ClefiaGfn4Inv(data, rk, NUMBER_OF_ROUNDS - 1);
-	rk -= NUMBER_OF_ROUNDS << 1; // NUMBER_OF_ROUNDS * 2 
-	/* End ClefiaGfn4Inv */
-
-	/* Final Key Whitening */
-	data[1] = data[1] ^ rk[0];
-	data[3] = data[3] ^ rk[1];	
-}
+#endif /* TABLES_H */

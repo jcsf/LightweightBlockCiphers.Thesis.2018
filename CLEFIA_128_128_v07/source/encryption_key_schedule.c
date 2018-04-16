@@ -44,26 +44,10 @@ void RunEncryptionKeySchedule(uint8_t *key, uint8_t *roundKeys)
 	memcpy(lk, key, KEY_SIZE);
 
 	/* ClefiaGfn4 */
-	uint8_t r;
-	uint32_t temp;
 	uint32_t *rcon128 = con128;
 
-	for(r = 0; r < 11; r++) {
-		ClefiaF0Xor(lk, rcon128[0]);
-		ClefiaF1Xor(lk + 2, rcon128[1]);
-		rcon128 += 2;
-
-		/* Feistel Permutation */
-		temp = lk[0];
-		lk[0] = lk[1];
-		lk[1] = lk[2];
-		lk[2] = lk[3];
-		lk[3] = temp;
-	}
-
-	ClefiaF0Xor(lk, rcon128[0]);
-	ClefiaF1Xor(lk + 2, rcon128[1]);
-	rcon128 += 2;
+	ClefiaGfn4(lk, rcon128, 11);
+	rcon128 += 12 << 1; // NUMBER_OF_ROUNDS * 2 
 	/* End ClefiaGfn4 */
 
 	/* Initial Whitening Key (WK0, WK1) */
@@ -87,7 +71,7 @@ void RunEncryptionKeySchedule(uint8_t *key, uint8_t *roundKeys)
 
 		uint8_t *doubleSwap_lk = (uint8_t *) lk;
 
-		ClefiaDoubleSwap(doubleSwap_lk) /* Updating L (DoubleSwap function) */
+		ClefiaDoubleSwap(doubleSwap_lk); /* Updating L (DoubleSwap function) */
 
 		rk += 4;
 		rcon128 += 4;

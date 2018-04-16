@@ -74,17 +74,22 @@ All block ciphers implementations have been made from the reference implementati
     * **Key Size:** 128 bits
 
 * [CLEFIA](CLEFIA_128_128_v06/source)
-    * **Description:** 32-bits Oriented Implementation, Gfn functions inlined, With Constants Table
+    * **Description:** 32-bits Oriented Implementation, With T-Box and Constants Table
     * **Block:** 128 bits
     * **Key Size:** 128 bits
 
 * [CLEFIA](CLEFIA_128_128_v07/source)
-    * **Description:** 32-bits Oriented Implementation, Gfn functions inlined, With T-Box and Constants Table
+    * **Description:** 32-bits Oriented Implementation, With T-Box (Reduction from 8 to 4) and Constants Table
     * **Block:** 128 bits
     * **Key Size:** 128 bits
 
 * [CLEFIA](CLEFIA_128_128_v08/source)
-    * **Description:** 32-bits Oriented Implementation, Gfn functions inlined, With T-Box (Reduction from 8 to 4) and Constants Table
+    * **Description:** 32-bits Oriented Implementation, With T-Box Reduction and Constants Table, F0 and F1 inlined
+    * **Block:** 128 bits
+    * **Key Size:** 128 bits
+
+* [CLEFIA](CLEFIA_128_128_v09/source)
+    * **Description:** 32-bits Oriented Implementation, With T-Box Reduction and Constants Table, Full Unroll
     * **Block:** 128 bits
     * **Key Size:** 128 bits
     
