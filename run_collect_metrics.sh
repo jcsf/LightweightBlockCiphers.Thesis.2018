@@ -13,8 +13,11 @@
 # SPECK
 #ciphers="Speck_64_128_v07 Speck_128_128_v01"
 
-# Comparision Between CLEFIA Normal, CLEFIA 32-Bits, CLEFIA Constants Table, CLEFIA Gfn Inline, CLEFIA T-Box, and CLEFIA T-Box Reduction
-ciphers="CLEFIA_128_128_v02 CLEFIA_128_128_v04 CLEFIA_128_128_v05 CLEFIA_128_128_v06 CLEFIA_128_128_v07 CLEFIA_128_128_v08"
+# Comparision Between CLEFIA Normal, CLEFIA 32-Bits, CLEFIA Constants Table, CLEFIA T-Box, CLEFIA T-Box Reduction, CLEFIA F-functions inline, CLEFIA Full Unroll
+ciphers="CLEFIA_128_128_v02 CLEFIA_128_128_v04 CLEFIA_128_128_v05 CLEFIA_128_128_v06 CLEFIA_128_128_v07 CLEFIA_128_128_v08 CLEFIA_128_128_v09"
+
+# Comparision Between AES T-Box Full Unroll, AES T-Box Round Cycle, AES Reduced T-Box Round Cycle, AES Compact T-Box, AES Reduced T-Box Full Unroll
+ciphers="AES_128_128_v02 AES_128_128_v08 AES_128_128_v09 AES_128_128_v10 AES_128_128_v11"
 
 # Current Ciphers
 #ciphers="AES_128_128_v02 PRESENT_64_80_v02 CLEFIA_128_128_v02 Speck_64_128_v07 RECTANGLE_64_128_v10 SPARX_64_128_v36 RoadRunneR_64_128_v07 NOEKEON_128_128_v03 NOEKEON_128_128_v04 Halka_64_80_v02"

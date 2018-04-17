@@ -19,6 +19,10 @@
 !AES_128_128_v10/*
 !AES_128_128_v10/source/*
 
+!AES_128_128_v11/
+!AES_128_128_v11/*
+!AES_128_128_v11/source/*
+
 !CLEFIA_128_128_v01/
 !CLEFIA_128_128_v01/*
 !CLEFIA_128_128_v01/source/*

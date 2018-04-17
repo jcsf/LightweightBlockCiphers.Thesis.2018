@@ -1,5 +1,5 @@
 ImplementationDescription: T-Box AES implementation with cycle for rounds
-ImplementationAuthors: Dmitry Khovratovich
+ImplementationAuthors: João Carlos Santos Fernandes
 
 EncryptionKeyScheduleConstants: sbox, rcon
 EncryptConstants: sbox, table

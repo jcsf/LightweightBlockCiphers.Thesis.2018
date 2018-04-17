@@ -29,56 +29,12 @@
 #include <stdint.h>
 
 #include "constants.h"
-#include "key_schedule.h"
 
 
-void KeySchedule(uint8_t *key, uint8_t *roundKeys)
-{
-	uint32_t w[44], temp;
-	uint32_t *rk = (uint32_t*) roundKeys;
-	int i, j;
-
-	w[0] = ((uint32_t*)key)[0];
-	w[1] = ((uint32_t*)key)[1];
-	w[2] = ((uint32_t*)key)[2];
-	w[3] = ((uint32_t*)key)[3];
-
-	i = 4;
-	while (i < 44)
+uint8_t Rcon[31] =
 	{
-		temp = w[i - 1];
-
-		temp = ((uint32_t)READ_SBOX_BYTE(Sbox[temp & 0xFF]) << 24) ^
-			((uint32_t)READ_SBOX_BYTE(Sbox[(temp >> 8) & 0xFF])) ^
-			((uint32_t)READ_SBOX_BYTE(Sbox[(temp >> 16) & 0xFF]) << 8) ^
-			((uint32_t)READ_SBOX_BYTE(Sbox[(temp >> 24) & 0xFF]) << 16) ^
-			(uint32_t)READ_KS_BYTE(Rcon[i / 4]);
-		w[i] = w[i - 4] ^ temp;
-		i++;
-
-		temp = w[i - 1];
-		w[i] = w[i - 4] ^ temp;
-		i++;
-
-		temp = w[i - 1];
-		w[i] = w[i - 4] ^ temp;
-		i++;
-
-		temp = w[i - 1];
-		w[i] = w[i - 4] ^ temp;
-		i++;
-	}
-
-	for (i = 0; i <= 10; i++)
-	{
-		uint32_t index = i << 2; // i * 4
-		
-		rk[index] = w[index];
-		index++;
-		rk[index] = w[index];
-		index++;
-		rk[index] = w[index];
-		index++;
-		rk[index] = w[index];
-	}
-}
+		0x00, 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 
+		0x80, 0x1b, 0x36, 0x6c, 0xc0, 0xab, 0x4d, 0x9a, 
+		0x2f, 0x5e, 0xbc, 0x63, 0xc6, 0x97, 0x35, 0x6a, 
+		0xd4, 0xb3, 0x7d, 0xfa, 0xef, 0xc5, 0x91
+	};

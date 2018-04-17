@@ -1,5 +1,5 @@
 ImplementationDescription: T-Box Compressed AES Implementation with cycle for rounds (12 Tables to 3)
-ImplementationAuthors: Dmitry Khovratovich
+ImplementationAuthors: João Carlos Santos Fernandes
 
 EncryptionKeyScheduleConstants: sbox, rcon
 EncryptConstants: sbox, table

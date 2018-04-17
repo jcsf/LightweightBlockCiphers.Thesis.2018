@@ -28,57 +28,12 @@
 
 #include <stdint.h>
 
+#include "cipher.h"
 #include "constants.h"
 #include "key_schedule.h"
 
 
-void KeySchedule(uint8_t *key, uint8_t *roundKeys)
+void RunEncryptionKeySchedule(uint8_t *key, uint8_t *roundKeys)
 {
-	uint32_t w[44], temp;
-	uint32_t *rk = (uint32_t*) roundKeys;
-	int i, j;
-
-	w[0] = ((uint32_t*)key)[0];
-	w[1] = ((uint32_t*)key)[1];
-	w[2] = ((uint32_t*)key)[2];
-	w[3] = ((uint32_t*)key)[3];
-
-	i = 4;
-	while (i < 44)
-	{
-		temp = w[i - 1];
-
-		temp = ((uint32_t)READ_SBOX_BYTE(Sbox[temp & 0xFF]) << 24) ^
-			((uint32_t)READ_SBOX_BYTE(Sbox[(temp >> 8) & 0xFF])) ^
-			((uint32_t)READ_SBOX_BYTE(Sbox[(temp >> 16) & 0xFF]) << 8) ^
-			((uint32_t)READ_SBOX_BYTE(Sbox[(temp >> 24) & 0xFF]) << 16) ^
-			(uint32_t)READ_KS_BYTE(Rcon[i / 4]);
-		w[i] = w[i - 4] ^ temp;
-		i++;
-
-		temp = w[i - 1];
-		w[i] = w[i - 4] ^ temp;
-		i++;
-
-		temp = w[i - 1];
-		w[i] = w[i - 4] ^ temp;
-		i++;
-
-		temp = w[i - 1];
-		w[i] = w[i - 4] ^ temp;
-		i++;
-	}
-
-	for (i = 0; i <= 10; i++)
-	{
-		uint32_t index = i << 2; // i * 4
-		
-		rk[index] = w[index];
-		index++;
-		rk[index] = w[index];
-		index++;
-		rk[index] = w[index];
-		index++;
-		rk[index] = w[index];
-	}
+	KeySchedule(key, roundKeys);
 }

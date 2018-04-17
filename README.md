@@ -32,6 +32,11 @@ All block ciphers implementations have been made from the reference implementati
     * **Description:** T-Box Compressed AES Compact Implementation (No Function Calls only Permutations and Cyles)
     * **Block:** 128 bits
     * **Key Size:** 128 bits
+
+* [AES](AES_128_128_v11/source):
+    * **Description:** T-Box Compressed AES Implementation, Full Unroll
+    * **Block:** 128 bits
+    * **Key Size:** 128 bits
     
 * [PRESENT](PRESENT_64_80_v02/source)
     * **Description:** FELICS Implementation, Software Optimized

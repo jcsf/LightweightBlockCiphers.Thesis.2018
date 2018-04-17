@@ -35,13 +35,13 @@
 void KeySchedule(uint8_t *key, uint8_t *roundKeys)
 {
 	uint32_t w[44], temp;
+	uint32_t *rk = (uint32_t*) roundKeys;
 	int i, j;
 
-
-	for (i = 0; i < 4; i++)
-	{
-		w[i] = ((uint32_t*)key)[i];
-	}
+	w[0] = ((uint32_t*)key)[0];
+	w[1] = ((uint32_t*)key)[1];
+	w[2] = ((uint32_t*)key)[2];
+	w[3] = ((uint32_t*)key)[3];
 
 	i = 4;
 	while (i < 44)
@@ -71,9 +71,14 @@ void KeySchedule(uint8_t *key, uint8_t *roundKeys)
 
 	for (i = 0; i <= 10; i++)
 	{
-		for (j = 0; j < 4; j++)
-		{
-			((uint32_t*)roundKeys)[4 * i + j] = w[4 * i + j];
-		}
+		uint32_t index = i << 2; // i * 4
+		
+		rk[index] = w[index];
+		index++;
+		rk[index] = w[index];
+		index++;
+		rk[index] = w[index];
+		index++;
+		rk[index] = w[index];
 	}
 }
