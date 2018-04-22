@@ -157,3 +157,38 @@ All block ciphers implementations have been made from the reference implementati
     * **Description:** Implementation using only one key scheduler
     * **Block:** 64 bits
     * **Key Size:** 128 bits
+
+* [ROADRUNNER](RoadRunneR_64_128_v08/source)
+    * **Description:** Implementation using no key scheduler
+    * **Block:** 64 bits
+    * **Key Size:** 128 bits
+
+* [ROADRUNNER](RoadRunneR_64_128_v09/source)
+    * **Description:** Implementation 32-bits partial oriented, one key scheduler
+    * **Block:** 64 bits
+    * **Key Size:** 128 bits
+
+* [ROADRUNNER](RoadRunneR_64_128_v10/source)
+    * **Description:** Implementation 32-bits partial oriented, no key scheduler
+    * **Block:** 64 bits
+    * **Key Size:** 128 bits
+
+* [ROADRUNNER](RoadRunneR_64_128_v11/source)
+    * **Description:** Implementation 32-bits partial oriented, one key scheduler, no function calls
+    * **Block:** 64 bits
+    * **Key Size:** 128 bits
+
+* [ROADRUNNER](RoadRunneR_64_128_v12/source)
+    * **Description:** Implementation 32-bits partial oriented, no key scheduler, no function calls
+    * **Block:** 64 bits
+    * **Key Size:** 128 bits
+
+* [ROADRUNNER](RoadRunneR_64_128_v13/source)
+    * **Description:** Implementation 32-bits partial oriented, one key scheduler, full unroll
+    * **Block:** 64 bits
+    * **Key Size:** 128 bits
+
+* [ROADRUNNER](RoadRunneR_64_128_v14/source)
+    * **Description:** Implementation 32-bits partial oriented, no key scheduler, full unroll
+    * **Block:** 64 bits
+    * **Key Size:** 128 bits
