@@ -1,10 +1,10 @@
-ImplementationDescription: 32-bits Oriented Implementation, With T-Box and Constants Table
+ImplementationDescription: Direct-Key Implementation, Little Endian Version, With Round Constants Table
 ImplementationAuthors: João Carlos Santos Fernandes
 
 EncryptionKeyScheduleConstants: constants
-EncryptConstants: constants, tables
+EncryptConstants: constants
 DecryptionKeyScheduleConstants:
-DecryptConstants: constants, tables
+DecryptConstants: constants
 
 EncryptionKeyScheduleCode: primitives
 EncryptCode: primitives

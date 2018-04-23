@@ -118,6 +118,21 @@ All block ciphers implementations have been made from the reference implementati
     * **Block:** 128 bits
     * **Key Size:** 128 bits
 
+* [NOEKEON](NOEKEON_128_128_v05/source)
+    * **Description:** Direct Key Implementation, Little Endian Version, With Constants Table
+    * **Block:** 128 bits
+    * **Key Size:** 128 bits
+
+* [NOEKEON](NOEKEON_128_128_v06/source)
+    * **Description:** Direct Key Implementation, Little Endian Version, No Function Calls
+    * **Block:** 128 bits
+    * **Key Size:** 128 bits
+
+* [NOEKEON](NOEKEON_128_128_v07/source)
+    * **Description:** Direct Key Implementation, Little Endian Version, No Function Calls, With Constants Table
+    * **Block:** 128 bits
+    * **Key Size:** 128 bits
+
 * [HALKA](Halka_64_80_v01/source):
     * **Description:** Based on Reference Implementation
     * **Block:** 64 bits

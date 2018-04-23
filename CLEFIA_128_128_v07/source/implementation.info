@@ -1,4 +1,4 @@
-ImplementationDescription: 32-bits Oriented Implementation, Gfn functions inlined, With T-Box (Reduction from 8 to 4) and Constants Table
+ImplementationDescription: 32-bits Oriented Implementation, With T-Box (Reduction from 8 to 4) and Constants Table
 ImplementationAuthors: João Carlos Santos Fernandes
 
 EncryptionKeyScheduleConstants: constants
