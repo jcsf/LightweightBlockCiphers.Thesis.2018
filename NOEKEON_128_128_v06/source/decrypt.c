@@ -44,18 +44,18 @@ void Decrypt(uint8_t *block, uint8_t *roundKeys) {
   k[1]=kencrypt[1];
   k[2]=kencrypt[2];
   k[3]=kencrypt[3];
-  THETA(NullVector,k);
+  THETA(NullVector,k)
 
   for(i = NUMBER_OF_ROUNDS; i > 0; i--) {
-    THETA(k, state); 
+    THETA(k, state) 
     state[0] ^= RC;
-    PI1(state); 
-    GAMMA(state);
-    PI2(state);
+    PI1(state) 
+    GAMMA(state)
+    PI2(state)
 
     RCSHIFTREGBWD(RC)
   }
 
-  THETA(k, state); 
+  THETA(k, state)
   state[0] ^= RC;
 }

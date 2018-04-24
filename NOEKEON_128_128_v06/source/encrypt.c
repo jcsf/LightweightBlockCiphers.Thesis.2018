@@ -42,14 +42,14 @@ void Encrypt(uint8_t *block, uint8_t *roundKeys)
 	
 	for(i = 0; i < NUMBER_OF_ROUNDS; i++) {
     	state[0] ^= RC;
-		THETA(k, state);
-		PI1(state); 
-		GAMMA(state); 
-		PI2(state); 
+		THETA(k, state)
+		PI1(state) 
+		GAMMA(state) 
+		PI2(state) 
 
 		RCSHIFTREGFWD(RC)
 	}
 
 	state[0] ^= RC;
-	THETA(k, state);
+	THETA(k, state)
 }

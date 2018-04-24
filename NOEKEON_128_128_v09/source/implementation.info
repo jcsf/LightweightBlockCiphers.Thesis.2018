@@ -1,0 +1,20 @@
+ImplementationDescription: Direct-Key Implementation, Little Endian Version, No Function Calls, With Constants Fixed, Full Unroll
+ImplementationAuthors: João Carlos Santos Fernandes
+
+EncryptionKeyScheduleConstants: constants
+EncryptConstants: constants
+DecryptionKeyScheduleConstants:
+DecryptConstants: constants
+
+EncryptionKeyScheduleCode: primitives
+EncryptCode: primitives
+DecryptionKeyScheduleCode:
+DecryptCode: primitives
+
+UseEncryptionKeySchedule: yes
+UseDecryptionKeySchedule: no
+
+ImplementationAVR: C
+ImplementationMSP: C
+ImplementationARM: C
+ImplementationPC: C

@@ -27,12 +27,42 @@
  */
 
 #include <stdint.h>
-#include <string.h>
 
 #include "cipher.h"
 #include "constants.h"
+#include "primitives.h"
 
-void RunEncryptionKeySchedule(uint8_t *key, uint8_t *roundKeys)
-{ 
-	memcpy(roundKeys, key, KEY_SIZE);
+#define round(state, k, RC)\
+{\
+	state[0] ^= RC; \
+	THETA(k, state) \
+	PI1(state) \
+	GAMMA(state) \
+	PI2(state) \
+}
+
+void Encrypt(uint8_t *block, uint8_t *roundKeys)
+{
+	uint32_t const *k = (uint32_t*) roundKeys;
+	uint32_t *state = (uint32_t*) block;
+
+	round(state, k, 0x80)
+	round(state, k, 0x1b)
+	round(state, k, 0x36)
+	round(state, k, 0x6c)
+	round(state, k, 0xd8)
+	round(state, k, 0xab)
+	round(state, k, 0x4d)
+	round(state, k, 0x9a)
+	round(state, k, 0x2f)
+	round(state, k, 0x5e)
+	round(state, k, 0xbc)
+	round(state, k, 0x63)
+	round(state, k, 0xc6)
+	round(state, k, 0x97)
+	round(state, k, 0x35)
+	round(state, k, 0x6a)
+
+	state[0] ^= 0xd4;
+	THETA(k, state)
 }

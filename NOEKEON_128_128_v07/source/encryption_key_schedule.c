@@ -31,7 +31,6 @@
 
 #include "cipher.h"
 #include "constants.h"
-#include "primitives.h"
 
 void RunEncryptionKeySchedule(uint8_t *key, uint8_t *roundKeys)
 { 

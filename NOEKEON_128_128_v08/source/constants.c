@@ -27,12 +27,13 @@
  */
 
 #include <stdint.h>
-#include <string.h>
 
-#include "cipher.h"
 #include "constants.h"
 
-void RunEncryptionKeySchedule(uint8_t *key, uint8_t *roundKeys)
-{ 
-	memcpy(roundKeys, key, KEY_SIZE);
-}
+/*
+ *
+ * Cipher constants
+ *
+ */
+
+uint32_t NullVector[4] = {0,0,0,0};
