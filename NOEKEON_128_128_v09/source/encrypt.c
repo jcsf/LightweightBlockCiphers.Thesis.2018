@@ -32,37 +32,51 @@
 #include "constants.h"
 #include "primitives.h"
 
-#define round(state, k, RC)\
-{\
-	state[0] ^= RC; \
-	THETA(k, state) \
-	PI1(state) \
-	GAMMA(state) \
-	PI2(state) \
-}
-
 void Encrypt(uint8_t *block, uint8_t *roundKeys)
 {
-	uint32_t const *k = (uint32_t*) roundKeys;
-	uint32_t *state = (uint32_t*) block;
+	register uint8_t i;
+	register uint32_t w0, w1, w2, w3;
+	register uint32_t k0, k1, k2, k3;
+	register uint32_t temp0, temp1;
 
-	round(state, k, 0x80)
-	round(state, k, 0x1b)
-	round(state, k, 0x36)
-	round(state, k, 0x6c)
-	round(state, k, 0xd8)
-	round(state, k, 0xab)
-	round(state, k, 0x4d)
-	round(state, k, 0x9a)
-	round(state, k, 0x2f)
-	round(state, k, 0x5e)
-	round(state, k, 0xbc)
-	round(state, k, 0x63)
-	round(state, k, 0xc6)
-	round(state, k, 0x97)
-	round(state, k, 0x35)
-	round(state, k, 0x6a)
+	w0 = ((uint32_t*) block)[0];
+	w1 = ((uint32_t*) block)[1];
+	w2 = ((uint32_t*) block)[2];
+	w3 = ((uint32_t*) block)[3];
 
-	state[0] ^= 0xd4;
-	THETA(k, state)
+	k0 = ((uint32_t*) roundKeys)[0];
+	k1 = ((uint32_t*) roundKeys)[1];
+	k2 = ((uint32_t*) roundKeys)[2];
+	k3 = ((uint32_t*) roundKeys)[3];
+
+	for(i = 0; i < NUMBER_OF_ROUNDS; i++) {
+    	w0 ^= RC[i];
+		
+		/* ------ THETA(w, k) -------- */
+		THETA(w0, w1, w2, w3, k0, k1, k2, k3, temp0, temp1)
+		/* --------------------- */
+
+		/* ------ PI1 -------- */
+		PI1(w0, w1, w2, w3)
+		/* ------------------- */
+
+		/* ------ GAMMA -------- */
+		GAMMA(w0, w1, w2, w3, temp0)
+		/* --------------------- */
+
+		/* ------ PI2 -------- */
+		PI2(w0, w1, w2, w3)
+		/* ------------------- */
+	}
+
+	w0 ^= RC[NUMBER_OF_ROUNDS];
+	
+	/* ------ THETA(w, k) -------- */
+	THETA(w0, w1, w2, w3, k0, k1, k2, k3, temp0, temp1)
+	/* --------------------- */
+
+	((uint32_t*) block)[0] = w0;
+	((uint32_t*) block)[1] = w1;
+	((uint32_t*) block)[2] = w2;
+	((uint32_t*) block)[3] = w3;
 }

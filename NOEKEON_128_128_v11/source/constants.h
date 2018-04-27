@@ -48,7 +48,6 @@
 
 #define NUMBER_OF_ROUNDS 16 /* Replace with the cipher number of rounds */
 
-
 /*
  *
  * Cipher constants
@@ -56,5 +55,6 @@
  */
 
 extern uint8_t RC[17];
+extern uint8_t NullVector[17];
 
 #endif /* CONSTANTS_H */

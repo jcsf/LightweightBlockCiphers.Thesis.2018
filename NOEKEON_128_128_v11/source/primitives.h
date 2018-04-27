@@ -39,16 +39,6 @@
  */
 #define ROTL(v, n) (((v) << n) | ((v) >> (32-n)))
 
-#define RCSHIFTREGFWD(rc)\
-{ \
-    if ((rc)&0x80) (rc)=((rc)<<1) ^ 0x1B; else (rc)<<=1; \
-}
-
-#define RCSHIFTREGBWD(rc)\
-{ \
-    if ((rc)&0x01) (rc)=((rc)>>1) ^ 0x8D; else (rc)>>=1; \
-}
-
 #define THETA(w0, w1, w2, w3, k0, k1, k2, k3, temp0, temp1)\
 { \
     temp1  = w0 ^ w2; \
@@ -93,5 +83,7 @@
     w1 ^= ~w3 & ~w2; \
     w0 ^=  w2 &  w1; \
 }
+
+extern void CommonLoop(uint32_t* const block,  const uint32_t* const key, const uint8_t* const RC1, const uint8_t* const RC2);
 
 #endif /* PRIMITIVES_H */

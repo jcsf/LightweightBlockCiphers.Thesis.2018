@@ -26,28 +26,9 @@
  *
  */
 
-#ifndef CONSTANTS_H
-#define CONSTANTS_H
+#include <stdint.h>
 
-#include "data_types.h"
-
-
-/*
- *
- * Cipher characteristics:
- * 	BLOCK_SIZE - the cipher block size in bytes
- * 	KEY_SIZE - the cipher key size in bytes
- *	ROUND_KEY_SIZE - the cipher round keys size in bytes
- * 	NUMBER_OF_ROUNDS - the cipher number of rounds
- *
- */
-#define BLOCK_SIZE 16 /* Replace with the cipher block size in bytes */
-
-#define KEY_SIZE 16 /* Replace with the cipher key size in bytes */
-#define ROUND_KEYS_SIZE 16 /* Replace with the cipher round keys size in bytes */
-
-#define NUMBER_OF_ROUNDS 16 /* Replace with the cipher number of rounds */
-
+#include "constants.h"
 
 /*
  *
@@ -55,6 +36,5 @@
  *
  */
 
-extern uint8_t RC[17];
-
-#endif /* CONSTANTS_H */
+uint8_t RC[17] = {0x80, 0x1b, 0x36, 0x6c, 0xd8, 0xab, 0x4d, 0x9a, 0x2f, 0x5e, 0xbc, 0x63, 0xc6, 0x97, 0x35, 0x6a, 0xd4};
+uint8_t NullVector[17] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};

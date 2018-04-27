@@ -98,48 +98,63 @@ All block ciphers implementations have been made from the reference implementati
     * **Block:** 128 bits
     * **Key Size:** 128 bits
     
-* [NOEKEON](NOEKEON_128_128_v01/source)
+* [NOEKEON_v01](NOEKEON_128_128_v01/source)
     * **Description:** Direct Key Implementation (Based on Reference), Big Endian Version
     * **Block:** 128 bits
     * **Key Size:** 128 bits
 
-* [NOEKEON](NOEKEON_128_128_v02/source)
+* [NOEKEON_v02](NOEKEON_128_128_v02/source)
     * **Description:** Indirect Key Implementation (Based on Reference), Big Endian Version
     * **Block:** 128 bits
     * **Key Size:** 128 bits
 
-* [NOEKEON](NOEKEON_128_128_v03/source)
+* [NOEKEON_v03](NOEKEON_128_128_v03/source)
     * **Description:** Direct Key Implementation, Little Endian Version
     * **Block:** 128 bits
     * **Key Size:** 128 bits
 
-* [NOEKEON](NOEKEON_128_128_v04/source)
+* [NOEKEON_v04](NOEKEON_128_128_v04/source)
     * **Description:** Indirect Key Implementation, Little Endian Version
     * **Block:** 128 bits
     * **Key Size:** 128 bits
 
-* [NOEKEON](NOEKEON_128_128_v05/source)
+* [NOEKEON_v05](NOEKEON_128_128_v05/source)
     * **Description:** Direct Key Implementation, Little Endian Version, With Constants Table
     * **Block:** 128 bits
     * **Key Size:** 128 bits
 
-* [NOEKEON](NOEKEON_128_128_v06/source)
+* [NOEKEON_v06](NOEKEON_128_128_v06/source)
     * **Description:** Direct Key Implementation, Little Endian Version, No Function Calls
     * **Block:** 128 bits
     * **Key Size:** 128 bits
 
-* [NOEKEON](NOEKEON_128_128_v07/source)
+* [NOEKEON_v07](NOEKEON_128_128_v07/source)
     * **Description:** Direct Key Implementation, Little Endian Version, No Function Calls, With Constants Table
     * **Block:** 128 bits
     * **Key Size:** 128 bits
 
-* [NOEKEON](NOEKEON_128_128_v08/source)
+* [NOEKEON_v08](NOEKEON_128_128_v08/source)
     * **Description:** Direct Key Implementation, Little Endian Version, No Function Calls, Full Unroll
     * **Block:** 128 bits
     * **Key Size:** 128 bits
 
-* [NOEKEON](NOEKEON_128_128_v09/source)
-    * **Description:** Direct Key Implementation, Little Endian Version, No Function Calls,  With Constants Fixed, Full Unroll
+* [NOEKEON_v09](NOEKEON_128_128_v09/source)
+    * **Description:** Direct-Key Implementation, Little Endian Version, No Function Calls, Implementation in Registers Variables
+    * **Block:** 128 bits
+    * **Key Size:** 128 bits
+
+* [NOEKEON_v10](NOEKEON_128_128_v10/source)
+    * **Description:** Direct-Key Implementation, Little Endian Version, No Function Calls, With Constants Table, Implementation in Registers Variables
+    * **Block:** 128 bits
+    * **Key Size:** 128 bits
+
+* [NOEKEON_v11](NOEKEON_128_128_v11/source)
+    * **Description:** Direct-Key Implementation, Little Endian Version, With Constants Table, Implementation in Registers Variables
+    * **Block:** 128 bits
+    * **Key Size:** 128 bits
+
+* [NOEKEON_v12](NOEKEON_128_128_v12/source)
+    * **Description:** Direct-Key Implementation, Little Endian Version, No Function Calls, Implementation in Registers Variables, Full Unroll
     * **Block:** 128 bits
     * **Key Size:** 128 bits
 

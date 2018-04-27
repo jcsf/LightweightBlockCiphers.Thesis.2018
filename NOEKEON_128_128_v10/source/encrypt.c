@@ -32,14 +32,15 @@
 #include "constants.h"
 #include "primitives.h"
 
-
-void Decrypt(uint8_t *block, uint8_t *roundKeys) {
+void Encrypt(uint8_t *block, uint8_t *roundKeys)
+{
 	register uint8_t i;
 	register uint32_t w0, w1, w2, w3;
 	register uint32_t k0, k1, k2, k3;
 	register uint32_t temp0, temp1;
+	register uint8_t RC;
 
-  	w0 = ((uint32_t*) block)[0];
+	w0 = ((uint32_t*) block)[0];
 	w1 = ((uint32_t*) block)[1];
 	w2 = ((uint32_t*) block)[2];
 	w3 = ((uint32_t*) block)[3];
@@ -48,18 +49,16 @@ void Decrypt(uint8_t *block, uint8_t *roundKeys) {
 	k1 = ((uint32_t*) roundKeys)[1];
 	k2 = ((uint32_t*) roundKeys)[2];
 	k3 = ((uint32_t*) roundKeys)[3];
-  
-  	/* ------ THETA(k, NullVector) -------- */
-	THETA(k0, k1, k2, k3, 0, 0, 0, 0, temp0, temp1)
-	/* --------------------- */
 
-	for(i = NUMBER_OF_ROUNDS; i > 0; i--) {
+	RC = RC1ENCRYPTSTART;
+
+	for(i = 0; i < NUMBER_OF_ROUNDS; i++) {
+    	w0 ^= RC;
+		
 		/* ------ THETA(w, k) -------- */
 		THETA(w0, w1, w2, w3, k0, k1, k2, k3, temp0, temp1)
 		/* --------------------- */
 
-		w0 ^= RC[i];
-		
 		/* ------ PI1 -------- */
 		PI1(w0, w1, w2, w3)
 		/* ------------------- */
@@ -71,13 +70,15 @@ void Decrypt(uint8_t *block, uint8_t *roundKeys) {
 		/* ------ PI2 -------- */
 		PI2(w0, w1, w2, w3)
 		/* ------------------- */
+
+		RCSHIFTREGFWD(RC)
 	}
 
+	w0 ^= RC;
+	
 	/* ------ THETA(w, k) -------- */
 	THETA(w0, w1, w2, w3, k0, k1, k2, k3, temp0, temp1)
 	/* --------------------- */
-
- 	w0 ^= RC[0];
 
 	((uint32_t*) block)[0] = w0;
 	((uint32_t*) block)[1] = w1;

@@ -26,35 +26,17 @@
  *
  */
 
-#ifndef CONSTANTS_H
-#define CONSTANTS_H
+#include <stdint.h>
 
-#include "data_types.h"
-
-
-/*
- *
- * Cipher characteristics:
- * 	BLOCK_SIZE - the cipher block size in bytes
- * 	KEY_SIZE - the cipher key size in bytes
- *	ROUND_KEY_SIZE - the cipher round keys size in bytes
- * 	NUMBER_OF_ROUNDS - the cipher number of rounds
- *
- */
-#define BLOCK_SIZE 16 /* Replace with the cipher block size in bytes */
-
-#define KEY_SIZE 16 /* Replace with the cipher key size in bytes */
-#define ROUND_KEYS_SIZE 16 /* Replace with the cipher round keys size in bytes */
-
-#define NUMBER_OF_ROUNDS 16 /* Replace with the cipher number of rounds */
+#include "test_vectors.h"
 
 
 /*
  *
- * Cipher constants
+ * Test vectors
  *
  */
-
-extern uint8_t RC[17];
-
-#endif /* CONSTANTS_H */
+/* Little Endian Test Vectors */
+const uint8_t expectedPlaintext[BLOCK_SIZE] = {0x1b, 0x42, 0x78, 0x2a, 0x92, 0xd0, 0xc7, 0x87, 0x3f, 0x11, 0x26, 0x4f, 0xb2, 0x49, 0x13, 0x1d};
+const uint8_t expectedKey[KEY_SIZE] = {0x51, 0x68, 0x65, 0xb1, 0xfa, 0x29, 0x9e, 0x69, 0x48, 0x01, 0xb7, 0x24, 0xfc, 0x2d, 0x3d, 0x50};
+const uint8_t expectedCiphertext[BLOCK_SIZE] = {0xe0, 0x87, 0xf6, 0xe2, 0xf, 0x66, 0x75, 0x7b, 0x33, 0x22, 0x37, 0xfc, 0x2c, 0x53, 0x47, 0xbc};

@@ -6,7 +6,7 @@ EncryptConstants: constants
 DecryptionKeyScheduleConstants:
 DecryptConstants: constants
 
-EncryptionKeyScheduleCode: primitives
+EncryptionKeyScheduleCode:
 EncryptCode: primitives
 DecryptionKeyScheduleCode:
 DecryptCode: primitives

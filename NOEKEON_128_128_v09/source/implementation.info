@@ -1,4 +1,4 @@
-ImplementationDescription: Direct-Key Implementation, Little Endian Version, No Function Calls, With Constants Fixed, Full Unroll
+ImplementationDescription: Direct-Key Implementation, Little Endian Version, No Function Calls, With Constants Table, Implementation in Registers Variables
 ImplementationAuthors: João Carlos Santos Fernandes
 
 EncryptionKeyScheduleConstants: constants
@@ -6,7 +6,7 @@ EncryptConstants: constants
 DecryptionKeyScheduleConstants:
 DecryptConstants: constants
 
-EncryptionKeyScheduleCode: primitives
+EncryptionKeyScheduleCode:
 EncryptCode: primitives
 DecryptionKeyScheduleCode:
 DecryptCode: primitives

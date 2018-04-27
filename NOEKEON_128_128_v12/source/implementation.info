@@ -1,4 +1,4 @@
-ImplementationDescription: Direct-Key Implementation, Little Endian Version, No Function Calls, With Constants Table
+ImplementationDescription: Direct-Key Implementation, Little Endian Version, No Function Calls, With Constants Table, Implementation in Registers Variables, Full Unroll
 ImplementationAuthors: João Carlos Santos Fernandes
 
 EncryptionKeyScheduleConstants: constants

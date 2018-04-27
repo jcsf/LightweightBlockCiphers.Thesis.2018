@@ -26,35 +26,13 @@
  *
  */
 
-#ifndef CONSTANTS_H
-#define CONSTANTS_H
+#include <stdint.h>
 
-#include "data_types.h"
+#include "cipher.h"
+#include "constants.h"
+#include "primitives.h"
 
-
-/*
- *
- * Cipher characteristics:
- * 	BLOCK_SIZE - the cipher block size in bytes
- * 	KEY_SIZE - the cipher key size in bytes
- *	ROUND_KEY_SIZE - the cipher round keys size in bytes
- * 	NUMBER_OF_ROUNDS - the cipher number of rounds
- *
- */
-#define BLOCK_SIZE 16 /* Replace with the cipher block size in bytes */
-
-#define KEY_SIZE 16 /* Replace with the cipher key size in bytes */
-#define ROUND_KEYS_SIZE 16 /* Replace with the cipher round keys size in bytes */
-
-#define NUMBER_OF_ROUNDS 16 /* Replace with the cipher number of rounds */
-
-
-/*
- *
- * Cipher constants
- *
- */
-
-extern uint8_t RC[17];
-
-#endif /* CONSTANTS_H */
+void Encrypt(uint8_t *block, uint8_t *roundKeys)
+{
+	CommonLoop((uint32_t*) block, (uint32_t*)roundKeys, RC, NullVector);
+}

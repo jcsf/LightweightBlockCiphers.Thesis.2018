@@ -26,35 +26,29 @@
  *
  */
 
-#ifndef CONSTANTS_H
-#define CONSTANTS_H
+#include <stdint.h>
 
-#include "data_types.h"
-
-
-/*
- *
- * Cipher characteristics:
- * 	BLOCK_SIZE - the cipher block size in bytes
- * 	KEY_SIZE - the cipher key size in bytes
- *	ROUND_KEY_SIZE - the cipher round keys size in bytes
- * 	NUMBER_OF_ROUNDS - the cipher number of rounds
- *
- */
-#define BLOCK_SIZE 16 /* Replace with the cipher block size in bytes */
-
-#define KEY_SIZE 16 /* Replace with the cipher key size in bytes */
-#define ROUND_KEYS_SIZE 16 /* Replace with the cipher round keys size in bytes */
-
-#define NUMBER_OF_ROUNDS 16 /* Replace with the cipher number of rounds */
+#include "cipher.h"
+#include "constants.h"
+#include "primitives.h"
 
 
-/*
- *
- * Cipher constants
- *
- */
+void Decrypt(uint8_t *block, uint8_t *roundKeys) {
+	uint32_t key[4];
+	register uint32_t k0, k1, k2, k3;
+	register uint32_t temp0, temp1;
 
-extern uint8_t RC[17];
+	k0 = ((uint32_t*) roundKeys)[0];
+	k1 = ((uint32_t*) roundKeys)[1];
+	k2 = ((uint32_t*) roundKeys)[2];
+	k3 = ((uint32_t*) roundKeys)[3];
+  
+	THETA(k0, k1, k2, k3, 0, 0, 0, 0, temp0, temp1)
 
-#endif /* CONSTANTS_H */
+	key[0] = k0;
+	key[1] = k1;
+	key[2] = k2;
+	key[3] = k3;
+
+	CommonLoop((uint32_t*)block, key, NullVector, RC);
+}
