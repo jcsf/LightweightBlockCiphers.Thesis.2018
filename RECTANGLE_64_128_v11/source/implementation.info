@@ -1,15 +1,15 @@
-ImplementationDescription: Normal Implementation
+ImplementationDescription: 32-bits parcial implementation
 ImplementationAuthors: João Carlos Santos Fernandes
 
 EncryptionKeyScheduleConstants: constants
-EncryptConstants: constants
+EncryptConstants: 
 DecryptionKeyScheduleConstants:
-DecryptConstants: constants
+DecryptConstants: 
 
-EncryptionKeyScheduleCode: primitives
-EncryptCode: primitives 
+EncryptionKeyScheduleCode:
+EncryptCode: 
 DecryptionKeyScheduleCode:
-DecryptCode: primitives
+DecryptCode:
 
 UseEncryptionKeySchedule: yes
 UseDecryptionKeySchedule: no

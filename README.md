@@ -43,13 +43,33 @@ All block ciphers implementations have been made from the reference implementati
     * **Block:** 64 bits
     * **Key Size:** 80 bits
 
-* [RECTANGLE](RECTANGLE_64_80_v10/source)
+* [RECTANGLE-K80_v10](RECTANGLE_64_80_v10/source)
     * **Description:** FELICS Optimized Implementation
     * **Block:** 64 bits
     * **Key Size:** 80 bits
 
-* [RECTANGLE](RECTANGLE_64_128_v10/source)
-    * **Description:** FELICS Optimized Implementation
+* [RECTANGLE-K128_v10](RECTANGLE_64_128_v10/source)
+    * **Description:** FELICS Reference Optimized Implementation
+    * **Block:** 64 bits
+    * **Key Size:** 128 bits
+
+* [RECTANGLE-K128_v11](RECTANGLE_64_128_v11/source)
+    * **Description:** 32-bits parcial implementation
+    * **Block:** 64 bits
+    * **Key Size:** 128 bits
+
+* [RECTANGLE-K128_v11](RECTANGLE_64_128_v12/source)
+    * **Description:** 32-bits parcial implementation, Full Unroll
+    * **Block:** 64 bits
+    * **Key Size:** 128 bits
+
+* [RECTANGLE-K128_v13](RECTANGLE_64_128_v13/source)
+    * **Description:** 32-bits parcial implementation, State in Register Variables
+    * **Block:** 64 bits
+    * **Key Size:** 128 bits
+
+* [RECTANGLE-K128_v14](RECTANGLE_64_128_v14/source)
+    * **Description:** 32-bits parcial implementation, State in Register Variables, Full Unroll
     * **Block:** 64 bits
     * **Key Size:** 128 bits
 
@@ -168,13 +188,28 @@ All block ciphers implementations have been made from the reference implementati
     * **Block:** 64 bits
     * **Key Size:** 80 bits
 
-* [SPECK](Speck_64_128_v07/source)
-    * **Description:** Implementation from scratch
+* [SPECK-64_v07](Speck_64_128_v07/source)
+    * **Description:** Normal Implementation
     * **Block:** 64 bits
     * **Key Size:** 128 bits
 
-* [SPECK](Speck_128_128_v01/source)
-    * **Description:** Implementation from scratch
+* [SPECK-64_v08](Speck_64_128_v08/source)
+    * **Description:** Normal Implementation, Full Unroll
+    * **Block:** 64 bits
+    * **Key Size:** 128 bits
+
+* [SPECK-64_v09](Speck_64_128_v09/source)
+    * **Description:** State in Register Variables Implementation
+    * **Block:** 64 bits
+    * **Key Size:** 128 bits
+
+* [SPECK-64_v10](Speck_64_128_v10/source)
+    * **Description:** State in Register Variables Implementation, Full Unroll
+    * **Block:** 64 bits
+    * **Key Size:** 128 bits
+
+* [SPECK-128_v01](Speck_128_128_v01/source)
+    * **Description:** Normal Implementation
     * **Block:** 128 bits
     * **Key Size:** 128 bits
 
