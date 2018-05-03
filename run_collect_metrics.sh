@@ -25,6 +25,15 @@ ciphers="RoadRunneR_64_128_v02 RoadRunneR_64_128_v07 RoadRunneR_64_128_v08 RoadR
 # Comparision Between NOEKEON Normal, NOEKEON With Constants Table
 ciphers="NOEKEON_128_128_v03 NOEKEON_128_128_v04 NOEKEON_128_128_v05 NOEKEON_128_128_v06 NOEKEON_128_128_v07 NOEKEON_128_128_v08 NOEKEON_128_128_v09 NOEKEON_128_128_v10 NOEKEON_128_128_v11 NOEKEON_128_128_v12"
 
+# Comparision Between RECTANGLE Reference Implementation, RECTANGLE 32-Bits Parcial, RECTANGLE Full Unroll, RECTANGLE Register Variables, RECTANGLE Register Variables Unroll
+ciphers="RECTANGLE_64_128_v10 RECTANGLE_64_128_v11 RECTANGLE_64_128_v12 RECTANGLE_64_128_v13 RECTANGLE_64_128_v14"
+
+# Comparision Between SPECK Reference Implementation, SPECK Full Unroll, SPECK Register Variables, SPECK Register Variables Unroll
+ciphers="Speck_64_128_v07 Speck_64_128_v08 Speck_64_128_v09 Speck_64_128_v10"
+
+# Comparision Between SPARX Normal, SPARX 32-bits Speckey w/ Pointers, SPARX 32-bits Speckey w/ Return Value, SPARX 32-bits Speckey Inlined, SPARX 32-bits Full Unroll, SPARX 32-bits State In Registers and Steps in Cycles, SPARX 32-bits State in Registers, SPARX 32-bits State in Registers Full Unroll
+ciphers="SPARX_64_128_v36 SPARX_64_128_v37 SPARX_64_128_v38 SPARX_64_128_v39 SPARX_64_128_v40 SPARX_64_128_v41 SPARX_64_128_v42 SPARX_64_128_v43"
+
 # Current Ciphers
 #ciphers="AES_128_128_v02 PRESENT_64_80_v02 CLEFIA_128_128_v02 Speck_64_128_v07 RECTANGLE_64_128_v10 SPARX_64_128_v36 RoadRunneR_64_128_v07 NOEKEON_128_128_v03 NOEKEON_128_128_v04 Halka_64_80_v02"
 
