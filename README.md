@@ -13,7 +13,7 @@ Repository:
 
 All block ciphers implementations have been made from the reference implementations of the ciphers.
 
-* [AES_128_128_v07](AES_128_128_v02/source):
+* [AES_128_128_v02](AES_128_128_v02/source):
     * **Description:** FELICS Implementation, T-Box AES Implementation
     * **Block:** 128 bits
     * **Key Size:** 128 bits
@@ -38,47 +38,47 @@ All block ciphers implementations have been made from the reference implementati
     * **Block:** 128 bits
     * **Key Size:** 128 bits
 
-* [CLEFIA_128_128_](CLEFIA_128_128_v01/source)
+* [CLEFIA_128_128_v01](CLEFIA_128_128_v01/source)
     * **Description:** Based on Reference Implementation
     * **Block:** 128 bits
     * **Key Size:** 128 bits
 
-* [CLEFIA_128_128_](CLEFIA_128_128_v02/source)
+* [CLEFIA_128_128_v02](CLEFIA_128_128_v02/source)
     * **Description:** Code Cleaned from Reference Implementation
     * **Block:** 128 bits
     * **Key Size:** 128 bits
 
-* [CLEFIA_128_128_](CLEFIA_128_128_v03/source)
+* [CLEFIA_128_128_v03](CLEFIA_128_128_v03/source)
     * **Description:** T-Box Implementation
     * **Block:** 128 bits
     * **Key Size:** 128 bits
 
-* [CLEFIA_128_128_](CLEFIA_128_128_v04/source)
+* [CLEFIA_128_128_v04](CLEFIA_128_128_v04/source)
     * **Description:** 32-bits Oriented Implementation
     * **Block:** 128 bits
     * **Key Size:** 128 bits
 
-* [CLEFIA_128_128_](CLEFIA_128_128_v05/source)
+* [CLEFIA_128_128_v05](CLEFIA_128_128_v05/source)
     * **Description:** 32-bits Oriented Implementation, With Constants Table
     * **Block:** 128 bits
     * **Key Size:** 128 bits
 
-* [CLEFIA_128_128_](CLEFIA_128_128_v06/source)
+* [CLEFIA_128_128_v06](CLEFIA_128_128_v06/source)
     * **Description:** 32-bits Oriented Implementation, With T-Box and Constants Table
     * **Block:** 128 bits
     * **Key Size:** 128 bits
 
-* [CLEFIA_128_128_](CLEFIA_128_128_v07/source)
+* [CLEFIA_128_128_v07](CLEFIA_128_128_v07/source)
     * **Description:** 32-bits Oriented Implementation, With T-Box (Reduction from 8 to 4) and Constants Table
     * **Block:** 128 bits
     * **Key Size:** 128 bits
 
-* [CLEFIA_128_128_](CLEFIA_128_128_v08/source)
+* [CLEFIA_128_128_v08](CLEFIA_128_128_v08/source)
     * **Description:** 32-bits Oriented Implementation, With T-Box Reduction and Constants Table, F0 and F1 inlined
     * **Block:** 128 bits
     * **Key Size:** 128 bits
 
-* [CLEFIA_128_128_](CLEFIA_128_128_v09/source)
+* [CLEFIA_128_128_v09](CLEFIA_128_128_v09/source)
     * **Description:** 32-bits Oriented Implementation, With T-Box Reduction and Constants Table, Full Unroll
     * **Block:** 128 bits
     * **Key Size:** 128 bits
@@ -173,7 +173,7 @@ All block ciphers implementations have been made from the reference implementati
     * **Block:** 64 bits
     * **Key Size:** 128 bits
 
-* [RECTANGLE_64_128_v11](RECTANGLE_64_128_v12/source)
+* [RECTANGLE_64_128_v12](RECTANGLE_64_128_v12/source)
     * **Description:** 32-bits parcial implementation, Full Unroll
     * **Block:** 64 bits
     * **Key Size:** 128 bits
@@ -283,12 +283,12 @@ All block ciphers implementations have been made from the reference implementati
     * **Block:** 64 bits
     * **Key Size:** 128 bits
 
-* [SPECK_64_128_08](Speck_64_128_v08/source)
+* [SPECK_64_128_v08](Speck_64_128_v08/source)
     * **Description:** Normal Implementation, Full Unroll
     * **Block:** 64 bits
     * **Key Size:** 128 bits
 
-* [SPECK_64_128_09](Speck_64_128_v09/source)
+* [SPECK_64_128_v09](Speck_64_128_v09/source)
     * **Description:** State in Register Variables Implementation
     * **Block:** 64 bits
     * **Key Size:** 128 bits
