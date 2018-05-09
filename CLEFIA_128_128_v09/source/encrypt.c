@@ -38,8 +38,8 @@ void Encrypt(uint8_t *block, uint8_t *roundKeys)
 	uint32_t *data = (uint32_t*) block;
 
 	/* Initial Key Whitening */
-	data[1] = data[1] ^ rk[0];
-	data[3] = data[3] ^ rk[1];
+	data[1] ^= rk[0];
+	data[3] ^= rk[1];
 	rk += 2;
 
 	/* ClefiaGfn4 */
@@ -47,6 +47,6 @@ void Encrypt(uint8_t *block, uint8_t *roundKeys)
 	/* End ClefiaGfn4 */
 
 	/* Final Key Whitening */
-	data[1] = data[1] ^ rk[0];
-	data[3] = data[3] ^ rk[1];
+	data[1] ^= rk[0];
+	data[3] ^= rk[1];
 }

@@ -83,6 +83,16 @@ All block ciphers implementations have been made from the reference implementati
     * **Block:** 128 bits
     * **Key Size:** 128 bits
 
+* [CLEFIA_128_128_v10](CLEFIA_128_128_v10/source)
+    * **Description:** 32-bits Oriented Implementation, With T-Box Reduction and Constants Table, State in Registers
+    * **Block:** 128 bits
+    * **Key Size:** 128 bits
+
+* [CLEFIA_128_128_v11](CLEFIA_128_128_v11/source)
+    * **Description:** 32-bits Oriented Implementation, With T-Box Reduction and Constants Table, State in Registers, Full Unroll
+    * **Block:** 128 bits
+    * **Key Size:** 128 bits
+
 * [HALKA](Halka_64_80_v01/source):
     * **Description:** Based on Reference Implementation
     * **Block:** 64 bits
@@ -224,12 +234,32 @@ All block ciphers implementations have been made from the reference implementati
     * **Key Size:** 128 bits
 
 * [ROADRUNNER_64_128_v13](RoadRunneR_64_128_v13/source)
-    * **Description:** Implementation 32-bits partial oriented, one key scheduler, full unroll
+    * **Description:** Implementation 32-bits partial oriented, one key scheduler, Full Unroll
     * **Block:** 64 bits
     * **Key Size:** 128 bits
 
 * [ROADRUNNER_64_128_v14](RoadRunneR_64_128_v14/source)
-    * **Description:** Implementation 32-bits partial oriented, no key scheduler, full unroll
+    * **Description:** Implementation 32-bits partial oriented, no key scheduler, Full Unroll
+    * **Block:** 64 bits
+    * **Key Size:** 128 bits
+
+* [ROADRUNNER_64_128_v15](RoadRunneR_64_128_v15/source)
+    * **Description:** Implementation 32-bits partial oriented, one key scheduler, no function calls, SLK with Registers
+    * **Block:** 64 bits
+    * **Key Size:** 128 bits
+
+* [ROADRUNNER_64_128_v16](RoadRunneR_64_128_v16/source)
+    * **Description:** Implementation 32-bits partial oriented, no key scheduler, no function calls, SLK with Registers
+    * **Block:** 64 bits
+    * **Key Size:** 128 bits
+
+* [ROADRUNNER_64_128_v17](RoadRunneR_64_128_v17/source)
+    * **Description:** Implementation 32-bits partial oriented, one key scheduler, no function calls, SLK with Registers, Full Unroll
+    * **Block:** 64 bits
+    * **Key Size:** 128 bits
+
+* [ROADRUNNER_64_128_v18](RoadRunneR_64_128_v18/source)
+    * **Description:** Implementation 32-bits partial oriented, no key scheduler, no function calls, SLK with Registers, Full Unroll
     * **Block:** 64 bits
     * **Key Size:** 128 bits
 

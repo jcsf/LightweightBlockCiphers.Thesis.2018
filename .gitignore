@@ -59,6 +59,14 @@
 !CLEFIA_128_128_v09/*
 !CLEFIA_128_128_v09/source/*
 
+!CLEFIA_128_128_v10/
+!CLEFIA_128_128_v10/*
+!CLEFIA_128_128_v10/source/*
+
+!CLEFIA_128_128_v11/
+!CLEFIA_128_128_v11/*
+!CLEFIA_128_128_v11/source/*
+
 !Halka_64_80_v01/
 !Halka_64_80_v01/*
 !Halka_64_80_v01/source/*
@@ -166,6 +174,22 @@
 !RoadRunneR_64_128_v14/
 !RoadRunneR_64_128_v14/*
 !RoadRunneR_64_128_v14/source/*
+
+!RoadRunneR_64_128_v15/
+!RoadRunneR_64_128_v15/*
+!RoadRunneR_64_128_v15/source/*
+
+!RoadRunneR_64_128_v16/
+!RoadRunneR_64_128_v16/*
+!RoadRunneR_64_128_v16/source/*
+
+!RoadRunneR_64_128_v17/
+!RoadRunneR_64_128_v17/*
+!RoadRunneR_64_128_v17/source/*
+
+!RoadRunneR_64_128_v18/
+!RoadRunneR_64_128_v18/*
+!RoadRunneR_64_128_v18/source/*
 
 !SPARX_64_128_v37/
 !SPARX_64_128_v37/*

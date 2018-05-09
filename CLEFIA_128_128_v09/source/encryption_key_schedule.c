@@ -45,8 +45,25 @@ void RunEncryptionKeySchedule(uint8_t *key, uint8_t *roundKeys)
 
 	/* ClefiaGfn4 */
 	uint32_t *rcon128 = con128;
+	uint32_t temp;
 
-	ClefiaGfn4KeyScheduler(lk, rcon128)
+	for(i = 11; i > 0; i--) {
+		ClefiaF0Xor(lk, rcon128[0])
+		ClefiaF1Xor(lk + 2, rcon128[1])
+		rcon128 += 2;
+
+		/* Feistel Permutation */
+		temp = lk[0];
+		lk[0] = lk[1];
+		lk[1] = lk[2];
+		lk[2] = lk[3];
+		lk[3] = temp;
+	}
+
+  	/* Last Round */
+	ClefiaF0Xor(lk, rcon128[0])
+	ClefiaF1Xor(lk + 2, rcon128[1])
+	rcon128 += 2;
 	/* End ClefiaGfn4 */
 
 	/* Initial Whitening Key (WK0, WK1) */

@@ -37,8 +37,6 @@
  * Cipher Primitives
  *
  */
-extern void ClefiaGfn4(uint32_t *block, uint32_t *rk, int8_t rounds_minus_1);
-extern void ClefiaGfn4Inv(uint32_t *block, uint32_t* rk, int8_t rounds_minus_1);
 
 #define round(block, rk, round) \
 { \
@@ -80,22 +78,6 @@ extern void ClefiaGfn4Inv(uint32_t *block, uint32_t* rk, int8_t rounds_minus_1);
   round(block, rk, 15) \
   round(block, rk, 16) \
   round(block, rk, 17) \
-  last_round(block, rk) \
-}
-
-#define ClefiaGfn4KeyScheduler(block, rk) \
-{ \
-  round(block, rk, 1) \
-  round(block, rk, 2) \
-  round(block, rk, 3) \
-  round(block, rk, 4) \
-  round(block, rk, 5) \
-  round(block, rk, 6) \
-  round(block, rk, 7) \
-  round(block, rk, 8) \
-  round(block, rk, 9) \
-  round(block, rk, 10) \
-  round(block, rk, 11) \
   last_round(block, rk) \
 }
 

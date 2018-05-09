@@ -41,8 +41,8 @@ void Decrypt(uint8_t *block, uint8_t *roundKeys)
 	rk = rk + ((NUMBER_OF_ROUNDS + 1) << 1); // (NUMBER_OF_ROUNDS + 1) * 2
 	
 	/* Initial Key Whitening */
-	data[1] = data[1] ^ rk[0];
-	data[3] = data[3] ^ rk[1];
+	data[1] ^= rk[0];
+	data[3] ^= rk[1];
 	rk -= 2;
 
 	/* ClefiaGfn4Inv*/
@@ -50,6 +50,6 @@ void Decrypt(uint8_t *block, uint8_t *roundKeys)
 	/* End ClefiaGfn4Inv */
 
 	/* Final Key Whitening */
-	data[1] = data[1] ^ rk[0];
-	data[3] = data[3] ^ rk[1];	
+	data[1] ^= rk[0];
+	data[3] ^= rk[1];	
 }

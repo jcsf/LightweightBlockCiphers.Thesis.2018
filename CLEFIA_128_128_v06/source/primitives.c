@@ -43,7 +43,7 @@ void ClefiaGfn4(uint32_t *block, uint32_t *rk, int8_t rounds_minus_1) {
   uint8_t i;
   uint32_t temp;
 
-	for(i = 0; i < rounds_minus_1; i++) {
+	for(i = rounds_minus_1; i > 0; i--) {
 		ClefiaF0Xor(block, rk[0]);
 		ClefiaF1Xor(block + 2, rk[1]);
 		rk += 2;
@@ -65,7 +65,7 @@ void ClefiaGfn4Inv(uint32_t *block, uint32_t* rk, int8_t rounds_minus_1) {
   uint8_t i;
   uint32_t temp;
 
-	for(i = 0; i < rounds_minus_1; i++) {
+	for(i = rounds_minus_1; i > 0; i--) {
 		ClefiaF0Xor(block, rk[0]);
 		ClefiaF1Xor(block + 2, rk[1]);
 		rk -= 2;
