@@ -34,6 +34,9 @@ ciphers="Speck_64_128_v07 Speck_64_128_v08 Speck_64_128_v09 Speck_64_128_v10"
 # Comparision Between SPARX Normal, SPARX 32-bits Speckey w/ Pointers, SPARX 32-bits Speckey w/ Return Value, SPARX 32-bits Speckey Inlined, SPARX 32-bits Full Unroll, SPARX 32-bits State In Registers and Steps in Cycles, SPARX 32-bits State in Registers, SPARX 32-bits State in Registers Full Unroll
 ciphers="SPARX_64_128_v36 SPARX_64_128_v37 SPARX_64_128_v38 SPARX_64_128_v39 SPARX_64_128_v40 SPARX_64_128_v41 SPARX_64_128_v42 SPARX_64_128_v43"
 
+# PRESENT FELICS Implementations
+ciphers="PRESENT_64_80_v01 PRESENT_64_80_v02 PRESENT_64_80_v03 PRESENT_64_80_v04 PRESENT_64_80_v05 PRESENT_64_80_v06"
+
 # Current Ciphers
 #ciphers="AES_128_128_v02 PRESENT_64_80_v02 CLEFIA_128_128_v02 Speck_64_128_v07 RECTANGLE_64_128_v10 SPARX_64_128_v36 RoadRunneR_64_128_v07 NOEKEON_128_128_v03 NOEKEON_128_128_v04 Halka_64_80_v02"
 
