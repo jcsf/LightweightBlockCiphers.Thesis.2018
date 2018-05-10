@@ -6,6 +6,10 @@
 !run_collect_metrics.sh
 !run_cipher_arm.sh
 
+# METRICS
+!Metrics/
+!Metrics/*
+
 # MY IMPLEMENTATIONS
 !AES_128_128_v08/
 !AES_128_128_v08/*
