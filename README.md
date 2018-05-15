@@ -13,8 +13,8 @@ Repository:
 
 All block ciphers implementations have been made from the reference implementations of the ciphers.
 
-* [AES_128_128_v02](AES_128_128_v02/source):
-    * **Description:** FELICS Implementation, T-Box AES Implementation
+* [AES_128_128_v01](AES_128_128_v01/source):
+    * **Description:** FELICS Implementation, AES Normal
     * **Block:** 128 bits
     * **Key Size:** 128 bits
 
@@ -24,17 +24,27 @@ All block ciphers implementations have been made from the reference implementati
     * **Key Size:** 128 bits
 
 * [AES_128_128_v09](AES_128_128_v09/source):
-    * **Description:** T-Box Compressed AES Implementation with cycle for rounds (12 Tables to 3)
+    * **Description:** T-Box Compressed (12 Tables to 3) AES Compact Implementation (Permutations and Cycles)
     * **Block:** 128 bits
     * **Key Size:** 128 bits
 
 * [AES_128_128_v10](AES_128_128_v10/source):
-    * **Description:** T-Box Compressed AES Compact Implementation (No Function Calls only Permutations and Cyles)
+    * **Description:** T-Box Compressed AES Compact Implementation (No Permutations)
     * **Block:** 128 bits
     * **Key Size:** 128 bits
 
 * [AES_128_128_v11](AES_128_128_v11/source):
     * **Description:** T-Box Compressed AES Implementation, Full Unroll
+    * **Block:** 128 bits
+    * **Key Size:** 128 bits
+
+* [AES_128_128_v12](AES_128_128_v12/source):
+    * **Description:** T-Box Compressed AES Compact Implementation (No Permutations), State in Registers
+    * **Block:** 128 bits
+    * **Key Size:** 128 bits
+
+* [AES_128_128_v13](AES_128_128_v13/source):
+    * **Description:** T-Box Compressed AES Implementation, State in Registers, Full Unroll
     * **Block:** 128 bits
     * **Key Size:** 128 bits
 

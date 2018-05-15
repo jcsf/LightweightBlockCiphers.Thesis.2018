@@ -16,8 +16,8 @@ ciphers="Speck_64_128_v07 Speck_128_128_v01"
 # Comparision Between CLEFIA Normal, CLEFIA 32-Bits, CLEFIA Constants Table, CLEFIA T-Box, CLEFIA T-Box Reduction, CLEFIA F-functions inline, CLEFIA Full Unroll, CLEFIA Register Variables
 ciphers="CLEFIA_128_128_v02 CLEFIA_128_128_v04 CLEFIA_128_128_v05 CLEFIA_128_128_v06 CLEFIA_128_128_v07 CLEFIA_128_128_v08 CLEFIA_128_128_v09 CLEFIA_128_128_v10 CLEFIA_128_128_v11"
 
-# Comparision Between AES T-Box Full Unroll, AES T-Box Round Cycle, AES Reduced T-Box Round Cycle, AES Compact T-Box, AES Reduced T-Box Full Unroll
-ciphers="AES_128_128_v02 AES_128_128_v08 AES_128_128_v09 AES_128_128_v10 AES_128_128_v11"
+# Comparision Between AES Normal, AES T-Box Round Cycle, AES Reduced T-Box Round Cycle, AES Compact T-Box, AES Reduced T-Box Full Unroll, AES Reduced T-Box State in Registers, Full Unroll
+ciphers="AES_128_128_v01 AES_128_128_v08 AES_128_128_v09 AES_128_128_v10 AES_128_128_v11 AES_128_128_v12 AES_128_128_v13"
 
 # Comparision Between RoadRunner Reference Implementation, RoadRunner One Key Scheduler, RoadRunner No Key Scheduler, RoadRunner 32-bits parcial implementation, RoadRunneR No Function Calls, RoadRunner Full Unroll, RoadRunneR SLK Registers
 ciphers="RoadRunneR_64_128_v02 RoadRunneR_64_128_v07 RoadRunneR_64_128_v08 RoadRunneR_64_128_v09 RoadRunneR_64_128_v10 RoadRunneR_64_128_v11 RoadRunneR_64_128_v12 RoadRunneR_64_128_v13 RoadRunneR_64_128_v14 RoadRunneR_64_128_v15 RoadRunneR_64_128_v16 RoadRunneR_64_128_v17 RoadRunneR_64_128_v18"
@@ -39,6 +39,8 @@ ciphers="PRESENT_64_80_v01 PRESENT_64_80_v02 PRESENT_64_80_v03 PRESENT_64_80_v04
 
 # Current Ciphers
 ciphers="CLEFIA_128_128_v02 CLEFIA_128_128_v04 CLEFIA_128_128_v05 CLEFIA_128_128_v06 CLEFIA_128_128_v07 CLEFIA_128_128_v08 CLEFIA_128_128_v09 CLEFIA_128_128_v10 CLEFIA_128_128_v11 AES_128_128_v02 AES_128_128_v08 AES_128_128_v09 AES_128_128_v10 AES_128_128_v11 RoadRunneR_64_128_v02 RoadRunneR_64_128_v07 RoadRunneR_64_128_v08 RoadRunneR_64_128_v09 RoadRunneR_64_128_v10 RoadRunneR_64_128_v11 RoadRunneR_64_128_v12 RoadRunneR_64_128_v13 RoadRunneR_64_128_v14 RoadRunneR_64_128_v15 RoadRunneR_64_128_v16 RoadRunneR_64_128_v17 RoadRunneR_64_128_v18 NOEKEON_128_128_v03 NOEKEON_128_128_v04 NOEKEON_128_128_v05 NOEKEON_128_128_v06 NOEKEON_128_128_v07 NOEKEON_128_128_v08 NOEKEON_128_128_v09 NOEKEON_128_128_v10 NOEKEON_128_128_v11 NOEKEON_128_128_v12 RECTANGLE_64_128_v10 RECTANGLE_64_128_v11 RECTANGLE_64_128_v12 RECTANGLE_64_128_v13 RECTANGLE_64_128_v14 Speck_64_128_v07 Speck_64_128_v08 Speck_64_128_v09 Speck_64_128_v10 SPARX_64_128_v36 SPARX_64_128_v37 SPARX_64_128_v38 SPARX_64_128_v39 SPARX_64_128_v40 SPARX_64_128_v41 SPARX_64_128_v42 SPARX_64_128_v43"
+
+ciphers="AES_128_128_v01 AES_128_128_v08 AES_128_128_v09 AES_128_128_v10 AES_128_128_v11 AES_128_128_v12 AES_128_128_v13"
 
 cd /home/felics/FELICS/FELICS_v1.1.23/block_ciphers/scripts/
 

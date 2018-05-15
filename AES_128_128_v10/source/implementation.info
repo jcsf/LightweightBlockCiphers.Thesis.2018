@@ -1,4 +1,4 @@
-ImplementationDescription: T-Box Compressed AES Compact Implementation (No Function Calls only Permutations and Cyles)
+ImplementationDescription: T-Box Compressed AES Compact Implementation (No Permutations)
 ImplementationAuthors: João Carlos Santos Fernandes
 
 EncryptionKeyScheduleConstants: sbox, rcon

@@ -1,5 +1,5 @@
-ImplementationDescription: Fast table-based AES implementation
-ImplementationAuthors: Dmitry Khovratovich
+ImplementationDescription: T-Box Compressed AES Implementation, State in Registers, Full Unroll
+ImplementationAuthors: João Carlos Santos Fernandes
 
 EncryptionKeyScheduleConstants: sbox, rcon
 EncryptConstants: sbox, table

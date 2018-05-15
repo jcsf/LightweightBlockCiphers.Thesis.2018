@@ -26,25 +26,9 @@
  *
  */
 
-#include <stdint.h>
+#ifndef KEY_SCHEDULE_H
+#define KEY_SCHEDULE_H
 
-#include "key_schedule.h"
-#include "constants.h"
+void KeySchedule(uint8_t *key, uint8_t *roundKeys);
 
-
-void RunDecryptionKeySchedule(uint8_t *key, uint8_t *roundKeys)
-{
-	uint8_t i;	
-
-
-	KeySchedule(key, roundKeys);
-	
-	for (i = 4; i < 40; ++i)
-	{
-		((uint32_t*)roundKeys)[i] = 
-			READ_KS_DOUBLE_WORD(inv_MC0[roundKeys[4 * i]]) ^ 
-			READ_KS_DOUBLE_WORD(inv_MC1[roundKeys[4 * i + 1]]) ^
-			READ_KS_DOUBLE_WORD(inv_MC2[roundKeys[4 * i + 2]]) ^ 
-			READ_KS_DOUBLE_WORD(inv_MC3[roundKeys[4 * i + 3]]);
-	}
-}
+#endif /* KEY_SCHEDULE_H */

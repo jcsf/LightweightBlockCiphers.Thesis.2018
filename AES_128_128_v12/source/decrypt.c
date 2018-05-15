@@ -38,24 +38,30 @@ void Decrypt(uint8_t *block, uint8_t *roundKeys)
 	uint8_t i, j;
 
 	// Go To the End of the Keys
-	rk = rk + (NUMBER_OF_ROUNDS << 2) + 3; // rk = rk + (NUMBER_OF_ROUNDS * 4);
+	rk = rk + (NUMBER_OF_ROUNDS << 2); // rk = rk + (NUMBER_OF_ROUNDS * 4);
 
-	j = 3;
-	// Add Last Key
-	for(i = 0; i < 4; i++) {
-		data[j] = data[j] ^ *rk;
-		rk -= 1;
-		j -= 1;
-	}
+	register uint32_t x0, x1, x2, x3, t0, t1, t2, t3;
+	register uint32_t data0, data1, data2, data3;
+	
+	data0 = data[0];
+	data1 = data[1];
+	data2 = data[2];
+	data3 = data[3];
 
-	uint32_t x0, x1, x2, x3, t0, t1, t2, t3;
+	// Add Initial Key
+	data0 ^= rk[0];
+	data1 ^= rk[1];
+	data2 ^= rk[2];
+	data3 ^= rk[3];
 
+	rk -= 1;
+	
 	// Rounds
 	for(i = 0; i < NUMBER_OF_ROUNDS - 1; i++) {
-		x0 = data[0];
-		x1 = data[1];
-		x2 = data[2];
-		x3 = data[3];
+		x0 = data0;
+		x1 = data1;
+		x2 = data2;
+		x3 = data3;
 
 		// Fourth Row
 		t0 = (uint8_t)(x3);
@@ -67,7 +73,7 @@ void Decrypt(uint8_t *block, uint8_t *roundKeys)
 		t3 = (uint8_t)(x0 >> 24);
 		inv_T3(t3)
 		
-		data[3] = (t0 ^ t1 ^ t2 ^ t3) ^ *rk;
+		data3 = (t0 ^ t1 ^ t2 ^ t3) ^ *rk;
 		rk -= 1;
 
 		// Third Row
@@ -80,7 +86,7 @@ void Decrypt(uint8_t *block, uint8_t *roundKeys)
 		t3 = (uint8_t)(x3 >> 24);
 		inv_T3(t3)
 		
-		data[2] = (t0 ^ t1 ^ t2 ^ t3) ^ *rk;
+		data2 = (t0 ^ t1 ^ t2 ^ t3) ^ *rk;
 		rk -= 1;
 
 		// Second Row
@@ -93,7 +99,7 @@ void Decrypt(uint8_t *block, uint8_t *roundKeys)
 		t3 = (uint8_t)(x2 >> 24);
 		inv_T3(t3)
 		
-		data[1] = (t0 ^ t1 ^ t2 ^ t3) ^ *rk;
+		data1 = (t0 ^ t1 ^ t2 ^ t3) ^ *rk;
 		rk -= 1;
 
 		// First Row
@@ -106,65 +112,60 @@ void Decrypt(uint8_t *block, uint8_t *roundKeys)
 		t3 = (uint8_t)(x1 >> 24);
 		inv_T3(t3)
 		
-		data[0] = (t0 ^ t1 ^ t2 ^ t3) ^ *rk;
+		data0 = (t0 ^ t1 ^ t2 ^ t3) ^ *rk;
 		rk -= 1;
 	}
 
 	// Last Round
-	x0 = data[0];
-	x1 = data[1];
-	x2 = data[2];
-	x3 = data[3];
 
 	// Fourth Row
-	t0 = (uint8_t)(x3);
+	t0 = (uint8_t)(data3);
 	t0 = inv_Sbox[t0];
-	t1 = (uint8_t)(x2 >> 8);
+	t1 = (uint8_t)(data2 >> 8);
 	t1 = inv_Sbox[t1];
-	t2 = (uint8_t)(x1 >> 16);
+	t2 = (uint8_t)(data1 >> 16);
 	t2 = inv_Sbox[t2];
-	t3 = (uint8_t)(x0 >> 24);
+	t3 = (uint8_t)(data0 >> 24);
 	t3 = inv_Sbox[t3];
 
 	data[3] = ((t0) | (t1 << 8) | (t2 << 16) | (t3 << 24)) ^ *rk;
 	rk -= 1;
 
 	// Third Row
-	t0 = (uint8_t)(x2);
+	t0 = (uint8_t)(data2);
 	t0 = inv_Sbox[t0];
-	t1 = (uint8_t)(x1 >> 8);
+	t1 = (uint8_t)(data1 >> 8);
 	t1 = inv_Sbox[t1];
-	t2 = (uint8_t)(x0 >> 16);
+	t2 = (uint8_t)(data0 >> 16);
 	t2 = inv_Sbox[t2];
-	t3 = (uint8_t)(x3 >> 24);
+	t3 = (uint8_t)(data3 >> 24);
 	t3 = inv_Sbox[t3];
 
 	data[2] = ((t0) | (t1 << 8) | (t2 << 16) | (t3 << 24)) ^ *rk;
 	rk -= 1;
 
 	// Second Row
-	t0 = (uint8_t)(x1);
+	t0 = (uint8_t)(data1);
 	t0 = inv_Sbox[t0];
-	t1 = (uint8_t)(x0 >> 8);
+	t1 = (uint8_t)(data0 >> 8);
 	t1 = inv_Sbox[t1];
-	t2 = (uint8_t)(x3 >> 16);
+	t2 = (uint8_t)(data3 >> 16);
 	t2 = inv_Sbox[t2];
-	t3 = (uint8_t)(x2 >> 24);
+	t3 = (uint8_t)(data2 >> 24);
 	t3 = inv_Sbox[t3];
 
 	data[1] = ((t0) | (t1 << 8) | (t2 << 16) | (t3 << 24)) ^ *rk;
 	rk -= 1;
 	
 	// First Row
-	t0 = (uint8_t)(x0);
+	t0 = (uint8_t)(data0);
 	t0 = inv_Sbox[t0];
-	t1 = (uint8_t)(x3 >> 8);
+	t1 = (uint8_t)(data3 >> 8);
 	t1 = inv_Sbox[t1];
-	t2 = (uint8_t)(x2 >> 16);
+	t2 = (uint8_t)(data2 >> 16);
 	t2 = inv_Sbox[t2];
-	t3 = (uint8_t)(x1 >> 24);
+	t3 = (uint8_t)(data1 >> 24);
 	t3 = inv_Sbox[t3];
 
 	data[0] = ((t0) | (t1 << 8) | (t2 << 16) | (t3 << 24)) ^ *rk;
-	rk -= 1;
 }

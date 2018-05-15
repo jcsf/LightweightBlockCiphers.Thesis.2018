@@ -1,4 +1,4 @@
-ImplementationDescription: T-Box Compressed (12 Tables to 3) AES Compact Implementation (Permutations and Cycles) 
+ImplementationDescription: T-Box Compressed AES Compact Implementation (No Permutations), State in Registers
 ImplementationAuthors: João Carlos Santos Fernandes
 
 EncryptionKeyScheduleConstants: sbox, rcon
