@@ -1,4 +1,4 @@
-ImplementationDescription: 32-bits parcial implementation, State in Register Variables
+ImplementationDescription: 32-bits parcial implementation, No Function Calls, Full Unroll
 ImplementationAuthors: João Carlos Santos Fernandes
 
 EncryptionKeyScheduleConstants: constants

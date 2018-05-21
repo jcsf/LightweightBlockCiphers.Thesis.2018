@@ -1,0 +1,15 @@
+ImplementationDescription:  32-bit oriented (S-Box 4 bits)
+ImplementationAuthors: João Carlos Santos Fernandes
+
+EncryptionKeyScheduleConstants: sbox
+EncryptConstants: sbox
+DecryptionKeyScheduleConstants:
+DecryptConstants: inv_sbox
+
+EncryptionKeyScheduleCode: 
+EncryptCode: 
+DecryptionKeyScheduleCode:
+DecryptCode:
+
+UseEncryptionKeySchedule: yes
+UseDecryptionKeySchedule: no

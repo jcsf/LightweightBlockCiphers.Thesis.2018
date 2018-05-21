@@ -173,18 +173,38 @@ All block ciphers implementations have been made from the reference implementati
     * **Block:** 128 bits
     * **Key Size:** 128 bits
     
-* [PRESENT](PRESENT_64_80_v02/source)
-    * **Description:** FELICS Implementation, Software Optimized
+* [PRESENT_64_80_v01](PRESENT_64_80_v01/source)
+    * **Description:** FELICS Reference Implementation
+    * **Block:** 64 bits
+    * **Key Size:** 80 bits
+
+* [PRESENT_64_80_v07](PRESENT_64_80_v07/source)
+    * **Description:** 32-bits oriented implementation (SBox 4-bits)
+    * **Block:** 64 bits
+    * **Key Size:** 80 bits
+
+* [PRESENT_64_80_v08](PRESENT_64_80_v08/source)
+    * **Description:** 32-bits oriented implementation (SBox 8-bits)
+    * **Block:** 64 bits
+    * **Key Size:** 80 bits
+
+* [PRESENT_64_80_v09](PRESENT_64_80_v09/source)
+    * **Description:** 32-bits oriented implementation (SBox 8-bits)
     * **Block:** 64 bits
     * **Key Size:** 80 bits
 
 * [RECTANGLE_64_128_v10](RECTANGLE_64_80_v10/source)
-    * **Description:** FELICS Optimized Implementation
+    * **Description:** FELICS Optimized Implementation, No Function Calls
     * **Block:** 64 bits
     * **Key Size:** 80 bits
 
+* [RECTANGLE_64_128_v01](RECTANGLE_64_128_v01/source)
+    * **Description:** FELICS Reference Implementation
+    * **Block:** 64 bits
+    * **Key Size:** 128 bits
+
 * [RECTANGLE_64_128_v10](RECTANGLE_64_128_v10/source)
-    * **Description:** FELICS Reference Optimized Implementation
+    * **Description:** FELICS Optimized Implementation, No Function Calls
     * **Block:** 64 bits
     * **Key Size:** 128 bits
 
@@ -194,16 +214,21 @@ All block ciphers implementations have been made from the reference implementati
     * **Key Size:** 128 bits
 
 * [RECTANGLE_64_128_v12](RECTANGLE_64_128_v12/source)
-    * **Description:** 32-bits parcial implementation, Full Unroll
+    * **Description:** 32-bits parcial implementation, No Function Calls
     * **Block:** 64 bits
     * **Key Size:** 128 bits
 
 * [RECTANGLE_64_128_v13](RECTANGLE_64_128_v13/source)
-    * **Description:** 32-bits parcial implementation, State in Register Variables
+    * **Description:** 32-bits parcial implementation, No Function Calls, Full Unroll
     * **Block:** 64 bits
     * **Key Size:** 128 bits
 
 * [RECTANGLE_64_128_v14](RECTANGLE_64_128_v14/source)
+    * **Description:** 32-bits parcial implementation, State in Register Variables
+    * **Block:** 64 bits
+    * **Key Size:** 128 bits
+
+* [RECTANGLE_64_128_v15](RECTANGLE_64_128_v15/source)
     * **Description:** 32-bits parcial implementation, State in Register Variables, Full Unroll
     * **Block:** 64 bits
     * **Key Size:** 128 bits

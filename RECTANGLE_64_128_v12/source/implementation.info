@@ -1,4 +1,4 @@
-ImplementationDescription: 32-bits parcial implementation, Full Unroll
+ImplementationDescription: 32-bits parcial implementation, No Function Calls
 ImplementationAuthors: João Carlos Santos Fernandes
 
 EncryptionKeyScheduleConstants: constants

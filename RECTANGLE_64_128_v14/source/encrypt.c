@@ -31,43 +31,6 @@
 #include "cipher.h"
 #include "constants.h"
 
-#define round(data0, data1, roundKeys32, w0, w1, w2, w3, sbox0, sbox1)\
-{\
-	/* AddRoundKey */ \
-	data0 ^= roundKeys32[0]; \
-	data1 ^= roundKeys32[1]; \
-	roundKeys32 += 2; \
-	\
-	/* Change to 16 bits */ \
-	w0 = (uint16_t)data0; \
-	w1 = (uint16_t)(data0>>16); \
-	w2 = (uint16_t)data1; \
-	w3 = (uint16_t)(data1>>16); \
-	\
-	/* SubColumn */	\
-	sbox1 = ~w1; \
-	sbox0 = sbox1 | w3; \
-	sbox0 ^= w0; \
-	w0 &= sbox1; \
-	sbox1 = w2 ^ w3; \
-	w0 ^= sbox1; \
-	w3 = w1 ^ w2; \
-	w1 = w2 ^ sbox0; \
-	sbox1 &= sbox0; \
-	w3 ^= sbox1; \
-	w2 = w0 | w3; \
-	w2 ^= sbox0; \
-	\
-	/* ShiftRow */ \
-	w1 = (w1<<1  | w1 >> 15); \
-	w2 = (w2<<12 | w2 >> 4); \
-	w3 = (w3<<13 | w3 >> 3); \
-	\
-	/* Back to 32 bits */ \
-	data0 = w0 | (w1 << 16); \
-	data1 = w2 | (w3 << 16); \
-}
-
 void Encrypt(uint8_t *block, uint8_t *roundKeys)
 {
 	uint32_t *block32 = (uint32_t*)block;
@@ -76,35 +39,46 @@ void Encrypt(uint8_t *block, uint8_t *roundKeys)
 	register uint32_t data0, data1;
 	register uint16_t w0, w1, w2, w3;
 	register uint16_t sbox0, sbox1;
+	register uint8_t i;
 	
 	data0 = block32[0];
 	data1 = block32[1];
 
-	round(data0, data1, roundKeys32, w0, w1, w2, w3, sbox0, sbox1)
-	round(data0, data1, roundKeys32, w0, w1, w2, w3, sbox0, sbox1)
-	round(data0, data1, roundKeys32, w0, w1, w2, w3, sbox0, sbox1)
-	round(data0, data1, roundKeys32, w0, w1, w2, w3, sbox0, sbox1)
-	round(data0, data1, roundKeys32, w0, w1, w2, w3, sbox0, sbox1)
-	round(data0, data1, roundKeys32, w0, w1, w2, w3, sbox0, sbox1)
-	round(data0, data1, roundKeys32, w0, w1, w2, w3, sbox0, sbox1)
-	round(data0, data1, roundKeys32, w0, w1, w2, w3, sbox0, sbox1)
-	round(data0, data1, roundKeys32, w0, w1, w2, w3, sbox0, sbox1)
-	round(data0, data1, roundKeys32, w0, w1, w2, w3, sbox0, sbox1)
-	round(data0, data1, roundKeys32, w0, w1, w2, w3, sbox0, sbox1)
-	round(data0, data1, roundKeys32, w0, w1, w2, w3, sbox0, sbox1)
-	round(data0, data1, roundKeys32, w0, w1, w2, w3, sbox0, sbox1)
-	round(data0, data1, roundKeys32, w0, w1, w2, w3, sbox0, sbox1)
-	round(data0, data1, roundKeys32, w0, w1, w2, w3, sbox0, sbox1)
-	round(data0, data1, roundKeys32, w0, w1, w2, w3, sbox0, sbox1)
-	round(data0, data1, roundKeys32, w0, w1, w2, w3, sbox0, sbox1)
-	round(data0, data1, roundKeys32, w0, w1, w2, w3, sbox0, sbox1)
-	round(data0, data1, roundKeys32, w0, w1, w2, w3, sbox0, sbox1)
-	round(data0, data1, roundKeys32, w0, w1, w2, w3, sbox0, sbox1)
-	round(data0, data1, roundKeys32, w0, w1, w2, w3, sbox0, sbox1)
-	round(data0, data1, roundKeys32, w0, w1, w2, w3, sbox0, sbox1)
-	round(data0, data1, roundKeys32, w0, w1, w2, w3, sbox0, sbox1)
-	round(data0, data1, roundKeys32, w0, w1, w2, w3, sbox0, sbox1)
-	round(data0, data1, roundKeys32, w0, w1, w2, w3, sbox0, sbox1)
+	for (i = NUMBER_OF_ROUNDS; i > 0 ; i--) {
+		/* AddRoundKey */
+		data0 ^= roundKeys32[0];
+		data1 ^= roundKeys32[1];
+		roundKeys32 += 2;
+		
+		/* Change to 16 bits */
+		w0 = (uint16_t)data0;
+		w1 = (uint16_t)(data0>>16);
+		w2 = (uint16_t)data1;
+		w3 = (uint16_t)(data1>>16);
+
+		/* SubColumn */	
+		sbox1 = ~w1;
+		sbox0 = sbox1 | w3;
+		sbox0 ^= w0;
+		w0 &= sbox1;
+		sbox1 = w2 ^ w3;
+		w0 ^= sbox1;
+		w3 = w1 ^ w2;
+		w1 = w2 ^ sbox0;
+		sbox1 &= sbox0;
+		w3 ^= sbox1;
+		w2 = w0 | w3;
+		w2 ^= sbox0;
+
+		/* ShiftRow */
+		w1 = (w1<<1  | w1 >> 15);
+		w2 = (w2<<12 | w2 >> 4);
+		w3 = (w3<<13 | w3 >> 3);
+
+		/* Back to 32 bits */
+		data0 = w0 | (w1 << 16);
+		data1 = w2 | (w3 << 16);
+	}
 
 	/* Last Round Add Key */
 	block32[0] = data0 ^ roundKeys32[0];

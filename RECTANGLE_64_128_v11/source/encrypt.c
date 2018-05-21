@@ -31,13 +31,50 @@
 #include "cipher.h"
 #include "constants.h"
 
+void S_layer(uint32_t *data){
+	uint16_t w0 = (uint16_t)data[0];
+	uint16_t w1 = (uint16_t)(data[0]>>16);
+	uint16_t w2 = (uint16_t)data[1];
+	uint16_t w3 = (uint16_t)(data[1]>>16);
+
+    uint16_t  sbox0, sbox1;
+
+   	sbox1 = ~w1;
+	sbox0 = sbox1 | w3;
+	sbox0 ^= w0;
+	w0 &= sbox1;
+	sbox1 = w2 ^ w3;
+	w0 ^= sbox1;
+	w3 = w1 ^ w2;
+	w1 = w2 ^ sbox0;
+	sbox1 &= sbox0;
+	w3 ^= sbox1;
+	w2 = w0 | w3;
+	w2 ^= sbox0;
+
+	data[0] = w0 | (w1 << 16);
+	data[1] = w2 | (w3 << 16);
+}
+
+void  P_layer(uint32_t *data) {
+	uint16_t w0 = (uint16_t)data[0];
+	uint16_t w1 = (uint16_t)(data[0]>>16);
+	uint16_t w2 = (uint16_t)data[1];
+	uint16_t w3 = (uint16_t)(data[1]>>16);
+
+	w1 = (w1<<1  | w1 >> 15);
+	w2 = (w2<<12 | w2 >> 4);
+	w3 = (w3<<13 | w3 >> 3);
+
+	data[0] = w0 | (w1 << 16);
+	data[1] = w2 | (w3 << 16);
+}
+
 void Encrypt(uint8_t *block, uint8_t *roundKeys)
 {
 	uint32_t *block32 = (uint32_t*)block;
 	uint32_t *roundKeys32 = (uint32_t*)roundKeys;
 
-	uint16_t w0, w1, w2, w3;
-	uint16_t sbox0, sbox1;
 	int8_t i;
 	
 	for (i = NUMBER_OF_ROUNDS; i > 0 ; i--) {
@@ -46,34 +83,11 @@ void Encrypt(uint8_t *block, uint8_t *roundKeys)
 		block32[1] ^= roundKeys32[1];
 		roundKeys32 += 2;
 		
-		/* Change to 16 bits */
-		w0 = (uint16_t)block32[0];
-		w1 = (uint16_t)(block32[0]>>16);
-		w2 = (uint16_t)block32[1];
-		w3 = (uint16_t)(block32[1]>>16);
-
 		/* SubColumn */	
-		sbox1 = ~w1;
-		sbox0 = sbox1 | w3;
-		sbox0 ^= w0;
-		w0 &= sbox1;
-		sbox1 = w2 ^ w3;
-		w0 ^= sbox1;
-		w3 = w1 ^ w2;
-		w1 = w2 ^ sbox0;
-		sbox1 &= sbox0;
-		w3 ^= sbox1;
-		w2 = w0 | w3;
-		w2 ^= sbox0;
+		S_layer(block32);
 
 		/* ShiftRow */
-		w1 = (w1<<1  | w1 >> 15);
-		w2 = (w2<<12 | w2 >> 4);
-		w3 = (w3<<13 | w3 >> 3);
-
-		/* Back to 32 bits */
-		block32[0] = w0 | (w1 << 16);
-		block32[1] = w2 | (w3 << 16);
+		P_layer(block32);
 	}
 
 	/* Last Round Add Key */
