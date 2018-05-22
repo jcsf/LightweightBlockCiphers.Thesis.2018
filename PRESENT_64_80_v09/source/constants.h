@@ -55,7 +55,6 @@
  *
  */
 extern uint8_t sBox4[];
-extern uint8_t sBox8[];
-extern uint8_t invsBox8[];
+extern uint8_t invsBox4[];
 
 #endif /* CONSTANTS_H */

@@ -189,7 +189,27 @@ All block ciphers implementations have been made from the reference implementati
     * **Key Size:** 80 bits
 
 * [PRESENT_64_80_v09](PRESENT_64_80_v09/source)
-    * **Description:** 32-bits oriented implementation (SBox 8-bits)
+    * **Description:** 32-bits oriented implementation (SBox 4-bits), Unroll Permutations
+    * **Block:** 64 bits
+    * **Key Size:** 80 bits
+
+* [PRESENT_64_80_v10](PRESENT_64_80_v10/source)
+    * **Description:** 32-bits oriented implementation (SBox 8-bits), Unroll Permutations
+    * **Block:** 64 bits
+    * **Key Size:** 80 bits
+
+* [PRESENT_64_80_v11](PRESENT_64_80_v11/source)
+    * **Description:** 32-bits oriented implementation (SBox 8-bits), State in Registers
+    * **Block:** 64 bits
+    * **Key Size:** 80 bits
+
+* [PRESENT_64_80_v12](PRESENT_64_80_v12/source)
+    * **Description:** 32-bits oriented implementation (SBox 8-bits), State in Registers, Unroll Permutations
+    * **Block:** 64 bits
+    * **Key Size:** 80 bits
+
+* [PRESENT_64_80_v13](PRESENT_64_80_v13/source)
+    * **Description:** 32-bits oriented implementation (SBox 8-bits), State in Registers, Unroll Permutations, Full Unroll
     * **Block:** 64 bits
     * **Key Size:** 80 bits
 

@@ -35,14 +35,17 @@ void Decrypt(uint8_t *block, uint8_t *roundKeys)
 {
 	uint32_t *state = (uint32_t*)block;
 	uint32_t *roundKeys32 = (uint32_t*)roundKeys;
-	uint32_t temp0, temp1;
-	uint8_t i, j, shift0, shift1, shift2, shift3;
+	register uint32_t state0, state1, temp0, temp1;
+	register uint8_t i, j, val0, val1, shift0, shift1, shift2, shift3;
 	
+	state0 = state[0];
+	state1 = state[1];
+
 	for (i = 31; i > 0; i--)
 	{
 		/* addRoundkey */
-		state[0] ^= roundKeys32[i << 1];
-		state[1] ^= roundKeys32[(i << 1) + 1];
+		state0 ^= roundKeys32[i << 1];
+		state1 ^= roundKeys32[(i << 1) + 1];
 
 		/* pLayer */
 		temp0 = 0; temp1 = 0;
@@ -52,37 +55,47 @@ void Decrypt(uint8_t *block, uint8_t *roundKeys)
 		shift2 = 16;
 		shift3 = 24;
 		for(j = 0; j < 32; ) {
-			temp0=temp0^(((state[0]>>shift0)&0x1)<<j);
-			temp1=temp1^(((state[0]>>shift1)&0x1)<<j);
+			temp0=temp0^(((state0>>shift0)&0x1)<<j);
+			temp1=temp1^(((state0>>shift1)&0x1)<<j);
 			j++;
 
-			temp0=temp0^(((state[0]>>shift2)&0x1)<<j);
-			temp1=temp1^(((state[0]>>shift3)&0x1)<<j);
+			temp0=temp0^(((state0>>shift2)&0x1)<<j);
+			temp1=temp1^(((state0>>shift3)&0x1)<<j);
 			j++;
 
-			temp0=temp0^(((state[1]>>shift0)&0x1)<<j);
-			temp1=temp1^(((state[1]>>shift1)&0x1)<<j);
+			temp0=temp0^(((state1>>shift0)&0x1)<<j);
+			temp1=temp1^(((state1>>shift1)&0x1)<<j);
 			j++;
 
-			temp0=temp0^(((state[1]>>shift2)&0x1)<<j);
-			temp1=temp1^(((state[1]>>shift3)&0x1)<<j);
+			temp0=temp0^(((state1>>shift2)&0x1)<<j);
+			temp1=temp1^(((state1>>shift3)&0x1)<<j);
 			j++;
 
 			shift0++;shift1++;shift2++;shift3++;
 		}
 
-		state[0] = temp0;
-		state[1] = temp1;
+		state0 = temp0;
+		state1 = temp1;
 		
 		/* sBoxLayer */
-		for(j = 0; j < BLOCK_SIZE; j++)
+		for(j = 0; j < 4; j++)
 		{
-			block[j]=invsBox8[(block[j])];
+			val0 = state0 & 0xFF;
+			val1 = state1 & 0xFF;
+
+			state0 &= 0xFFFFFF00; 			
+			state1 &= 0xFFFFFF00; 
+			
+			state0 |= invsBox8[val0];
+			state1 |= invsBox8[val1];
+
+			state0 = (state0 >> 8) | (state0 << 24);
+			state1 = (state1 >> 8) | (state1 << 24);
 		}
 	}
 
 	
 	/* addRoundkey (Round 31) */
-	state[0] ^= roundKeys32[0];
-	state[1] ^= roundKeys32[1];
+	state[0] = state0 ^ roundKeys32[0];
+	state[1] = state1 ^ roundKeys32[1];
 }

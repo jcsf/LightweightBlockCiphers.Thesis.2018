@@ -36,7 +36,7 @@ void Decrypt(uint8_t *block, uint8_t *roundKeys)
 	uint32_t *state = (uint32_t*)block;
 	uint32_t *roundKeys32 = (uint32_t*)roundKeys;
 	uint32_t temp0, temp1;
-	uint8_t i, j, t, t1;
+	uint8_t i, j;
 	
 	for (i = 31; i > 0; i--)
 	{
@@ -119,11 +119,7 @@ void Decrypt(uint8_t *block, uint8_t *roundKeys)
 		/* sBoxLayer */
 		for(j = 0; j < BLOCK_SIZE; j++)
 		{
-			t = block[j];
-			t1 = t & 0xF;
-			t = (t >> 4) & 0xF;
-
-			block[j] = (invsBox4[t1]) | (invsBox4[t] << 4);
+			block[j]=invsBox8[(block[j])];
 		}
 	}
 

@@ -30,54 +30,63 @@
 
 #include "cipher.h"
 #include "constants.h"
-#include "rotate.h"
-
 
 void Decrypt(uint8_t *block, uint8_t *roundKeys)
 {
-	uint64_t state = *(uint64_t*)block;
-	uint64_t *roundKeys64 = (uint64_t*)roundKeys;
-	uint64_t temp;
-	uint8_t i, j;
-	uint8_t sBoxValue, position;
+	uint32_t *state = (uint32_t*)block;
+	uint32_t *roundKeys32 = (uint32_t*)roundKeys;
+	uint32_t temp0, temp1;
+	uint8_t i, j, shift0, shift1, shift2, shift3;
 	
 	for (i = 31; i > 0; i--)
 	{
 		/* addRoundkey */
-		state ^= roundKeys64[i];
+		state[0] ^= roundKeys32[i << 1];
+		state[1] ^= roundKeys32[(i << 1) + 1];
 
 		/* pLayer */
-		temp = 0;
-		for (j = 0; j < 63; j++)
-		{
-			/* arithmetic calculation of the p-Layer */
-			position = (j << 2) % 63; // (j * 4) % 63
+		temp0 = 0; temp1 = 0;
 
-			/* result writing */
-			temp |= ((state >> j) & 0x1) << position;
+		shift0 = 0;
+		shift1 = 8;
+		shift2 = 16;
+		shift3 = 24;
+		for(j = 0; j < 32; ) {
+			temp0=temp0^(((state[0]>>shift0)&0x1)<<j);
+			temp1=temp1^(((state[0]>>shift1)&0x1)<<j);
+			j++;
+
+			temp0=temp0^(((state[0]>>shift2)&0x1)<<j);
+			temp1=temp1^(((state[0]>>shift3)&0x1)<<j);
+			j++;
+
+			temp0=temp0^(((state[1]>>shift0)&0x1)<<j);
+			temp1=temp1^(((state[1]>>shift1)&0x1)<<j);
+			j++;
+
+			temp0=temp0^(((state[1]>>shift2)&0x1)<<j);
+			temp1=temp1^(((state[1]>>shift3)&0x1)<<j);
+			j++;
+
+			shift0++;shift1++;shift2++;shift3++;
 		}
-		state = temp | (state & 0x8000000000000000); // Add last bit (bit 63)
 
-
+		state[0] = temp0;
+		state[1] = temp1;
+		
 		/* sBoxLayer */
-
-		for (j = 0; j < 16; j++)
+		for(j = 0; j < BLOCK_SIZE; j++)
 		{
-			/* get lowest nibble */
-			uint16_t sBoxValue = state & 0xF;
+			shift0 = block[j];
+			shift1 = shift0 & 0xF;
+			shift2 = (shift0 >> 4) & 0xF;
 
-			/* kill lowest nibble */			
-			state &= 0xFFFFFFFFFFFFFFF0;
-
-			/* put new value to lowest nibble (sbox) */				
-			state |= invsBox4[sBoxValue];
-
-			/* next(rotate by one nibble) */				
-			state = rotate4l_64(state);						
+			block[j] = (invsBox4[shift1]) | (invsBox4[shift2] << 4);
 		}
 	}
 
 	
 	/* addRoundkey (Round 31) */
-	*(uint64_t*)block = state ^ roundKeys64[0];
+	state[0] ^= roundKeys32[0];
+	state[1] ^= roundKeys32[1];
 }

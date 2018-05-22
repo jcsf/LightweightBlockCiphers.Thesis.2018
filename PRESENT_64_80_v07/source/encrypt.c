@@ -30,51 +30,60 @@
 
 #include "cipher.h"
 #include "constants.h"
-#include "rotate.h"
 
 void Encrypt(uint8_t *block, uint8_t *roundKeys)
 {
-	uint64_t state = *(uint64_t*)block;
-	uint64_t *roundKeys64 = (uint64_t*)roundKeys;
-	uint64_t temp;
-	uint8_t i, j;
-	uint8_t sBoxValue, position;
+	uint32_t *state = (uint32_t*)block;
+	uint32_t *roundKeys32 = (uint32_t*)roundKeys;
+	uint32_t temp0, temp1;
+	uint8_t i, j, shift0, shift1, shift2, shift3;
 
 	for (i = 0; i < 31; i++)
 	{
 		/* addRoundkey */
-		state ^= roundKeys64[i];
+		state[0] ^= roundKeys32[i << 1];
+		state[1] ^= roundKeys32[(i << 1) + 1];
 
 		/* sBoxLayer */
-		for (j = 0; j < 16; j++)
+		for(j = 0; j < BLOCK_SIZE; j++)
 		{
-			/* get lowest nibble */
-			sBoxValue = state & 0xF;
+			shift0 = block[j];
+			shift1 = shift0 & 0xF;
+			shift2 = (shift0 >> 4) & 0xF;
 
-			/* kill lowest nibble */
-			state &= 0xFFFFFFFFFFFFFFF0; 
-
-			/* put new value to lowest nibble (sBox) */
-			state |= sBox4[sBoxValue];
-
-			/* next(rotate by one nibble) */
-			state = rotate4l_64(state); 
+			block[j]=(sBox4[shift1]) | (sBox4[shift2] << 4);
 		}
-
+		
 		/* pLayer */
-		temp = 0;
-		for (j = 0; j < 63; j++)
-		{
-			/* arithmentic calculation of the p-Layer */
-			position = (j << 4) % 63; // (j * 16) % 63
+		temp0 = 0; temp1 = 0;
 
-			/* result writing */
-			temp |= ((state >> j) & 0x1) << position; 
+		shift0 = 0;
+		shift1 = 16;
+		shift2 = 8;
+		shift3 = 24;
+		for(j = 0; j < 32; ) {
+			temp0=temp0^(((state[0]>>j)&0x1) << shift0);
+			temp0=temp0^(((state[1]>>j)&0x1) << shift2);
+			j++;
+			temp0=temp0^(((state[0]>>j)&0x1) << shift1);
+			temp0=temp0^(((state[1]>>j)&0x1) << shift3);
+			j++;
+			temp1=temp1^(((state[0]>>j)&0x1) << shift0);
+			temp1=temp1^(((state[1]>>j)&0x1) << shift2);
+			j++;
+			temp1=temp1^(((state[0]>>j)&0x1) << shift1);
+			temp1=temp1^(((state[1]>>j)&0x1) << shift3);
+			j++;
+
+			shift0++;shift1++;shift2++;shift3++;
 		}
-		state = temp | (state & 0x8000000000000000); // Add last bit (bit 63)
+
+		state[0] = temp0;
+		state[1] = temp1;
 	}
 
 
 	/* addRoundkey (Round 31) */
-	*(uint64_t*)block = state ^ roundKeys64[31];
+	state[0] ^= roundKeys32[62];
+	state[1] ^= roundKeys32[63];
 }

@@ -26,13 +26,13 @@
  *
  */
 
-#ifndef ROTATE_H
-#define ROTATE_H
+#include <stdint.h>
 
-/* input rotated left (4x) */
-#define rotate4l_64(r4lin) ( high4_64(r4lin) | ( r4lin << 4 ) )
+#include "cipher.h"
+#include "constants.h"
 
-/* 4 msb as lsb */
-#define high4_64(h4in) ( (uint64_t)h4in >> 60 )
 
-#endif /* ROTATE_H */
+void RunDecryptionKeySchedule(uint8_t *key, uint8_t *roundKeys)
+{
+	
+}

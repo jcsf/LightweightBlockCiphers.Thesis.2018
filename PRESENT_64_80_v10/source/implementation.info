@@ -1,4 +1,4 @@
-ImplementationDescription: 32-bit oriented (S-Box 4 bits), Unroll Permutations
+ImplementationDescription: 32-bit oriented (S-Box 8 bits), Unroll Permutations
 ImplementationAuthors: João Carlos Santos Fernandes
 
 EncryptionKeyScheduleConstants: sbox
