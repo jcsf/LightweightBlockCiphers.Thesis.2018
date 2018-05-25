@@ -1,0 +1,15 @@
+ImplementationDescription: Reference Implementation
+ImplementationAuthors: João Carlos Santos Fernandes
+
+EncryptionKeyScheduleConstants: sbox, rc_tab
+EncryptConstants: sbox
+DecryptionKeyScheduleConstants: 
+DecryptConstants: inv_sbox
+
+EncryptionKeyScheduleCode: 
+EncryptCode: gmul_o, primitives
+DecryptionKeyScheduleCode:
+DecryptCode: gmul_o, primitives
+
+UseEncryptionKeySchedule: yes
+UseDecryptionKeySchedule: no
