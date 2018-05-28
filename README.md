@@ -53,6 +53,11 @@ All block ciphers implementations have been made from the reference implementati
     * **Block:** 128 bits
     * **Key Size:** 128 bits
 
+* [AES_128_128_v15](AES_128_128_v15/source):
+    * **Description:** Reference Implementation, Fast Encryption (Multiply)
+    * **Block:** 128 bits
+    * **Key Size:** 128 bits
+
 * [CLEFIA_128_128_v01](CLEFIA_128_128_v01/source)
     * **Description:** Based on Reference Implementation
     * **Block:** 128 bits

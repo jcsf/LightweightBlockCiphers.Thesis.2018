@@ -32,15 +32,15 @@
 #include "constants.h"
 #include "primitives.h"
 
-void subBytes(uint8_t* block) {
+void inv_subBytes(uint8_t* block) {
 	uint8_t j;
 
 	for(j = 0; j < BLOCK_SIZE; j++) {
-		block[j] = Sbox[block[j]];
+		block[j] = inv_Sbox[block[j]];
 	}
 }
 
-void shiftRow(uint8_t* block, uint8_t shift) {
+void inv_shiftRow(uint8_t* block, uint8_t shift) {
 	uint8_t tmp[4];
 
 	tmp[0] = block[0];
@@ -48,40 +48,48 @@ void shiftRow(uint8_t* block, uint8_t shift) {
 	tmp[2] = block[8];
 	tmp[3] = block[12];
 	
-	block[0] = tmp[(shift + 0) & 3];
-	block[4] = tmp[(shift + 1) & 3];
-	block[8] = tmp[(shift + 2) & 3];
-	block[12] = tmp[(shift + 3) & 3];
+	block[0] = tmp[(4 - shift + 0) & 3];
+	block[4] = tmp[(4 - shift + 1) & 3];
+	block[8] = tmp[(4 - shift + 2) & 3];
+	block[12] = tmp[(4 - shift + 3) & 3];
 }
 
-void addKey(uint32_t* block32, uint32_t* roundKeys32) {
+void inv_addKey(uint32_t* block32, uint32_t* roundKeys32) {
 	block32[0] ^= roundKeys32[0];
 	block32[1] ^= roundKeys32[1];
 	block32[2] ^= roundKeys32[2];
 	block32[3] ^= roundKeys32[3];
 }
 
-void Encrypt(uint8_t *block, uint8_t *roundKeys)
+void Decrypt(uint8_t *block, uint8_t *roundKeys)
 {
 	uint32_t *block32 = (uint32_t*) block;
 	uint32_t *roundKeys32 = (uint32_t*) roundKeys;
 	uint8_t x0, x1, x2, x3;
 	uint8_t i, j;
 
-	// Add Initial Round Key
-	addKey(block32, roundKeys32);
-	roundKeys32 += 4;
+	roundKeys32 += 10 << 2;
 
-	for(i = 1; i < NUMBER_OF_ROUNDS; i++) {	
-		// SBox Layer
-		subBytes(block);
+	// Inv Last Round
 
-		// ShiftRow Layer
-		shiftRow(block + 1, 1);
-		shiftRow(block + 2, 2);
-		shiftRow(block + 3, 3);
+	// Add Key
+	inv_addKey(block32, roundKeys32);
+	roundKeys32 -= 4;
 
-		// MixColumns Layer
+	// SBox Layer
+	inv_subBytes(block);
+
+	// ShiftRow Layer
+	inv_shiftRow(block + 1, 1);
+	inv_shiftRow(block + 2, 2);
+	inv_shiftRow(block + 3, 3);
+
+	for(i = 1; i < NUMBER_OF_ROUNDS; i++) {
+		// Add Round Key
+		inv_addKey(block32, roundKeys32);
+		roundKeys32 -= 4;
+
+		// Inv MixColumns Layer
 		for(j = 0; j < 4; j++) {
 			uint8_t t = j << 2; // j * 4
 
@@ -90,27 +98,21 @@ void Encrypt(uint8_t *block, uint8_t *roundKeys)
 			x2 = block[t + 2];
 			x3 = block[t + 3];
 
-			block[t] 	 = AESMul2(x0) ^ AESMul3(x1) ^ 		   x2  ^ 		 x3;
-			block[t + 1] =		   x0  ^ AESMul2(x1) ^ AESMul3(x2) ^ 		 x3;
-			block[t + 2] =		   x0  ^ 		 x1  ^ AESMul2(x2) ^ AESMul3(x3);
-			block[t + 3] = AESMul3(x0) ^ 		 x1  ^		   x2  ^ AESMul2(x3);
+			block[t] 	 = AESMul14(x0) ^ AESMul11(x1) ^ AESMul13(x2) ^ AESMul9(x3);
+			block[t + 1] =  AESMul9(x0) ^ AESMul14(x1) ^ AESMul11(x2) ^ AESMul13(x3);
+			block[t + 2] = AESMul13(x0) ^  AESMul9(x1) ^ AESMul14(x2) ^ AESMul11(x3);
+			block[t + 3] = AESMul11(x0) ^ AESMul13(x1) ^  AESMul9(x2) ^ AESMul14(x3);
 		}
 
-		// Add Key
-		addKey(block32, roundKeys32);
-		roundKeys32 += 4;
+		// Inv ShiftRow Layer
+		inv_shiftRow(block + 1, 1);
+		inv_shiftRow(block + 2, 2);
+		inv_shiftRow(block + 3, 3);
+
+		// Inv SBox Layer
+		inv_subBytes(block);
 	}
 
-	// Last Round
-
-	// SBox Layer
-	subBytes(block);
-
-	// ShiftRow Layer
-	shiftRow(block + 1, 1);
-	shiftRow(block + 2, 2);
-	shiftRow(block + 3, 3);
-
-	// Add Key
-	addKey(block32, roundKeys32);
+	// Add Initial Round Key
+	inv_addKey(block32, roundKeys32);
 }

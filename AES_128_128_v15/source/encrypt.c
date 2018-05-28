@@ -90,10 +90,13 @@ void Encrypt(uint8_t *block, uint8_t *roundKeys)
 			x2 = block[t + 2];
 			x3 = block[t + 3];
 
-			block[t] 	 = AESMul2(x0) ^ AESMul3(x1) ^ 		   x2  ^ 		 x3;
-			block[t + 1] =		   x0  ^ AESMul2(x1) ^ AESMul3(x2) ^ 		 x3;
-			block[t + 2] =		   x0  ^ 		 x1  ^ AESMul2(x2) ^ AESMul3(x3);
-			block[t + 3] = AESMul3(x0) ^ 		 x1  ^		   x2  ^ AESMul2(x3);
+			// Fastest Version
+			uint8_t Tmp = x0 ^ x1 ^ x2 ^ x3;
+			
+			block[t] ^= AESMul2(x0 ^ x1) ^ Tmp ;
+			block[t + 1] ^= AESMul2(x1 ^ x2) ^ Tmp;
+			block[t + 2] ^= AESMul2(x2 ^ x3) ^ Tmp;
+			block[t + 3] ^= AESMul2(x3 ^ x0) ^ Tmp;
 		}
 
 		// Add Key
