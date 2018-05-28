@@ -1,4 +1,4 @@
-ImplementationDescription: State in Register Variables Implementation, Changed Cycle Operations on Decryption
+ImplementationDescription: State in Register Variables, Full Unroll Implementation
 ImplementationAuthors: João Carlos Santos Fernandes
 
 EncryptionKeyScheduleConstants: constants

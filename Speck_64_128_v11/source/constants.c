@@ -28,24 +28,8 @@
 
 #include <stdint.h>
 
-#include "cipher.h"
 #include "constants.h"
-#include "primitives.h"
 
-void Encrypt(uint8_t *block, uint8_t *roundKeys)
-{
-	register uint32_t *rk = (uint32_t *)roundKeys;
-  register uint32_t rightSlice = ((uint32_t *)block)[0];
-  register uint32_t leftSlice = ((uint32_t *)block)[1];
-  register uint8_t r;
-
-  for (r = NUMBER_OF_ROUNDS; r > 0; r--)
-  {
-    leftSlice = (ror(leftSlice, ALPHA) + rightSlice) ^ *rk;
-    rightSlice = rol(rightSlice, BETA) ^ leftSlice;
-    rk += 1;
-  }
-
-  ((uint32_t *)block)[0] = rightSlice;
-  ((uint32_t *)block)[1] = leftSlice;
-}
+/*
+ * Cipher constants
+ */

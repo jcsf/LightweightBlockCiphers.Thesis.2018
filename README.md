@@ -389,6 +389,11 @@ All block ciphers implementations have been made from the reference implementati
     * **Key Size:** 128 bits
 
 * [SPECK_64_128_v10](Speck_64_128_v10/source)
+    * **Description:** State in Register Variables Implementation, Changed Cycle Operations on Decryption
+    * **Block:** 64 bits
+    * **Key Size:** 128 bits
+
+* [SPECK_64_128_v11](Speck_64_128_v11/source)
     * **Description:** State in Register Variables Implementation, Full Unroll
     * **Block:** 64 bits
     * **Key Size:** 128 bits

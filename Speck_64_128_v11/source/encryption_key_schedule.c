@@ -32,20 +32,22 @@
 #include "constants.h"
 #include "primitives.h"
 
-void Encrypt(uint8_t *block, uint8_t *roundKeys)
+void RunEncryptionKeySchedule(uint8_t *key, uint8_t *roundKeys)
 {
-	register uint32_t *rk = (uint32_t *)roundKeys;
-  register uint32_t rightSlice = ((uint32_t *)block)[0];
-  register uint32_t leftSlice = ((uint32_t *)block)[1];
-  register uint8_t r;
+	uint32_t *mk = (uint32_t *)key; /* Main Key */
+	uint32_t *rk = (uint32_t *)roundKeys;
+    uint32_t l[NUMBER_OF_ROUNDS + NUMBER_KEYWORDS];
 
-  for (r = NUMBER_OF_ROUNDS; r > 0; r--)
-  {
-    leftSlice = (ror(leftSlice, ALPHA) + rightSlice) ^ *rk;
-    rightSlice = rol(rightSlice, BETA) ^ leftSlice;
-    rk += 1;
-  }
+	uint8_t r;
 
-  ((uint32_t *)block)[0] = rightSlice;
-  ((uint32_t *)block)[1] = leftSlice;
+	l[0] = mk[1];
+	l[1] = mk[2];
+	l[2] = mk[3];
+	
+	rk[0] = mk[0];
+    for (r = 0; r < NUMBER_OF_ROUNDS-1; r++)
+    {
+		l[r+NUMBER_KEYWORDS-1] = (ror(l[r], ALPHA) + rk[r]) ^ r;
+		rk[r+1] = rol(rk[r], BETA) ^ l[r+NUMBER_KEYWORDS-1];
+    }
 }

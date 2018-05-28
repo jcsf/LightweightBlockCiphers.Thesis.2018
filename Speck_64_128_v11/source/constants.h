@@ -26,26 +26,38 @@
  *
  */
 
-#include <stdint.h>
+#ifndef CONSTANTS_H
+#define CONSTANTS_H
 
-#include "cipher.h"
-#include "constants.h"
-#include "primitives.h"
+#include "data_types.h"
 
-void Encrypt(uint8_t *block, uint8_t *roundKeys)
-{
-	register uint32_t *rk = (uint32_t *)roundKeys;
-  register uint32_t rightSlice = ((uint32_t *)block)[0];
-  register uint32_t leftSlice = ((uint32_t *)block)[1];
-  register uint8_t r;
 
-  for (r = NUMBER_OF_ROUNDS; r > 0; r--)
-  {
-    leftSlice = (ror(leftSlice, ALPHA) + rightSlice) ^ *rk;
-    rightSlice = rol(rightSlice, BETA) ^ leftSlice;
-    rk += 1;
-  }
+/*
+ *
+ * Cipher characteristics:
+ * 	BLOCK_SIZE - the cipher block size in bytes
+ * 	KEY_SIZE - the cipher key size in bytes
+ *	ROUND_KEY_SIZE - the cipher round keys size in bytes
+ * 	NUMBER_OF_ROUNDS - the cipher number of rounds
+ *
+ */
 
-  ((uint32_t *)block)[0] = rightSlice;
-  ((uint32_t *)block)[1] = leftSlice;
-}
+#define BLOCK_SIZE 8
+
+#define KEY_SIZE 16
+
+#define ROUND_KEYS_SIZE 108 /* NUMBER_OF_ROUNDS * 4 */ 
+
+#define NUMBER_OF_ROUNDS 27
+
+/*
+ * Cipher constants
+ */
+
+#define ALPHA 8
+#define BETA 3
+
+#define WORD_SIZE 32
+#define NUMBER_KEYWORDS 4
+
+#endif /* CONSTANTS_H */

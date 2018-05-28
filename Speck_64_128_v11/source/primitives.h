@@ -7,7 +7,7 @@
  *
  * Copyright (C) 2015 University of Luxembourg
  *
- * Written in 2015 by Daniel Dinu <dumitru-daniel.dinu@uni.lu>
+ * Written in 2015 by Yann Le Corre <yann.lecorre@uni.lu>
  *
  * This file is part of FELICS.
  *
@@ -25,27 +25,19 @@
  * along with this program; if not, see <http://www.gnu.org/licenses/>.
  *
  */
+#ifndef PRIMITIVES_H
+#define PRIMITIVES_H
 
-#include <stdint.h>
-
-#include "cipher.h"
 #include "constants.h"
-#include "primitives.h"
 
-void Encrypt(uint8_t *block, uint8_t *roundKeys)
+static inline uint32_t rol(uint32_t x, uint8_t n)
 {
-	register uint32_t *rk = (uint32_t *)roundKeys;
-  register uint32_t rightSlice = ((uint32_t *)block)[0];
-  register uint32_t leftSlice = ((uint32_t *)block)[1];
-  register uint8_t r;
-
-  for (r = NUMBER_OF_ROUNDS; r > 0; r--)
-  {
-    leftSlice = (ror(leftSlice, ALPHA) + rightSlice) ^ *rk;
-    rightSlice = rol(rightSlice, BETA) ^ leftSlice;
-    rk += 1;
-  }
-
-  ((uint32_t *)block)[0] = rightSlice;
-  ((uint32_t *)block)[1] = leftSlice;
+    return (x << n) | (x >> (WORD_SIZE - n));
 }
+
+static inline uint32_t ror(uint32_t x, uint8_t n)
+{
+    return (x >> n) | (x << (WORD_SIZE - n));
+}
+
+#endif /* PRIMITIVES_H */

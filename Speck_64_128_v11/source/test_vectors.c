@@ -28,24 +28,27 @@
 
 #include <stdint.h>
 
-#include "cipher.h"
-#include "constants.h"
-#include "primitives.h"
+#include "test_vectors.h"
 
-void Encrypt(uint8_t *block, uint8_t *roundKeys)
-{
-	register uint32_t *rk = (uint32_t *)roundKeys;
-  register uint32_t rightSlice = ((uint32_t *)block)[0];
-  register uint32_t leftSlice = ((uint32_t *)block)[1];
-  register uint8_t r;
+/*
+ *
+ * Test vectors
+ *
+ */
+/* Replace with the cipher test vectors */
+const uint8_t expectedPlaintext[BLOCK_SIZE] = {
+    0x2d, 0x43, 0x75, 0x74,
+    0x74, 0x65, 0x72, 0x3b
+};
 
-  for (r = NUMBER_OF_ROUNDS; r > 0; r--)
-  {
-    leftSlice = (ror(leftSlice, ALPHA) + rightSlice) ^ *rk;
-    rightSlice = rol(rightSlice, BETA) ^ leftSlice;
-    rk += 1;
-  }
+const uint8_t expectedKey[KEY_SIZE] = {
+    0x0, 0x1, 0x2, 0x3,
+    0x8, 0x9, 0xa, 0xb,
+    0x10, 0x11, 0x12, 0x13,
+    0x18, 0x19,0x1a, 0x1b
+};
 
-  ((uint32_t *)block)[0] = rightSlice;
-  ((uint32_t *)block)[1] = leftSlice;
-}
+const uint8_t expectedCiphertext[BLOCK_SIZE] = {
+    0x8b, 0x2, 0x4e, 0x45,
+    0x48, 0xa5, 0x6f, 0x8c
+};
