@@ -1,4 +1,4 @@
-ImplementationDescription: T-Box AES implementation with cycle for rounds
+ImplementationDescription: T-Box AES implementation with cycle for rounds and permutations
 ImplementationAuthors: João Carlos Santos Fernandes
 
 EncryptionKeyScheduleConstants: sbox, rcon

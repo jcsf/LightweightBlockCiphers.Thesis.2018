@@ -43,7 +43,7 @@ void Encrypt(uint8_t *block, uint8_t *roundKeys)
 		rk += 1;
 	}
 
-	uint32_t x0, x1, x2, x3, t0, t1, t2, t3;
+	uint32_t x0, x1, x2, x3, t0, t1, t2, t3, temp;
 
 	// Rounds
 	for(i = 0; i < NUMBER_OF_ROUNDS - 1; i++) {
@@ -52,57 +52,23 @@ void Encrypt(uint8_t *block, uint8_t *roundKeys)
 		x2 = data[2];
 		x3 = data[3];
 
-		// First Row
-		t0 = (uint8_t)(x0);
-		t0 = T0[t0];
-		t1 = (uint8_t)(x1 >> 8);
-		t1 = T1[t1];
-		t2 = (uint8_t)(x2 >> 16);
-		t2 = T2[t2];
-		t3 = (uint8_t)(x3 >> 24);
-		t3 = T3[t3];
-		
-		data[0] = (t0 ^ t1 ^ t2 ^ t3) ^ *rk;
-		rk += 1;
+		for(j = 0; j < 4; j++) {
+			// Row
+			t0 = (uint8_t)(x0);
+			t1 = (uint8_t)(x1 >> 8);
+			t2 = (uint8_t)(x2 >> 16);
+			t3 = (uint8_t)(x3 >> 24);
+			
+			data[j] = (T0[t0] ^ T1[t1] ^ T2[t2] ^ T3[t3]) ^ *rk;
+			rk += 1;
 
-		// Second Row
-		t0 = (uint8_t)(x1);
-		t0 = T0[t0];
-		t1 = (uint8_t)(x2 >> 8);
-		t1 = T1[t1];
-		t2 = (uint8_t)(x3 >> 16);
-		t2 = T2[t2];
-		t3 = (uint8_t)(x0 >> 24);
-		t3 = T3[t3];
-		
-		data[1] = (t0 ^ t1 ^ t2 ^ t3) ^ *rk;
-		rk += 1;
-
-		// Third Row
-		t0 = (uint8_t)(x2);
-		t0 = T0[t0];
-		t1 = (uint8_t)(x3 >> 8);
-		t1 = T1[t1];
-		t2 = (uint8_t)(x0 >> 16);
-		t2 = T2[t2];
-		t3 = (uint8_t)(x1 >> 24);
-		t3 = T3[t3];
-		
-		data[2] = (t0 ^ t1 ^ t2 ^ t3) ^ *rk;
-		rk += 1;
-
-		// Fourth Row
-		t0 = (uint8_t)(x3);
-		t0 = T0[t0];
-		t1 = (uint8_t)(x0 >> 8);
-		t1 = T1[t1];
-		t2 = (uint8_t)(x1 >> 16);
-		t2 = T2[t2];
-		t3 = (uint8_t)(x2 >> 24);
-		t3 = T3[t3];
-		
-		data[3] = (t0 ^ t1 ^ t2 ^ t3) ^ *rk;
-		rk += 1;
+			// Permutations for next row
+			temp = x0;
+			x0 = x1;
+			x1 = x2;
+			x2 = x3;
+			x3 = temp;
+		}
 	}
 
 	// Last Round
@@ -111,55 +77,21 @@ void Encrypt(uint8_t *block, uint8_t *roundKeys)
 	x2 = data[2];
 	x3 = data[3];
 
-	// First Row
-	t0 = (uint8_t)(x0);
-	t0 = Sbox[t0];
-	t1 = (uint8_t)(x1 >> 8);
-	t1 = Sbox[t1];
-	t2 = (uint8_t)(x2 >> 16);
-	t2 = Sbox[t2];
-	t3 = (uint8_t)(x3 >> 24);
-	t3 = Sbox[t3];
+	for(j = 0; j < 4; j++) {
+		// Row
+		t0 = (uint8_t)(x0);
+		t1 = (uint8_t)(x1 >> 8);
+		t2 = (uint8_t)(x2 >> 16);
+		t3 = (uint8_t)(x3 >> 24);
 
-	data[0] = ((t0) | (t1 << 8) | (t2 << 16) | (t3 << 24)) ^ *rk;
-	rk += 1;
+		data[j] = (Sbox[t0] | (Sbox[t1] << 8) | (Sbox[t2] << 16) | (Sbox[t3] << 24)) ^ *rk;
+		rk += 1;
 
-	// Second Row
-	t0 = (uint8_t)(x1);
-	t0 = Sbox[t0];
-	t1 = (uint8_t)(x2 >> 8);
-	t1 = Sbox[t1];
-	t2 = (uint8_t)(x3 >> 16);
-	t2 = Sbox[t2];
-	t3 = (uint8_t)(x0 >> 24);
-	t3 = Sbox[t3];
-
-	data[1] = ((t0) | (t1 << 8) | (t2 << 16) | (t3 << 24)) ^ *rk;
-	rk += 1;
-
-	// Third Row
-	t0 = (uint8_t)(x2);
-	t0 = Sbox[t0];
-	t1 = (uint8_t)(x3 >> 8);
-	t1 = Sbox[t1];
-	t2 = (uint8_t)(x0 >> 16);
-	t2 = Sbox[t2];
-	t3 = (uint8_t)(x1 >> 24);
-	t3 = Sbox[t3];
-
-	data[2] = ((t0) | (t1 << 8) | (t2 << 16) | (t3 << 24)) ^ *rk;
-	rk += 1;
-
-	// Fourth Row
-	t0 = (uint8_t)(x3);
-	t0 = Sbox[t0];
-	t1 = (uint8_t)(x0 >> 8);
-	t1 = Sbox[t1];
-	t2 = (uint8_t)(x1 >> 16);
-	t2 = Sbox[t2];
-	t3 = (uint8_t)(x2 >> 24);
-	t3 = Sbox[t3];
-
-	data[3] = ((t0) | (t1 << 8) | (t2 << 16) | (t3 << 24)) ^ *rk;
-	rk += 1;
+		// Permutations for next row
+		temp = x0;
+		x0 = x1;
+		x1 = x2;
+		x2 = x3;
+		x3 = temp;
+	}
 }

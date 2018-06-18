@@ -89,15 +89,11 @@ void Decrypt(uint8_t *block, uint8_t *roundKeys)
 	for(j = 0; j < 4; j++) {
 		// Row
 		t0 = (uint8_t)(x3);
-		t0 = inv_Sbox[t0];
 		t1 = (uint8_t)(x2 >> 8);
-		t1 = inv_Sbox[t1];
 		t2 = (uint8_t)(x1 >> 16);
-		t2 = inv_Sbox[t2];
 		t3 = (uint8_t)(x0 >> 24);
-		t3 = inv_Sbox[t3];
 
-		data[3-j] = ((t0) | (t1 << 8) | (t2 << 16) | (t3 << 24)) ^ *rk;
+		data[3-j] = ((inv_Sbox[t0]) | (inv_Sbox[t1] << 8) | (inv_Sbox[t2] << 16) | (inv_Sbox[t3] << 24)) ^ *rk;
 		rk -= 1;
 
 		// Permutations for next row

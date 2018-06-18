@@ -43,6 +43,8 @@ ciphers="PRESENT_64_80_v01 PRESENT_64_80_v07 PRESENT_64_80_v08 PRESENT_64_80_v09
 #ciphers="Speck_64_128_v07 Speck_64_128_v08 Speck_64_128_v09 Speck_64_128_v10 Speck_64_128_v11 Speck_64_128_v12"
 ciphers="AES_128_128_v01 AES_128_128_v08 AES_128_128_v09 AES_128_128_v10 AES_128_128_v11 AES_128_128_v12 AES_128_128_v13 AES_128_128_v14 AES_128_128_v15"
 
+ciphers="AES_128_128_v08 AES_128_128_v09"
+
 cd /home/felics/FELICS/FELICS_v1.1.23/block_ciphers/scripts/
 
 for i in $ciphers; do

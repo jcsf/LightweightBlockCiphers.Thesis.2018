@@ -84,15 +84,11 @@ void Encrypt(uint8_t *block, uint8_t *roundKeys)
 	for(j = 0; j < 4; j++) {
 		// Row
 		t0 = (uint8_t)(x0);
-		t0 = Sbox[t0];
 		t1 = (uint8_t)(x1 >> 8);
-		t1 = Sbox[t1];
 		t2 = (uint8_t)(x2 >> 16);
-		t2 = Sbox[t2];
 		t3 = (uint8_t)(x3 >> 24);
-		t3 = Sbox[t3];
 
-		data[j] = ((t0) | (t1 << 8) | (t2 << 16) | (t3 << 24)) ^ *rk;
+		data[j] = ((Sbox[t0]) | (Sbox[t1] << 8) | (Sbox[t2] << 16) | (Sbox[t3] << 24)) ^ *rk;
 		rk += 1;
 
 		// Permutations for next row
