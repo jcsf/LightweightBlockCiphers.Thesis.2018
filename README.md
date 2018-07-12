@@ -164,22 +164,22 @@ All block ciphers implementations have been made from the reference implementati
     * **Key Size:** 128 bits
 
 * [NOEKEON_128_128_v09](NOEKEON_128_128_v09/source)
-    * **Description:** Direct-Key Implementation, Little Endian Version, No Function Calls, Implementation in Registers Variables
-    * **Block:** 128 bits
-    * **Key Size:** 128 bits
-
-* [NOEKEON_128_128_v10](NOEKEON_128_128_v10/source)
     * **Description:** Direct-Key Implementation, Little Endian Version, No Function Calls, With Constants Table, Implementation in Registers Variables
     * **Block:** 128 bits
     * **Key Size:** 128 bits
 
+* [NOEKEON_128_128_v10](NOEKEON_128_128_v10/source)
+    * **Description:** Direct-Key Implementation, Little Endian Version, No Function Calls, Constants Computed on the Fly, Implementation in Registers Variables
+    * **Block:** 128 bits
+    * **Key Size:** 128 bits
+
 * [NOEKEON_128_128_v11](NOEKEON_128_128_v11/source)
-    * **Description:** Direct-Key Implementation, Little Endian Version, With Constants Table, Implementation in Registers Variables
+    * **Description:** Direct-Key Implementation, Little Endian Version, With Constants Table, Only 1 Function For Encryption and Decryption, Implementation in Registers Variables
     * **Block:** 128 bits
     * **Key Size:** 128 bits
 
 * [NOEKEON_128_128_v12](NOEKEON_128_128_v12/source)
-    * **Description:** Direct-Key Implementation, Little Endian Version, No Function Calls, Implementation in Registers Variables, Full Unroll
+    * **Description:** Direct-Key Implementation, Little Endian Version, No Function Calls, With Constants Table, Implementation in Registers Variables, Full Unroll
     * **Block:** 128 bits
     * **Key Size:** 128 bits
     
