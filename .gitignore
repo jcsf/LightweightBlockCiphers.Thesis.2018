@@ -5,6 +5,7 @@
 # SCRIPTS
 !run_collect_metrics.sh
 !run_cipher_arm.sh
+!run_cipher_pc.sh
 
 # METRICS
 !Metrics/

@@ -9,6 +9,16 @@ make -f ./../../../common/cipher.mk cleanall
 if [ $4 = 1 ]
 then
     make -f ./../../../common/cipher.mk DEBUG=7 ARCHITECTURE=ARM SCENARIO=$2 COMPILER_OPTIONS=$3 
-    make -f ./../../../common/cipher.mk ARCHITECTURE=ARM SCENARIO=$2 COMPILER_OPTIONS=$3 upload-cipher
+    
+	if [ $2 = 0 ]
+	then 
+		make -f ./../../../common/cipher.mk ARCHITECTURE=ARM SCENARIO=$2 upload-cipher
+	fi
+
+	if [ $2 -gt 0 ]
+	then 
+		make -f ./../../../common/cipher.mk ARCHITECTURE=ARM SCENARIO=$2 upload-scenario
+	fi
+
     ./../../../../../common/scripts/arm/arm_serial_terminal.py
 fi
